@@ -3,6 +3,7 @@ export default defineAppConfig({
     'pages/home/index',
     'pages/chapter/index',
     'pages/ch4/index',
+    'pages/ch6/index',
     'pages/ch14/index',
     'pages/ch17/index',
     'pages/ch20/index',

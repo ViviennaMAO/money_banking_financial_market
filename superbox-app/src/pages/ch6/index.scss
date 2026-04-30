@@ -1,0 +1,149 @@
+.ch6 {
+  padding: 32rpx 28rpx 80rpx;
+  height: 100vh;
+  box-sizing: border-box;
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 24rpx;
+}
+
+.page-title { font-size: 36rpx; font-weight: 600; color: #e6edf3; }
+.page-meta { font-size: 22rpx; color: #8b8fa8; }
+
+.canvas-card {
+  margin-top: 24rpx;
+  padding: 24rpx;
+  background: rgba(28, 34, 54, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 24rpx;
+  transition: background 0.3s, border-color 0.3s;
+}
+
+.canvas-card.flash {
+  animation: flashRed 0.7s ease 3;
+}
+
+@keyframes flashRed {
+  0%, 100% { background: rgba(28, 34, 54, 0.55); border-color: rgba(255,255,255,0.05); }
+  50% { background: rgba(239, 68, 68, 0.18); border-color: rgba(239, 68, 68, 0.4); }
+}
+
+.spread-row {
+  display: flex;
+  margin-top: 16rpx;
+  padding-top: 16rpx;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  gap: 24rpx;
+  align-items: baseline;
+}
+
+.spread-cell { display: flex; align-items: baseline; gap: 8rpx; }
+.spread-label { font-size: 20rpx; color: #8b8fa8; }
+.spread-value { font-size: 26rpx; color: #e6edf3; font-family: ui-monospace, Menlo, monospace; }
+
+.spread-key {
+  margin-left: auto;
+  padding: 4rpx 16rpx;
+  border-radius: 9999rpx;
+}
+
+.spread-key.norm { background: rgba(16, 185, 129, 0.15); }
+.spread-key.norm .spread-value { color: #10b981; }
+.spread-key.inv { background: rgba(239, 68, 68, 0.15); }
+.spread-key.inv .spread-value { color: #ef4444; }
+
+.inv-tag { font-size: 18rpx; color: #ef4444; margin-left: 6rpx; }
+
+.panel {
+  margin-top: 24rpx;
+  padding: 28rpx;
+  background: rgba(28, 34, 54, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 24rpx;
+  display: flex;
+  flex-direction: column;
+  gap: 8rpx;
+}
+
+.panel-tag {
+  font-size: 22rpx;
+  color: #8b8fa8;
+  margin-bottom: 8rpx;
+}
+
+.note-card {
+  margin-top: 24rpx;
+  padding: 24rpx;
+  border-radius: 24rpx;
+  font-size: 24rpx;
+  line-height: 1.7;
+  border: 1px solid;
+}
+
+.note-ok {
+  background: rgba(16, 185, 129, 0.04);
+  border-color: rgba(16, 185, 129, 0.2);
+  color: #10b981;
+}
+
+.note-inv {
+  background: rgba(239, 68, 68, 0.06);
+  border-color: rgba(239, 68, 68, 0.3);
+  color: #ef4444;
+}
+
+/* 三大理论 */
+.theories {
+  margin-top: 24rpx;
+  padding: 28rpx;
+  background: rgba(167, 139, 250, 0.05);
+  border: 1px solid rgba(167, 139, 250, 0.2);
+  border-radius: 24rpx;
+}
+
+.theories-tag {
+  display: block;
+  font-size: 22rpx;
+  color: #a78bfa;
+  margin-bottom: 16rpx;
+  font-weight: 500;
+}
+
+.th-item {
+  display: flex;
+  gap: 14rpx;
+  align-items: flex-start;
+  padding: 12rpx 0;
+}
+
+.th-num {
+  flex-shrink: 0;
+  width: 36rpx;
+  height: 36rpx;
+  border-radius: 50%;
+  background: rgba(167, 139, 250, 0.18);
+  color: #a78bfa;
+  font-size: 22rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  margin-top: 4rpx;
+}
+
+.th-body { flex: 1; display: flex; flex-direction: column; gap: 6rpx; }
+.th-title { font-size: 26rpx; font-weight: 500; color: #e6edf3; }
+.th-desc { font-size: 22rpx; color: rgba(230, 237, 243, 0.75); line-height: 1.6; }
+
+.hint {
+  display: block;
+  margin-top: 24rpx;
+  padding: 0 8rpx;
+  font-size: 22rpx;
+  color: #8b8fa8;
+  line-height: 1.6;
+}

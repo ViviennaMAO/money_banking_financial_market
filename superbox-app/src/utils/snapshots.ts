@@ -86,6 +86,53 @@ export const ch4Snapshots: Record<string, Ch4Snapshot> = {
   }
 }
 
+/* ===== 第 6 章 收益率曲线 ===== */
+export interface Ch6Snapshot {
+  shortEnd: number      // 2Y 短端
+  longEnd: number       // 30Y 长端
+  curveBow: number      // 凸度
+  note: string
+  flash?: boolean
+  predict?: PredictDef
+}
+
+export const ch6Snapshots: Record<string, Ch6Snapshot> = {
+  '1980': {
+    shortEnd: 14, longEnd: 11, curveBow: -0.5,
+    note: '1980 沃尔克紧缩巅峰:短端 14%(拉到极致打通胀),长端 11%(市场预期会降)。严重倒挂 + 凹陷 → 1981-82 双重衰退如期而至。'
+  },
+  '2007': {
+    shortEnd: 5.25, longEnd: 5.0, curveBow: 0,
+    note: '2007.6 危机前:平坦微倒挂,市场嗅到了风险。一年后(2008.9)雷曼倒下。倒挂 → 衰退,经典传导。'
+  },
+  '2019': {
+    shortEnd: 2.4, longEnd: 1.6, curveBow: -0.2,
+    note: '2019.8 倒挂:Fed 紧缩末期,市场预期会衰退。但 2020 衰退是疫情触发,不是常规商业周期 — 两个原因混在一起。'
+  },
+  '2024': {
+    shortEnd: 5.4, longEnd: 4.2, curveBow: -0.3,
+    note: '⚠️ 2024.7 反常:2s10s 倒挂超过 24 个月,但 GDP 仍 +2.5%。50 年来首次"超长倒挂无衰退"。教科书 8/8 必衰退被打破。',
+    flash: true,
+    predict: {
+      title: '你即将切换到「2024.7 反常」',
+      question: '美国 2s10s 倒挂已持续 24 个月,按教科书 8/8 历史经验衰退应该已发生。猜 2024 末美国实际 GDP 增速?',
+      options: [
+        '衰退 (-2% 以下)',
+        '微弱增长 (0-1%)',
+        '健康增长 (2-3%)',
+        '强劲增长 (3%+)'
+      ],
+      correctIdx: 2,
+      revealHeadline: '答案 +2.5% — 健康增长',
+      revealMsg: '50 年来首次"超长倒挂无衰退"。打破"倒挂必衰退"的信仰。可能原因:① 财政刺激持续(IRA/CHIPS)② 劳动力市场异常坚韧 ③ AI 投资潮带动增长 ④ 后疫情消费补偿。教学点:收益率曲线是市场预期的反映,不是真理 — 预期可能错。'
+    }
+  },
+  'today': {
+    shortEnd: 4.3, longEnd: 4.6, curveBow: 0.1,
+    note: '今天:Fed 已降息,2s10s 转正。市场松一口气,但通胀风险还没完全过去。试试调长端通胀预期看曲线变化。'
+  }
+}
+
 /* ===== 第 17 章 套息交易 ===== */
 export interface Ch17Snapshot {
   id: number; ifv: number; ds: number; lev: number

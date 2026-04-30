@@ -80,6 +80,29 @@ export function realRate(nominalRate: number, inflation: number): number {
   return (1 + nominalRate) / (1 + inflation) - 1
 }
 
+// 第 6 章 收益率曲线
+// 模型:y(t) = shortEnd + (longEnd - shortEnd) × w + curveBow × 4w(1-w)
+//   其中 w = t/30(期限权重)
+//   curveBow > 0 中段凸起;curveBow < 0 中段凹陷
+export function yieldAtTenor(
+  shortEnd: number,    // 2Y 短端利率(Fed 政策影响)
+  longEnd: number,     // 30Y 长端利率(市场长期预期)
+  curveBow: number,    // 凸度(-1.5 ~ +1.5)
+  tenor: number        // 期限(年)
+): number {
+  const w = Math.min(Math.max(tenor / 30, 0), 1)
+  const linear = shortEnd + (longEnd - shortEnd) * w
+  const bow = curveBow * 4 * w * (1 - w)
+  return Math.max(0, linear + bow)
+}
+
+// 2s10s 利差(经典衰退指标)
+export function spread2s10s(shortEnd: number, longEnd: number, curveBow: number): number {
+  const y10 = yieldAtTenor(shortEnd, longEnd, curveBow, 10)
+  const y2 = yieldAtTenor(shortEnd, longEnd, curveBow, 2)
+  return y10 - y2  // 正常 > 0;倒挂 < 0
+}
+
 // 第 20 章 IS-LM 均衡
 export interface ISLMEquilibrium {
   i_star: number
