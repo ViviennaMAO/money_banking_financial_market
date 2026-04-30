@@ -1,0 +1,348 @@
+.chapter {
+  padding: 32rpx 28rpx 80rpx;
+  height: 100vh;
+  box-sizing: border-box;
+}
+
+.chapter-loading {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40rpx;
+}
+
+.loading-emoji { font-size: 96rpx; line-height: 1; }
+.loading-msg { font-size: 32rpx; color: #e6edf3; margin: 24rpx 0; }
+.loading-back {
+  background: rgba(59, 130, 246, 0.15);
+  color: #3b82f6;
+  font-size: 28rpx;
+  padding: 24rpx 60rpx;
+  border-radius: 16rpx;
+  &::after { border: none; }
+}
+
+/* ===== 章节封面 ===== */
+.ch-cover {
+  text-align: center;
+  padding: 32rpx 0 24rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.ch-part {
+  font-size: 22rpx;
+  color: #8b8fa8;
+  margin-bottom: 16rpx;
+}
+
+.ch-emoji {
+  font-size: 96rpx;
+  line-height: 1;
+  margin-bottom: 16rpx;
+}
+
+.ch-num {
+  font-size: 22rpx;
+  color: #8b8fa8;
+  margin-bottom: 8rpx;
+}
+
+.ch-title {
+  font-size: 38rpx;
+  font-weight: 600;
+  color: #e6edf3;
+  text-align: center;
+  line-height: 1.3;
+  padding: 0 20rpx;
+}
+
+.ch-meta {
+  display: flex;
+  gap: 24rpx;
+  margin-top: 16rpx;
+}
+
+.ch-meta-item {
+  font-size: 22rpx;
+  color: #8b8fa8;
+}
+
+/* ===== 导言 ===== */
+.ch-intro {
+  margin-top: 24rpx;
+  padding: 28rpx;
+  background: rgba(28, 34, 54, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 24rpx;
+}
+
+.ch-intro-tag {
+  display: block;
+  font-size: 22rpx;
+  color: #3b82f6;
+  margin-bottom: 12rpx;
+}
+
+.ch-intro-text {
+  display: block;
+  font-size: 28rpx;
+  color: rgba(230, 237, 243, 0.9);
+  line-height: 1.7;
+}
+
+/* ===== Section ===== */
+.section {
+  margin-top: 32rpx;
+}
+
+.section-tag {
+  display: block;
+  font-size: 22rpx;
+  color: #8b8fa8;
+  margin-bottom: 16rpx;
+  padding: 0 4rpx;
+}
+
+/* ===== 概念卡片(横向滚动)===== */
+.concept-scroll {
+  white-space: nowrap;
+  width: 100%;
+}
+
+.concept-card {
+  display: inline-flex;
+  flex-direction: column;
+  width: 380rpx;
+  margin-right: 16rpx;
+  padding: 24rpx;
+  background: rgba(28, 34, 54, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 20rpx;
+  white-space: normal;
+  vertical-align: top;
+}
+
+.concept-emoji {
+  font-size: 56rpx;
+  line-height: 1;
+  margin-bottom: 16rpx;
+}
+
+.concept-title {
+  display: block;
+  font-size: 28rpx;
+  font-weight: 500;
+  color: #e6edf3;
+  margin-bottom: 12rpx;
+  line-height: 1.4;
+}
+
+.concept-desc {
+  display: block;
+  font-size: 24rpx;
+  color: rgba(230, 237, 243, 0.7);
+  line-height: 1.6;
+}
+
+/* ===== 知识检测 ===== */
+.quiz-card {
+  margin-top: 32rpx;
+  padding: 28rpx;
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.08), rgba(245, 158, 11, 0.02));
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  border-radius: 24rpx;
+}
+
+.quiz-tag {
+  display: block;
+  font-size: 22rpx;
+  color: #f59e0b;
+  margin-bottom: 16rpx;
+}
+
+.quiz-q {
+  display: block;
+  font-size: 28rpx;
+  color: #e6edf3;
+  line-height: 1.6;
+  margin-bottom: 24rpx;
+}
+
+.quiz-options {
+  display: flex;
+  flex-direction: column;
+  gap: 12rpx;
+}
+
+.quiz-opt {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16rpx;
+  padding: 20rpx 24rpx;
+  font-size: 26rpx;
+  color: #e6edf3;
+  text-align: left;
+  line-height: 1.5;
+  &::after { border: none; }
+  &:active { background: rgba(255, 255, 255, 0.08); }
+}
+
+.quiz-opt.opt-picked {
+  background: rgba(59, 130, 246, 0.2);
+  border-color: rgba(59, 130, 246, 0.4);
+}
+
+.quiz-opt.opt-correct {
+  background: rgba(16, 185, 129, 0.2);
+  border-color: rgba(16, 185, 129, 0.4);
+  color: #10b981;
+}
+
+.quiz-opt.opt-wrong {
+  background: rgba(239, 68, 68, 0.2);
+  border-color: rgba(239, 68, 68, 0.4);
+  color: #ef4444;
+}
+
+.quiz-result {
+  margin-top: 20rpx;
+  padding: 20rpx;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 12rpx;
+}
+
+.res-correct { display: block; font-size: 26rpx; color: #10b981; font-weight: 500; margin-bottom: 8rpx; }
+.res-wrong { display: block; font-size: 26rpx; color: #ef4444; font-weight: 500; margin-bottom: 8rpx; }
+.res-explanation { display: block; font-size: 24rpx; color: rgba(230, 237, 243, 0.85); line-height: 1.6; }
+
+/* ===== 学完收获 ===== */
+.takeaway-card {
+  margin-top: 32rpx;
+  padding: 28rpx;
+  background: rgba(28, 34, 54, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 24rpx;
+}
+
+.takeaway-tag {
+  display: block;
+  font-size: 22rpx;
+  color: #10b981;
+  margin-bottom: 16rpx;
+}
+
+.takeaway-item {
+  display: flex;
+  gap: 16rpx;
+  margin-bottom: 12rpx;
+  &:last-child { margin-bottom: 0; }
+}
+
+.takeaway-num {
+  flex-shrink: 0;
+  width: 36rpx;
+  height: 36rpx;
+  border-radius: 50%;
+  background: rgba(16, 185, 129, 0.15);
+  color: #10b981;
+  font-size: 22rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  margin-top: 2rpx;
+}
+
+.takeaway-text {
+  flex: 1;
+  font-size: 26rpx;
+  color: rgba(230, 237, 243, 0.9);
+  line-height: 1.6;
+}
+
+/* ===== 关联章节 ===== */
+.related-card {
+  margin-top: 32rpx;
+  padding: 28rpx;
+  background: rgba(28, 34, 54, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 24rpx;
+}
+
+.related-tag {
+  display: block;
+  font-size: 22rpx;
+  color: #a78bfa;
+  margin-bottom: 16rpx;
+}
+
+.related-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12rpx;
+}
+
+.related-item {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+  padding: 16rpx;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 16rpx;
+  &:active {
+    background: rgba(167, 139, 250, 0.1);
+    border-color: rgba(167, 139, 250, 0.3);
+  }
+}
+
+.related-emoji { font-size: 36rpx; line-height: 1; }
+.related-body { flex: 1; display: flex; flex-direction: column; }
+.related-num { font-size: 20rpx; color: #8b8fa8; }
+.related-title { font-size: 26rpx; color: #e6edf3; margin-top: 4rpx; }
+.related-arrow { font-size: 28rpx; color: #8b8fa8; }
+
+/* ===== v0.2 升级提示 ===== */
+.upgrade-note {
+  margin-top: 32rpx;
+  padding: 24rpx 28rpx;
+  background: rgba(59, 130, 246, 0.05);
+  border: 1px dashed rgba(59, 130, 246, 0.3);
+  border-radius: 20rpx;
+  display: flex;
+  gap: 16rpx;
+  align-items: flex-start;
+}
+
+.upgrade-emoji { font-size: 32rpx; line-height: 1; padding-top: 4rpx; }
+.upgrade-text {
+  flex: 1;
+  font-size: 22rpx;
+  color: rgba(230, 237, 243, 0.7);
+  line-height: 1.7;
+}
+
+.emp { color: #3b82f6; font-weight: 500; }
+
+/* ===== 底部操作 ===== */
+.ch-actions {
+  margin-top: 40rpx;
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+}
+
+.ch-btn-back {
+  background: rgba(255, 255, 255, 0.05);
+  color: #e6edf3;
+  font-size: 28rpx;
+  padding: 24rpx;
+  border-radius: 16rpx;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  &::after { border: none; }
+  &:active { background: rgba(255, 255, 255, 0.08); }
+}

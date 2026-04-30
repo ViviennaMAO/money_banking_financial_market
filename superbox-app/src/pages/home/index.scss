@@ -195,11 +195,20 @@
   }
 }
 
-.mini-card.mini-impl {
-  background: rgba(59, 130, 246, 0.05);
-  border-color: rgba(59, 130, 246, 0.2);
+.mini-card.mini-mvp {
+  background: rgba(59, 130, 246, 0.08);
+  border-color: rgba(59, 130, 246, 0.3);
   &:active {
-    background: rgba(59, 130, 246, 0.12);
+    background: rgba(59, 130, 246, 0.15);
+  }
+}
+
+.mini-card.mini-basic {
+  background: rgba(167, 139, 250, 0.04);
+  border-color: rgba(167, 139, 250, 0.15);
+  &:active {
+    background: rgba(167, 139, 250, 0.1);
+    border-color: rgba(167, 139, 250, 0.3);
   }
 }
 
@@ -235,8 +244,13 @@
   color: #8b8fa8;
 }
 
-.mini-status-on {
+.mini-status-mvp {
   color: #3b82f6;
+  font-weight: 500;
+}
+
+.mini-status-basic {
+  color: #a78bfa;
 }
 
 .mini-title {

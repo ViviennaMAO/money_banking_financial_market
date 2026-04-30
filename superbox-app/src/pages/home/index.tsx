@@ -1,7 +1,7 @@
 import { View, Text, ScrollView } from '@tarojs/components'
 import { useState } from 'react'
 import Taro from '@tarojs/taro'
-import { parts, mvpChapters, totalChapters, implementedCount, type Chapter } from '../../data/chapters'
+import { parts, mvpChapters, totalChapters, mvpCount, basicCount, type Chapter } from '../../data/chapters'
 import './index.scss'
 
 const principles = [
@@ -28,14 +28,9 @@ export default function Home() {
     })
   }
 
-  function navigateToChapter(ch: Chapter, partNum: number) {
-    if (ch.implemented && ch.pagePath) {
-      Taro.navigateTo({ url: ch.pagePath })
-    } else {
-      Taro.navigateTo({
-        url: `/pages/placeholder/index?ch=${ch.num}`
-      })
-    }
+  function navigateToChapter(ch: Chapter, _partNum: number) {
+    const url = ch.pagePath || `/pages/chapter/index?ch=${ch.num}`
+    Taro.navigateTo({ url })
   }
 
   return (
@@ -62,8 +57,8 @@ export default function Home() {
       {/* MVP 三章 · 大卡片(突出反预期) */}
       <View className='section'>
         <View className='section-header'>
-          <Text className='section-tag'>MVP 三章 · 已上线</Text>
-          <Text className='section-meta'>{implementedCount}/{totalChapters}</Text>
+          <Text className='section-tag'>⭐ MVP 三章 · 专属互动模拟器</Text>
+          <Text className='section-meta'>{mvpCount}/{totalChapters}</Text>
         </View>
         <View className='mvp-list'>
           {mvpChapters.map(c => (
@@ -98,7 +93,7 @@ export default function Home() {
 
         {parts.map(part => {
           const isOpen = expanded.has(part.num)
-          const partImpl = part.chapters.filter(c => c.implemented).length
+          const mvpInPart = part.chapters.filter(c => c.tier === 'mvp').length
           return (
             <View key={part.num} className='part-block'>
               <View
@@ -110,7 +105,7 @@ export default function Home() {
                   <Text className='part-desc'>{part.desc}</Text>
                   <Text className='part-meta'>
                     {part.range} · {part.chapters.length} 章
-                    {partImpl > 0 ? ` · ${partImpl} 已上线 ✓` : ''}
+                    {mvpInPart > 0 ? ` · ${mvpInPart} 章 ⭐ MVP` : ''}
                   </Text>
                 </View>
                 <Text className='part-arrow'>{isOpen ? '▾' : '▸'}</Text>
@@ -121,17 +116,17 @@ export default function Home() {
                   {part.chapters.map(c => (
                     <View
                       key={c.num}
-                      className={`mini-card ${c.implemented ? 'mini-impl' : ''}`}
+                      className={`mini-card mini-${c.tier}`}
                       onClick={() => navigateToChapter(c, part.num)}
                     >
                       <Text className='mini-emoji'>{c.emoji}</Text>
                       <View className='mini-body'>
                         <View className='mini-title-row'>
                           <Text className='mini-num'>第 {c.num} 章</Text>
-                          {c.implemented ? (
-                            <Text className='mini-status mini-status-on'>● 已上线</Text>
+                          {c.tier === 'mvp' ? (
+                            <Text className='mini-status mini-status-mvp'>⭐ 专属</Text>
                           ) : (
-                            <Text className='mini-status'>○ 规划中</Text>
+                            <Text className='mini-status mini-status-basic'>● 概览版</Text>
                           )}
                         </View>
                         <Text className='mini-title'>{c.title}</Text>
