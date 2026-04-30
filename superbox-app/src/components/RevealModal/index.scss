@@ -1,0 +1,55 @@
+.reveal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 24rpx;
+  z-index: 100;
+}
+
+.reveal-modal {
+  background: rgba(28, 34, 54, 0.95);
+  backdrop-filter: blur(24rpx);
+  border-radius: 32rpx;
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  width: 100%;
+  max-width: 600rpx;
+  padding: 40rpx;
+  display: flex;
+  flex-direction: column;
+}
+
+.reveal-tag {
+  font-size: 22rpx;
+  color: #ef4444;
+}
+
+.reveal-headline {
+  font-size: 30rpx;
+  font-weight: 600;
+  margin-top: 12rpx;
+  color: #e6edf3;
+}
+
+.reveal-msg {
+  font-size: 26rpx;
+  margin-top: 24rpx;
+  color: rgba(230, 237, 243, 0.85);
+  line-height: 1.7;
+}
+
+.reveal-close {
+  margin-top: 32rpx;
+  background: rgba(239, 68, 68, 0.2);
+  color: #ef4444;
+  font-size: 28rpx;
+  font-weight: 500;
+  border-radius: 16rpx;
+  padding: 24rpx;
+  text-align: center;
+  &:active {
+    background: rgba(239, 68, 68, 0.3);
+  }
+}

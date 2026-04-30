@@ -1,0 +1,83 @@
+.ch20 {
+  padding: 32rpx 28rpx 80rpx;
+  height: 100vh;
+  box-sizing: border-box;
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 24rpx;
+}
+
+.page-title { font-size: 36rpx; font-weight: 600; color: #e6edf3; }
+.page-meta { font-size: 22rpx; color: #8b8fa8; }
+
+.canvas-card {
+  margin-top: 24rpx;
+  padding: 24rpx;
+  background: rgba(28, 34, 54, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 24rpx;
+}
+
+.eq-row {
+  display: flex;
+  margin-top: 16rpx;
+  padding-top: 16rpx;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  gap: 32rpx;
+  align-items: baseline;
+}
+
+.eq-cell { display: flex; align-items: baseline; gap: 12rpx; }
+.eq-label { font-size: 22rpx; color: #8b8fa8; }
+.eq-value { font-size: 32rpx; color: #ef4444; font-family: ui-monospace, Menlo, monospace; }
+
+.trap-tag {
+  margin-left: auto;
+  font-size: 22rpx;
+  padding: 4rpx 16rpx;
+  border-radius: 9999rpx;
+  background: rgba(245, 158, 11, 0.2);
+  color: #f59e0b;
+}
+
+.panel {
+  margin-top: 24rpx;
+  padding: 28rpx;
+  background: rgba(28, 34, 54, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 24rpx;
+  display: flex;
+  flex-direction: column;
+  gap: 8rpx;
+}
+
+.note-card {
+  margin-top: 24rpx;
+  padding: 24rpx;
+  background: rgba(28, 34, 54, 0.55);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  border-radius: 24rpx;
+  font-size: 24rpx;
+  color: #f59e0b;
+  line-height: 1.6;
+  transition: background 0.3s, border-color 0.3s;
+}
+
+.note-card.flash { animation: flashAmber 0.7s ease 3; }
+@keyframes flashAmber {
+  0%, 100% { background: rgba(28, 34, 54, 0.55); }
+  50% { background: rgba(245, 158, 11, 0.18); }
+}
+
+.hint {
+  display: block;
+  margin-top: 24rpx;
+  padding: 0 8rpx;
+  font-size: 22rpx;
+  color: #8b8fa8;
+  line-height: 1.6;
+}

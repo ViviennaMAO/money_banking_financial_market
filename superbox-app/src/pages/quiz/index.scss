@@ -1,0 +1,69 @@
+.quiz {
+  padding: 32rpx 28rpx 80rpx;
+  height: 100vh;
+  box-sizing: border-box;
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 12rpx;
+}
+
+.page-title { font-size: 36rpx; font-weight: 600; color: #e6edf3; }
+.page-meta { font-size: 22rpx; color: #8b8fa8; }
+
+.intro { display: block; font-size: 24rpx; color: #8b8fa8; line-height: 1.7; }
+.intro-emp { color: rgba(230, 237, 243, 0.85); }
+
+.qs-card {
+  margin-top: 24rpx;
+  padding: 28rpx;
+  background: rgba(28, 34, 54, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 24rpx;
+  display: flex;
+  flex-direction: column;
+  gap: 40rpx;
+}
+
+.q-stem { display: block; font-size: 28rpx; font-weight: 500; color: #e6edf3; line-height: 1.5; }
+
+.q-opts {
+  margin-top: 20rpx;
+  display: grid;
+  gap: 12rpx;
+}
+
+.q-opts.cols-2 { grid-template-columns: 1fr 1fr; }
+.q-opts.cols-4 { grid-template-columns: 1fr 1fr; }
+
+.q-opt {
+  font-size: 24rpx;
+  padding: 18rpx;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12rpx;
+  color: #e6edf3;
+  text-align: center;
+  &::after { border: none; }
+}
+
+.q-opt.picked {
+  background: rgba(59, 130, 246, 0.2);
+  border-color: rgba(59, 130, 246, 0.4);
+  color: #3b82f6;
+}
+
+.design-card {
+  margin-top: 24rpx;
+  padding: 28rpx;
+  background: rgba(245, 158, 11, 0.05);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  border-radius: 24rpx;
+}
+
+.design-tag { display: block; font-size: 22rpx; color: #f59e0b; margin-bottom: 12rpx; font-weight: 500; }
+.design-text { display: block; font-size: 24rpx; color: #e6edf3; line-height: 1.7; }
+.emp { color: #e6edf3; font-weight: 500; }

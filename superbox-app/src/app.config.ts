@@ -1,0 +1,17 @@
+export default defineAppConfig({
+  pages: [
+    'pages/home/index',
+    'pages/ch14/index',
+    'pages/ch17/index',
+    'pages/ch20/index',
+    'pages/news/index',
+    'pages/quiz/index'
+  ],
+  window: {
+    backgroundTextStyle: 'dark',
+    navigationBarBackgroundColor: '#0a0e1a',
+    navigationBarTitleText: '米什金互动学习',
+    navigationBarTextStyle: 'white',
+    backgroundColor: '#0a0e1a'
+  }
+})

@@ -1,0 +1,23 @@
+.slider-row {
+  display: flex;
+  flex-direction: column;
+  gap: 8rpx;
+  padding: 12rpx 0;
+}
+
+.slider-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.slider-label {
+  font-size: 26rpx;
+  color: #e6edf3;
+}
+
+.slider-value {
+  font-size: 26rpx;
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  color: #3b82f6;
+}

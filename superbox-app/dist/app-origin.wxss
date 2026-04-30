@@ -1,0 +1,1 @@
+page{background:#0a0e1a;color:#e6edf3;font-family:-apple-system,BlinkMacSystemFont,PingFang SC,Hiragino Sans GB,sans-serif}button,text,view{-webkit-box-sizing:border-box;box-sizing:border-box}button{background:transparent;border:none;color:inherit;line-height:inherit;margin:0;padding:0}button::after{border:none}

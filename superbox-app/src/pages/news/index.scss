@@ -1,0 +1,97 @@
+.news {
+  padding: 32rpx 28rpx 80rpx;
+  height: 100vh;
+  box-sizing: border-box;
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 12rpx;
+}
+
+.page-title { font-size: 36rpx; font-weight: 600; color: #e6edf3; }
+.page-meta { font-size: 22rpx; color: #8b8fa8; }
+
+.intro { display: block; font-size: 24rpx; color: #8b8fa8; line-height: 1.6; }
+
+.card {
+  margin-top: 24rpx;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 24rpx;
+  overflow: hidden;
+  background: #131826;
+}
+
+.card-news {
+  padding: 28rpx;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), transparent);
+}
+
+.news-date { display: block; font-size: 22rpx; color: #3b82f6; margin-bottom: 12rpx; }
+.news-title { display: block; font-size: 30rpx; font-weight: 500; line-height: 1.4; color: #e6edf3; }
+.news-detail { display: block; font-size: 24rpx; color: #8b8fa8; margin-top: 12rpx; line-height: 1.6; }
+
+.card-section {
+  padding: 28rpx;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.section-tag { display: block; font-size: 22rpx; color: #8b8fa8; margin-bottom: 16rpx; }
+
+.kpi-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 26rpx;
+  padding: 8rpx 0;
+  color: rgba(230, 237, 243, 0.85);
+}
+
+.kpi-neg { color: #ef4444; font-family: ui-monospace, Menlo, monospace; }
+.kpi-warn { color: #f59e0b; font-family: ui-monospace, Menlo, monospace; }
+
+.theory { font-size: 26rpx; color: rgba(230, 237, 243, 0.85); line-height: 1.7; }
+
+.card-q { background: linear-gradient(135deg, rgba(245, 158, 11, 0.08), transparent); }
+.q-tag { display: block; font-size: 22rpx; color: #f59e0b; margin-bottom: 12rpx; }
+.q-text { display: block; font-size: 26rpx; color: #e6edf3; }
+
+.q-options { display: flex; gap: 12rpx; margin-top: 20rpx; }
+
+.q-btn {
+  flex: 1;
+  font-size: 22rpx;
+  padding: 16rpx;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12rpx;
+  color: #e6edf3;
+  &::after { border: none; }
+}
+.q-btn.picked {
+  background: rgba(59, 130, 246, 0.2);
+  border-color: rgba(59, 130, 246, 0.4);
+  color: #3b82f6;
+}
+
+.q-after { display: block; margin-top: 16rpx; font-size: 20rpx; color: #8b8fa8; }
+
+.card-actions {
+  display: flex;
+  gap: 12rpx;
+  padding: 24rpx 28rpx;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.action-share, .action-sim {
+  flex: 1;
+  font-size: 22rpx;
+  padding: 16rpx;
+  border-radius: 12rpx;
+  font-weight: 500;
+  &::after { border: none; }
+}
+.action-share { background: rgba(59, 130, 246, 0.15); color: #3b82f6; }
+.action-sim { background: rgba(255, 255, 255, 0.05); color: #e6edf3; }

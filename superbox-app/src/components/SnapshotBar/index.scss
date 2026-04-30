@@ -1,0 +1,43 @@
+.snap-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 12rpx;
+}
+
+.snap-label {
+  font-size: 22rpx;
+  color: #8b8fa8;
+}
+
+.snap-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12rpx;
+}
+
+.snap-btn {
+  font-size: 22rpx;
+  padding: 12rpx 24rpx;
+  border-radius: 9999rpx;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #e6edf3;
+  line-height: 1.4;
+  &::after { border: none; }
+  &:active { background: rgba(255, 255, 255, 0.1); }
+}
+
+.snap-primary {
+  background: rgba(59, 130, 246, 0.2);
+  border-color: rgba(59, 130, 246, 0.4);
+  color: #3b82f6;
+}
+
+.snap-danger {
+  background: rgba(239, 68, 68, 0.15);
+  border-color: rgba(239, 68, 68, 0.3);
+  color: #e6edf3;
+  &:active {
+    background: rgba(239, 68, 68, 0.25);
+  }
+}

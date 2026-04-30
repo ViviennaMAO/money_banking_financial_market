@@ -1,0 +1,23 @@
+/* 全局样式 · 暗色主题 */
+page {
+  background: #0a0e1a;
+  color: #e6edf3;
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", sans-serif;
+}
+
+/* 重置 */
+view, text, button {
+  box-sizing: border-box;
+}
+
+button {
+  background: transparent;
+  border: none;
+  padding: 0;
+  margin: 0;
+  line-height: inherit;
+  color: inherit;
+  &::after {
+    border: none;
+  }
+}

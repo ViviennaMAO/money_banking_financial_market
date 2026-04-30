@@ -1,0 +1,98 @@
+.ch14 {
+  padding: 32rpx 28rpx 80rpx;
+  height: 100vh;
+  box-sizing: border-box;
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 24rpx;
+}
+
+.page-title {
+  font-size: 36rpx;
+  font-weight: 600;
+  color: #e6edf3;
+}
+
+.page-meta {
+  font-size: 22rpx;
+  color: #8b8fa8;
+}
+
+.panel {
+  margin-top: 24rpx;
+  padding: 28rpx;
+  background: rgba(28, 34, 54, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 24rpx;
+  display: flex;
+  flex-direction: column;
+  gap: 8rpx;
+}
+
+.output {
+  margin-top: 24rpx;
+  padding: 28rpx;
+  background: rgba(28, 34, 54, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 24rpx;
+  transition: background 0.3s, border-color 0.3s;
+}
+
+.output.flash {
+  animation: flashRed 0.7s ease 3;
+}
+
+@keyframes flashRed {
+  0%, 100% {
+    background: rgba(28, 34, 54, 0.55);
+    border-color: rgba(255, 255, 255, 0.05);
+  }
+  50% {
+    background: rgba(239, 68, 68, 0.18);
+    border-color: rgba(239, 68, 68, 0.4);
+  }
+}
+
+.output-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 32rpx;
+}
+
+.output-label {
+  display: block;
+  font-size: 22rpx;
+  color: #8b8fa8;
+}
+
+.output-value {
+  display: block;
+  font-size: 56rpx;
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  margin-top: 4rpx;
+  color: #e6edf3;
+  line-height: 1;
+}
+
+.output-note {
+  display: block;
+  margin-top: 24rpx;
+  padding-top: 24rpx;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: 24rpx;
+  color: #f59e0b;
+  line-height: 1.6;
+}
+
+.hint {
+  display: block;
+  margin-top: 24rpx;
+  padding: 0 8rpx;
+  font-size: 22rpx;
+  color: #8b8fa8;
+  line-height: 1.6;
+}

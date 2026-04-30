@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<title>米什金互动学习 · 原型 v1</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    background: #0a0e1a; color: #e6edf3;
+  }
+  .glass { background: rgba(28, 34, 54, 0.55); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+  input[type="range"] {
+    -webkit-appearance: none; appearance: none;
+    height: 4px; background: #2d3550; border-radius: 2px; outline: none;
+  }
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none; width: 18px; height: 18px;
+    border-radius: 50%; background: #3b82f6; cursor: pointer;
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
+  }
+  input[type="range"]::-moz-range-thumb {
+    width: 18px; height: 18px; border-radius: 50%;
+    background: #3b82f6; cursor: pointer; border: none;
+  }
+  .flash-red { animation: flashRed 0.7s ease 3; }
+  @keyframes flashRed {
+    0%, 100% { background: rgba(28, 34, 54, 0.55); border-color: rgba(255,255,255,0.05); }
+    50% { background: rgba(239, 68, 68, 0.18); border-color: rgba(239, 68, 68, 0.4); }
+  }
+  .badge {
+    display: inline-flex; align-items: center; gap: 4px;
+    padding: 3px 9px; border-radius: 9999px; font-size: 11px; line-height: 1;
+  }
+  .fade-in { animation: fadeIn 0.3s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+  .pulse-dot { animation: pulseDot 1.5s ease-in-out infinite; }
+  @keyframes pulseDot { 0%, 100% { r: 5; opacity: 1; } 50% { r: 7; opacity: 0.7; } }
+  .heartbeat { animation: heartbeat 0.4s ease 5; }
+  @keyframes heartbeat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+</style>
+</head>
+<body class="min-h-screen pb-20">
+
+<nav class="sticky top-0 z-30 glass border-b border-white/5 px-4 py-3 flex items-center justify-between">
+  <div class="flex items-center gap-2">
+    <span class="text-lg">📚</span>
+    <span class="font-medium text-sm">米什金互动学习</span>
+    <span class="text-[10px] text-[#8b8fa8] px-1.5 py-0.5 rounded bg-white/5">v1</span>
+  </div>
+  <div class="flex gap-0.5 text-[11px] overflow-x-auto">
+    <a href="#home" class="px-2 py-1 rounded hover:bg-white/5 whitespace-nowrap">首页</a>
+    <a href="#ch14" class="px-2 py-1 rounded hover:bg-white/5 whitespace-nowrap">14 乘数</a>
+    <a href="#ch17" class="px-2 py-1 rounded hover:bg-white/5 whitespace-nowrap">17 套息</a>
+    <a href="#ch20" class="px-2 py-1 rounded hover:bg-white/5 whitespace-nowrap">20 IS-LM</a>
+    <a href="#news" class="px-2 py-1 rounded hover:bg-white/5 whitespace-nowrap">新闻</a>
+    <a href="#quiz" class="px-2 py-1 rounded hover:bg-white/5 whitespace-nowrap">前测</a>
+  </div>
+</nav>
+
+<main class="max-w-md mx-auto px-4 py-6 space-y-12">
+
+<section id="home">
+  <div class="text-[11px] text-[#8b8fa8] uppercase tracking-wider">让米什金的理论 · 在今天的市场上立刻验证</div>
+  <h1 class="text-[26px] font-semibold leading-[1.2] mt-2">
+    把<span class="text-[#3b82f6]">货币金融学</span><br>
+    变成你能<span class="text-[#f59e0b]">动手玩</span>的活教材
+  </h1>
+
+  <div class="mt-6 glass rounded-xl p-4 border border-white/5">
+    <div class="text-[11px] text-[#8b8fa8] mb-2.5">设计原则 · 6 条学习科学锚点</div>
+    <div class="flex flex-wrap gap-1.5">
+      <span class="badge bg-[#3b82f6]/15 text-[#3b82f6]">测试效应</span>
+      <span class="badge bg-[#f59e0b]/15 text-[#f59e0b]">生成效应</span>
+      <span class="badge bg-[#ef4444]/15 text-[#ef4444]">反预期</span>
+      <span class="badge bg-[#10b981]/15 text-[#10b981]">必要难度</span>
+      <span class="badge bg-[#a78bfa]/15 text-[#a78bfa]">自解释</span>
+      <span class="badge bg-[#06b6d4]/15 text-[#06b6d4]">元认知</span>
+    </div>
+  </div>
+
+  <div class="mt-6 space-y-3">
+    <div class="text-[11px] text-[#8b8fa8] uppercase tracking-wider">MVP 三章 · 全部可点</div>
+
+    <a href="#ch14" class="block glass rounded-xl p-4 border border-white/5 hover:border-[#3b82f6]/40 transition">
+      <div class="flex items-start justify-between">
+        <div>
+          <div class="text-[11px] text-[#8b8fa8]">第 14 章</div>
+          <div class="font-medium mt-0.5">货币乘数</div>
+          <div class="text-[11px] text-[#8b8fa8] mt-1">12 分钟 · ⭐⭐⭐</div>
+        </div>
+        <span class="text-2xl">💱</span>
+      </div>
+      <div class="mt-3 text-[12px] text-[#e6edf3]/70 leading-relaxed">反预期震撼:Fed 印万亿,M2 却几乎没动。乘数砸到 1.2 那一刻。</div>
+    </a>
+
+    <a href="#ch17" class="block glass rounded-xl p-4 border border-white/5 hover:border-[#3b82f6]/40 transition">
+      <div class="flex items-start justify-between">
+        <div>
+          <div class="text-[11px] text-[#8b8fa8]">第 17 章</div>
+          <div class="font-medium mt-0.5">利率平价 · 套息交易</div>
+          <div class="text-[11px] text-[#8b8fa8] mt-1">14 分钟 · ⭐⭐⭐⭐</div>
+        </div>
+        <span class="text-2xl">🪙</span>
+      </div>
+      <div class="mt-3 text-[12px] text-[#e6edf3]/70 leading-relaxed">反预期震撼:2024.8 USD/JPY 三周从 162→142,10 倍杠杆 -100%。</div>
+    </a>
+
+    <a href="#ch20" class="block glass rounded-xl p-4 border border-white/5 hover:border-[#3b82f6]/40 transition">
+      <div class="flex items-start justify-between">
+        <div>
+          <div class="text-[11px] text-[#8b8fa8]">第 20 章</div>
+          <div class="font-medium mt-0.5">IS-LM 模型</div>
+          <div class="text-[11px] text-[#8b8fa8] mt-1">15 分钟 · ⭐⭐⭐⭐⭐</div>
+        </div>
+        <span class="text-2xl">📐</span>
+      </div>
+      <div class="mt-3 text-[12px] text-[#e6edf3]/70 leading-relaxed">反预期震撼:流动性陷阱里,LM 怎么右移 Y 都不动。</div>
+    </a>
+  </div>
+</section>
+
+<!-- ===== 第 14 章 货币乘数 ===== -->
+<section id="ch14" class="space-y-4">
+  <div class="flex items-baseline justify-between">
+    <h2 class="text-lg font-semibold">💱 货币乘数实验室</h2>
+    <span class="text-[11px] text-[#8b8fa8]">第 14 章</span>
+  </div>
+
+  <div>
+    <div class="text-[11px] text-[#8b8fa8] mb-2">历史快照</div>
+    <div class="flex flex-wrap gap-1.5">
+      <button onclick="loadCh14('2007')" class="text-[11px] px-3 py-1.5 rounded-full bg-white/5 border border-white/10 hover:bg-white/10">2007.8 危机前</button>
+      <button onclick="loadCh14('2010')" class="text-[11px] px-3 py-1.5 rounded-full bg-[#ef4444]/15 border border-[#ef4444]/30 hover:bg-[#ef4444]/25">2010.1 QE 后 ⚡</button>
+      <button onclick="loadCh14('2020')" class="text-[11px] px-3 py-1.5 rounded-full bg-white/5 border border-white/10 hover:bg-white/10">2020.4 疫情</button>
+      <button onclick="loadCh14('today')" class="text-[11px] px-3 py-1.5 rounded-full bg-[#3b82f6]/20 border border-[#3b82f6]/40">今天</button>
+    </div>
+  </div>
+
+  <div class="glass rounded-xl p-4 border border-white/5 space-y-4">
+    <div>
+      <div class="flex justify-between items-baseline text-sm mb-1.5"><span>MB · 基础货币</span><span class="font-mono text-[#3b82f6]">$<span id="mb-val">5.5</span>T</span></div>
+      <input type="range" id="mb" min="0.5" max="10" step="0.1" value="5.5" class="w-full">
+    </div>
+    <div>
+      <div class="flex justify-between items-baseline text-sm mb-1.5"><span>r · 法准率</span><span class="font-mono text-[#3b82f6]"><span id="r-val">0.0</span>%</span></div>
+      <input type="range" id="r" min="0" max="20" step="0.5" value="0" class="w-full">
+    </div>
+    <div>
+      <div class="flex justify-between items-baseline text-sm mb-1.5"><span>e · 超储率</span><span class="font-mono text-[#3b82f6]"><span id="e-val">12.0</span>%</span></div>
+      <input type="range" id="e" min="0" max="80" step="0.5" value="12" class="w-full">
+    </div>
+    <div>
+      <div class="flex justify-between items-baseline text-sm mb-1.5"><span>c · 现金/存款比</span><span class="font-mono text-[#3b82f6]"><span id="c-val">8.0</span>%</span></div>
+      <input type="range" id="c" min="0" max="30" step="0.5" value="8" class="w-full">
+    </div>
+  </div>
+
+  <div id="ch14-output" class="rounded-xl p-4 border space-y-0 transition glass border-white/5">
+    <div class="grid grid-cols-2 gap-4">
+      <div>
+        <div class="text-[11px] text-[#8b8fa8]">乘数 m</div>
+        <div class="text-[28px] font-mono mt-1 leading-none" id="m-val">5.40</div>
+      </div>
+      <div>
+        <div class="text-[11px] text-[#8b8fa8]">M2 理论值</div>
+        <div class="text-[28px] font-mono mt-1 leading-none">$<span id="m2-val">29.7</span>T</div>
+      </div>
+    </div>
+    <div id="ch14-note" class="hidden mt-3 pt-3 border-t border-white/10 text-[12px] text-[#f59e0b] leading-relaxed"></div>
+  </div>
+
+  <div class="text-[11px] text-[#8b8fa8] px-1">💡 试试「2010.1 QE 后」——会先弹预测窗,猜对猜错都给反馈。</div>
+</section>
+
+<!-- ===== 第 17 章 套息交易 ===== -->
+<section id="ch17" class="space-y-4">
+  <div class="flex items-baseline justify-between">
+    <h2 class="text-lg font-semibold">🪙 套息交易实验室</h2>
+    <span class="text-[11px] text-[#8b8fa8]">第 17 章</span>
+  </div>
+
+  <div>
+    <div class="text-[11px] text-[#8b8fa8] mb-2">历史快照</div>
+    <div class="flex flex-wrap gap-1.5">
+      <button onclick="loadCh17('2007')" class="text-[11px] px-3 py-1.5 rounded-full bg-white/5 border border-white/10 hover:bg-white/10">2007.7 套息巅峰</button>
+      <button onclick="loadCh17('2008')" class="text-[11px] px-3 py-1.5 rounded-full bg-[#ef4444]/15 border border-[#ef4444]/30 hover:bg-[#ef4444]/25">2008.10 崩盘</button>
+      <button onclick="loadCh17('2024-7')" class="text-[11px] px-3 py-1.5 rounded-full bg-white/5 border border-white/10 hover:bg-white/10">2024.7 高峰</button>
+      <button onclick="loadCh17('2024-8')" class="text-[11px] px-3 py-1.5 rounded-full bg-[#ef4444]/15 border border-[#ef4444]/30 hover:bg-[#ef4444]/25">2024.8 平仓 ⚡</button>
+      <button onclick="loadCh17('today')" class="text-[11px] px-3 py-1.5 rounded-full bg-[#3b82f6]/20 border border-[#3b82f6]/40">今天</button>
+    </div>
+  </div>
+
+  <div class="glass rounded-xl p-4 border border-white/5 space-y-4">
+    <div class="text-[11px] text-[#8b8fa8]">借日元 · 投美元 · 持仓 3 个月</div>
+    <div>
+      <div class="flex justify-between items-baseline text-sm mb-1.5"><span>i_d · USD 利率</span><span class="font-mono text-[#3b82f6]"><span id="id-val">5.25</span>%</span></div>
+      <input type="range" id="id" min="0" max="10" step="0.05" value="5.25" class="w-full">
+    </div>
+    <div>
+      <div class="flex justify-between items-baseline text-sm mb-1.5"><span>i_f · JPY 利率</span><span class="font-mono text-[#3b82f6]"><span id="if-val">0.50</span>%</span></div>
+      <input type="range" id="if" min="-0.5" max="5" step="0.05" value="0.5" class="w-full">
+    </div>
+    <div>
+      <div class="flex justify-between items-baseline text-sm mb-1.5"><span>ΔS · 持仓期 USD/JPY 变动</span><span class="font-mono text-[#3b82f6]"><span id="ds-val">0</span>%</span></div>
+      <input type="range" id="ds" min="-20" max="10" step="0.5" value="0" class="w-full">
+    </div>
+    <div>
+      <div class="flex justify-between items-baseline text-sm mb-1.5"><span>杠杆</span><span class="font-mono text-[#3b82f6]"><span id="lev-val">10</span>x</span></div>
+      <input type="range" id="lev" min="1" max="30" step="1" value="10" class="w-full">
+    </div>
+  </div>
+
+  <div id="ch17-output" class="rounded-xl p-4 border space-y-3 transition glass border-white/5">
+    <div class="grid grid-cols-2 gap-4">
+      <div>
+        <div class="text-[11px] text-[#8b8fa8]">Carry 收益(3M)</div>
+        <div class="text-lg font-mono mt-0.5" id="carry-val">+1.19%</div>
+      </div>
+      <div>
+        <div class="text-[11px] text-[#8b8fa8]">汇率损益</div>
+        <div class="text-lg font-mono mt-0.5" id="dsr-val">0.00%</div>
+      </div>
+      <div>
+        <div class="text-[11px] text-[#8b8fa8]">无杠杆总回报</div>
+        <div class="text-lg font-mono mt-0.5" id="ret-val">+1.19%</div>
+      </div>
+      <div>
+        <div class="text-[11px] text-[#8b8fa8]">杠杆后回报</div>
+        <div class="text-2xl font-mono mt-0.5" id="lev-ret-val">+11.9%</div>
+      </div>
+    </div>
+    <div class="pt-3 border-t border-white/10">
+      <div class="flex justify-between text-[12px]">
+        <span class="text-[#8b8fa8]">Breakeven · 汇率最多跌</span>
+        <span class="font-mono text-[#f59e0b]" id="be-val">-1.19%</span>
+      </div>
+      <div class="mt-1.5 flex justify-between text-[12px]">
+        <span class="text-[#8b8fa8]">风险标签</span>
+        <span id="risk-val" class="badge bg-[#10b981]/15 text-[#10b981]">低</span>
+      </div>
+    </div>
+    <div id="ch17-note" class="hidden mt-2 pt-3 border-t border-white/10 text-[12px] text-[#f59e0b] leading-relaxed"></div>
+  </div>
+
+  <div class="text-[11px] text-[#8b8fa8] px-1">💡 切到「2024.8 平仓」——猜猜 10x 杠杆下亏多少。<br>10 年 carry 收益 vs 3 周一夜归零,这就是套息的真面目。</div>
+</section>
+
+<!-- ===== 第 20 章 IS-LM ===== -->
+<section id="ch20" class="space-y-4">
+  <div class="flex items-baseline justify-between">
+    <h2 class="text-lg font-semibold">📐 IS-LM 沙盘</h2>
+    <span class="text-[11px] text-[#8b8fa8]">第 20 章</span>
+  </div>
+
+  <div>
+    <div class="text-[11px] text-[#8b8fa8] mb-2">历史快照</div>
+    <div class="flex flex-wrap gap-1.5">
+      <button onclick="loadCh20('1962')" class="text-[11px] px-3 py-1.5 rounded-full bg-white/5 border border-white/10 hover:bg-white/10">1962 减税</button>
+      <button onclick="loadCh20('1980')" class="text-[11px] px-3 py-1.5 rounded-full bg-white/5 border border-white/10 hover:bg-white/10">1980 沃尔克</button>
+      <button onclick="loadCh20('2010')" class="text-[11px] px-3 py-1.5 rounded-full bg-[#ef4444]/15 border border-[#ef4444]/30 hover:bg-[#ef4444]/25">2010 陷阱 ⚡</button>
+      <button onclick="loadCh20('2020')" class="text-[11px] px-3 py-1.5 rounded-full bg-white/5 border border-white/10 hover:bg-white/10">2020.4 双扩张</button>
+      <button onclick="loadCh20('today')" class="text-[11px] px-3 py-1.5 rounded-full bg-[#3b82f6]/20 border border-[#3b82f6]/40">今天</button>
+    </div>
+  </div>
+
+  <!-- SVG IS-LM 图 -->
+  <div class="glass rounded-xl p-4 border border-white/5">
+    <svg id="islm-svg" viewBox="0 0 320 220" class="w-full" xmlns="http://www.w3.org/2000/svg">
+      <!-- 网格 -->
+      <defs>
+        <pattern id="grid" width="30" height="20" patternUnits="userSpaceOnUse">
+          <path d="M 30 0 L 0 0 0 20" fill="none" stroke="#2d3550" stroke-width="0.5"/>
+        </pattern>
+      </defs>
+      <rect x="30" y="20" width="270" height="160" fill="url(#grid)"/>
+      <!-- 轴 -->
+      <line x1="30" y1="180" x2="300" y2="180" stroke="#5a6280" stroke-width="1"/>
+      <line x1="30" y1="20" x2="30" y2="180" stroke="#5a6280" stroke-width="1"/>
+      <text x="305" y="184" fill="#8b8fa8" font-size="10">Y</text>
+      <text x="20" y="20" fill="#8b8fa8" font-size="10">i</text>
+      <!-- IS / LM 曲线 -->
+      <line id="is-line" x1="0" y1="0" x2="0" y2="0" stroke="#3b82f6" stroke-width="2"/>
+      <line id="lm-line-1" x1="0" y1="0" x2="0" y2="0" stroke="#f59e0b" stroke-width="2"/>
+      <line id="lm-line-2" x1="0" y1="0" x2="0" y2="0" stroke="#f59e0b" stroke-width="2" stroke-dasharray="0"/>
+      <!-- 标签 -->
+      <text id="is-label" x="0" y="0" fill="#3b82f6" font-size="10" font-weight="bold">IS</text>
+      <text id="lm-label" x="0" y="0" fill="#f59e0b" font-size="10" font-weight="bold">LM</text>
+      <!-- 均衡点 -->
+      <circle id="eq-dot" cx="0" cy="0" r="5" fill="#ef4444" class="pulse-dot"/>
+      <text id="eq-label" x="0" y="0" fill="#ef4444" font-size="10" font-weight="bold">E*</text>
+    </svg>
+    <div class="mt-2 grid grid-cols-2 gap-2 text-[12px]">
+      <div class="flex justify-between"><span class="text-[#8b8fa8]">i*</span><span class="font-mono text-[#ef4444]"><span id="i-star">3.1</span>%</span></div>
+      <div class="flex justify-between"><span class="text-[#8b8fa8]">Y*</span><span class="font-mono text-[#ef4444]"><span id="y-star">14.4</span>T</span></div>
+    </div>
+  </div>
+
+  <div class="glass rounded-xl p-4 border border-white/5 space-y-4">
+    <div>
+      <div class="flex justify-between items-baseline text-sm mb-1.5"><span>财政量(IS 截距 a)</span><span class="font-mono text-[#3b82f6]"><span id="a-val">20</span></span></div>
+      <input type="range" id="a" min="10" max="35" step="0.5" value="20" class="w-full">
+    </div>
+    <div>
+      <div class="flex justify-between items-baseline text-sm mb-1.5"><span>投资敏感度(IS 斜率 b)</span><span class="font-mono text-[#3b82f6]"><span id="b-val">2.0</span></span></div>
+      <input type="range" id="b" min="0.5" max="5" step="0.1" value="2" class="w-full">
+    </div>
+    <div>
+      <div class="flex justify-between items-baseline text-sm mb-1.5"><span>实际货币供给 M^s/P(LM 截距 c)</span><span class="font-mono text-[#3b82f6]"><span id="c-islm-val">5</span></span></div>
+      <input type="range" id="c-islm" min="0" max="80" step="0.5" value="5" class="w-full">
+    </div>
+    <div>
+      <div class="flex justify-between items-baseline text-sm mb-1.5"><span>利率敏感度(LM 斜率 d)</span><span class="font-mono text-[#3b82f6]"><span id="d-val">2.0</span></span></div>
+      <input type="range" id="d" min="0.5" max="5" step="0.1" value="2" class="w-full">
+    </div>
+  </div>
+
+  <div id="ch20-note" class="hidden glass rounded-xl p-3 border border-[#f59e0b]/30 text-[12px] text-[#f59e0b] leading-relaxed"></div>
+
+  <div class="text-[11px] text-[#8b8fa8] px-1">💡 切「2010 陷阱」 → 拖大 c(QE 注入)→ 看 LM 推到哪都改不了 Y*。</div>
+</section>
+
+<!-- ===== 新闻三联单 ===== -->
+<section id="news" class="space-y-3">
+  <div class="flex items-baseline justify-between">
+    <h2 class="text-lg font-semibold">📰 新闻三联单</h2>
+    <span class="text-[11px] text-[#8b8fa8]">每日 1-3 条</span>
+  </div>
+  <div class="text-[12px] text-[#8b8fa8]">一张图同时给"新闻 + 数据 + 理论 + 互动"。</div>
+
+  <article class="rounded-xl border border-white/5 overflow-hidden">
+    <div class="p-4 border-b border-white/5 bg-gradient-to-br from-[#3b82f6]/10 to-transparent">
+      <div class="text-[11px] text-[#3b82f6] mb-1.5">📰 2024.7.31</div>
+      <div class="font-medium leading-snug">BOJ 意外加息 25bp,Powell 暗示 9 月降息</div>
+      <div class="text-[12px] text-[#8b8fa8] mt-1.5">日央行 0.10% → 0.25%(2007 来最大)。Fed 当晚措辞转向。</div>
+    </div>
+    <div class="p-4 border-b border-white/5 bg-[#131826]">
+      <div class="text-[11px] text-[#8b8fa8] mb-2.5">📊 看板信号 · 决议后 48 小时</div>
+      <div class="space-y-1.5 text-sm">
+        <div class="flex justify-between"><span class="text-[#e6edf3]/85">USD/JPY</span><span class="text-[#ef4444] font-mono">155 → 142 <span class="text-[11px]">(-8.4%)</span></span></div>
+        <div class="flex justify-between"><span class="text-[#e6edf3]/85">日经 225</span><span class="text-[#ef4444] font-mono">-12% <span class="text-[11px]">单日</span></span></div>
+        <div class="flex justify-between"><span class="text-[#e6edf3]/85">VIX</span><span class="text-[#f59e0b] font-mono">16 → 38</span></div>
+      </div>
+    </div>
+    <div class="p-4 border-b border-white/5 bg-[#131826]">
+      <div class="text-[11px] text-[#8b8fa8] mb-2">🎓 教材原理 · 第 17 章 利率平价</div>
+      <div class="text-sm leading-relaxed text-[#e6edf3]/85">
+        i_d↓ + i_f↑ → carry 利差快速收窄 → <span class="text-[#f59e0b]">套息平仓潮</span> → 反向资金推升 JPY → 杠杆放大 → 流动性挤兑
+      </div>
+    </div>
+    <div class="p-4 bg-gradient-to-br from-[#f59e0b]/8 to-transparent">
+      <div class="text-[11px] text-[#f59e0b] mb-2">❓ 渐进追问 L1 · 直觉层</div>
+      <div class="text-sm">这事对持有美股的散户有影响吗?</div>
+      <div class="mt-3 grid grid-cols-3 gap-1.5 text-[11px]">
+        <button class="py-2 rounded bg-white/5 border border-white/10 hover:bg-white/10">有</button>
+        <button class="py-2 rounded bg-white/5 border border-white/10 hover:bg-white/10">没有</button>
+        <button class="py-2 rounded bg-white/5 border border-white/10 hover:bg-white/10">看情况</button>
+      </div>
+    </div>
+    <div class="px-4 py-3 flex gap-1.5 border-t border-white/5 text-[11px] bg-[#131826]">
+      <button class="flex-1 py-2 rounded bg-[#3b82f6]/15 text-[#3b82f6] hover:bg-[#3b82f6]/25 font-medium">📤 分享到 Luffa</button>
+      <a href="#ch17" class="flex-1 py-2 rounded bg-white/5 hover:bg-white/10 text-center">🪙 套息器试一下</a>
+    </div>
+  </article>
+</section>
+
+<!-- ===== 前测 ===== -->
+<section id="quiz" class="space-y-3">
+  <div class="flex items-baseline justify-between">
+    <h2 class="text-lg font-semibold">⚡ 前测 3 题</h2>
+    <span class="text-[11px] text-[#8b8fa8]">测试效应</span>
+  </div>
+  <div class="text-[12px] text-[#8b8fa8]">不教任何东西,直接抛三道直觉题。<span class="text-[#e6edf3]/85">答案此刻不揭晓</span>——只记录初始直觉。</div>
+
+  <div class="glass rounded-xl border border-white/5 p-4 space-y-5">
+    <div>
+      <div class="text-sm font-medium leading-snug">1. 100 美元存银行,通过派生最终能创造多少 M2?</div>
+      <div class="grid grid-cols-2 gap-2 mt-3">
+        <button class="quiz-opt text-[12px] py-2.5 rounded bg-white/5 border border-white/10 hover:bg-white/10">$100</button>
+        <button class="quiz-opt text-[12px] py-2.5 rounded bg-white/5 border border-white/10 hover:bg-white/10">$500</button>
+        <button class="quiz-opt text-[12px] py-2.5 rounded bg-white/5 border border-white/10 hover:bg-white/10">$1,000</button>
+        <button class="quiz-opt text-[12px] py-2.5 rounded bg-white/5 border border-white/10 hover:bg-white/10">$10,000</button>
+      </div>
+    </div>
+    <div>
+      <div class="text-sm font-medium leading-snug">2. Fed 印 1 万亿美元,M2 一定增加 1 万亿?</div>
+      <div class="grid grid-cols-2 gap-2 mt-3">
+        <button class="quiz-opt text-[12px] py-2.5 rounded bg-white/5 border border-white/10 hover:bg-white/10">对</button>
+        <button class="quiz-opt text-[12px] py-2.5 rounded bg-white/5 border border-white/10 hover:bg-white/10">错</button>
+      </div>
+    </div>
+    <div>
+      <div class="text-sm font-medium leading-snug">3. 高息货币,是不是必然升值?</div>
+      <div class="grid grid-cols-2 gap-2 mt-3">
+        <button class="quiz-opt text-[12px] py-2.5 rounded bg-white/5 border border-white/10 hover:bg-white/10">是</button>
+        <button class="quiz-opt text-[12px] py-2.5 rounded bg-white/5 border border-white/10 hover:bg-white/10">不是</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="rounded-xl border border-[#f59e0b]/30 p-4 text-[12px] leading-relaxed bg-[#f59e0b]/5">
+    <div class="text-[#f59e0b] mb-1.5 font-medium">🔬 设计逻辑</div>
+    我们不告诉你答案。等你在三个模拟器里学完后,这三道题会<span class="text-[#e6edf3]">伪装成新题再次出现</span>——前测/后测的提升幅度才是产品 KPI。
+  </div>
+</section>
+
+<div class="text-center pt-8">
+  <div class="text-[10px] text-[#8b8fa8]">原型 v1 · 三章模拟器全开放 · 米什金教材内容版权属 Pearson</div>
+</div>
+
+</main>
+
+<!-- ===== 通用预测先行弹窗 ===== -->
+<div id="modal" class="hidden fixed inset-0 z-50 bg-black/70 flex items-end sm:items-center justify-center p-4 fade-in">
+  <div class="glass rounded-2xl border border-white/10 max-w-sm w-full p-5">
+    <div class="text-[11px] text-[#f59e0b]">🎯 预测先行 · 生成效应</div>
+    <div id="modal-title" class="font-medium mt-1.5"></div>
+    <div id="modal-q" class="text-sm mt-3 text-[#e6edf3]/85 leading-relaxed"></div>
+    <div id="modal-options" class="space-y-2 mt-4"></div>
+    <div class="text-[10px] text-[#8b8fa8] mt-3 text-center">猜对猜错都给反馈,被打脸是学习时刻</div>
+  </div>
+</div>
+
+<!-- ===== 通用反预期揭示弹窗 ===== -->
+<div id="reveal" class="hidden fixed inset-0 z-50 bg-black/70 flex items-end sm:items-center justify-center p-4 fade-in">
+  <div class="glass rounded-2xl border border-[#ef4444]/40 max-w-sm w-full p-5">
+    <div class="text-[11px] text-[#ef4444]">⚡ 反预期时刻</div>
+    <div id="reveal-headline" class="font-medium mt-1.5"></div>
+    <div id="reveal-msg" class="text-sm mt-3 text-[#e6edf3]/85 leading-relaxed"></div>
+    <button onclick="closeReveal()" class="w-full mt-4 py-2.5 rounded-lg bg-[#ef4444]/20 text-[#ef4444] text-sm font-medium hover:bg-[#ef4444]/30">看模拟器演示 →</button>
+  </div>
+</div>
+
+<script>
+/* ===== 第 14 章 货币乘数 ===== */
+const ch14Snap = {
+  '2007': { mb: 0.85, r: 10, e: 0.04, c: 7, note: '2007.8 危机前:乘数 ≈ 8.7。正常时期。' },
+  '2010': { mb: 2.0, r: 10, e: 80, c: 8, note: '⚠️ 2010.1 QE 后:乘数从 8.7 砸到 1.2!Fed 注入的钱卡在准备金里——这是流动性陷阱的微观证据。', flash: true,
+    predict: { title: '你即将切换到「2010.1 QE 后」', q: 'Fed 通过 QE 把 MB 从 0.85T 推到 2.0T,乘数 m 会变成多少?',
+      options: ['跟现在差不多(5 左右)','涨到 10+(QE 注入了大量货币)','暴跌到 1-2(超储锁住流动性)'],
+      correct: 2, headline: '真实 m = <span class="text-[#ef4444] font-mono text-lg">1.2</span>',
+      msg: '超额准备金 e 从 0.04% 飙到 80%——Fed 印的钱卡在银行系统。这就是为什么万亿 QE 没引发 1970s 式恶性通胀。'
+    }},
+  '2020': { mb: 4.8, r: 0, e: 18, c: 9, note: '2020.4 疫情:无 r 时代,但 e 仍是大头(IORB 给得太香)。' },
+  'today': { mb: 5.5, r: 0, e: 12, c: 8, note: '今天:QT 进行中,e 在缓慢下降,M2 增速逐步回升。' }
+}
+function ch14Calc() {
+  const mb = +mb_.value, r = +r_.value/100, e = +e_.value/100, c = +c_.value/100
+  $('mb-val').textContent = mb.toFixed(1); $('r-val').textContent = (r*100).toFixed(1)
+  $('e-val').textContent = (e*100).toFixed(1); $('c-val').textContent = (c*100).toFixed(1)
+  const denom = r+e+c
+  if (denom < 0.001) { $('m-val').textContent = '∞'; $('m2-val').textContent = '∞'; return }
+  const m = (1+c)/denom
+  $('m-val').textContent = m.toFixed(2); $('m2-val').textContent = (m*mb).toFixed(1)
+}
+function loadCh14(k) {
+  const s = ch14Snap[k]
+  if (s.predict) { showModal(s.predict, () => applyCh14(k)); return }
+  applyCh14(k)
+}
+function applyCh14(k) {
+  const s = ch14Snap[k]
+  mb_.value = s.mb; r_.value = s.r; e_.value = s.e; c_.value = s.c; ch14Calc()
+  const n = $('ch14-note'); n.textContent = s.note; n.classList.remove('hidden')
+  if (s.flash) flashEl('ch14-output')
+}
+
+/* ===== 第 17 章 套息交易 ===== */
+const ch17Snap = {
+  '2007': { id: 5.25, if: 0.5, ds: 1, lev: 5, note: '2007.7 套息巅峰:利差 4.75% × 5x = 28% 年化,carry trade 黄金时代。' },
+  '2008': { id: 5.0, if: 1.0, ds: -18, lev: 10, note: '⚠️ 2008.10:USD/JPY 单月暴跌 18%,10x 杠杆 -140% → 爆仓。', flash: true,
+    predict: { title: '你即将切换到「2008.10 雷曼崩盘」', q: 'USD/JPY 单月跌 18%,10x 杠杆套息策略亏多少?',
+      options: ['-30%(还活着)','-100%(归零)','-140%(倒欠经纪商)'],
+      correct: 2, headline: '真实损失 = <span class="text-[#ef4444] font-mono text-lg">-140%</span>',
+      msg: '保证金被强平,且杠杆放大让你不只是亏完本金,还倒欠经纪商。这是 2008 全球套息平仓潮的微观结果。'
+    }},
+  '2024-7': { id: 5.25, if: 0.25, ds: 0, lev: 10, note: '2024.7:套息利差 5%,市场以为这种关系会永远持续。' },
+  '2024-8': { id: 4.75, if: 0.5, ds: -12, lev: 10, note: '⚠️ 2024.8 三周内 USD/JPY 162→142(-12%),10x 杠杆 -100%。10 年 carry 收益,3 周亏完。', flash: true,
+    predict: { title: '你即将切换到「2024.8 套息平仓」', q: '这 3 周内,10 倍杠杆套息策略亏多少?',
+      options: ['-10%(carry 还在)','-50%(汇率跌 5%)','-100%(全亏完)','比 -100% 更糟'],
+      correct: 2, headline: '真实损失 = <span class="text-[#ef4444] font-mono text-lg">-100%</span>',
+      msg: 'BOJ 意外加息 + Fed 转向降息,carry 利差双向夹击。叠加自我实现的平仓潮,USD/JPY 三周从 162 跌到 142。10x 杠杆 = 一夜归零。'
+    }},
+  'today': { id: 4.5, if: 0.5, ds: 0, lev: 10, note: '今天:利差仍在 4%,但市场对"持续"的信心已动摇。' }
+}
+function ch17Calc() {
+  const id = +id_.value, ifv = +if_.value, ds = +ds_.value, lev = +lev_.value
+  $('id-val').textContent = id.toFixed(2); $('if-val').textContent = ifv.toFixed(2)
+  $('ds-val').textContent = ds.toFixed(1); $('lev-val').textContent = lev
+  const carry = (id - ifv) / 4
+  const ret = carry + ds
+  const levRet = ret * lev
+  const be = -carry
+  $('carry-val').textContent = (carry >= 0 ? '+' : '') + carry.toFixed(2) + '%'
+  $('dsr-val').textContent = (ds >= 0 ? '+' : '') + ds.toFixed(1) + '%'
+  $('ret-val').textContent = (ret >= 0 ? '+' : '') + ret.toFixed(2) + '%'
+  $('lev-ret-val').textContent = (levRet >= 0 ? '+' : '') + levRet.toFixed(1) + '%'
+  $('be-val').textContent = be.toFixed(2) + '%'
+  // 风险标签
+  const risk = $('risk-val')
+  if (Math.abs(levRet) < 5) { risk.textContent = '低'; risk.className = 'badge bg-[#10b981]/15 text-[#10b981]' }
+  else if (Math.abs(levRet) < 30) { risk.textContent = '中'; risk.className = 'badge bg-[#f59e0b]/15 text-[#f59e0b]' }
+  else if (Math.abs(levRet) < 80) { risk.textContent = '高'; risk.className = 'badge bg-[#ef4444]/15 text-[#ef4444]' }
+  else { risk.textContent = '极高 / 爆仓'; risk.className = 'badge bg-[#ef4444]/30 text-[#ef4444] heartbeat' }
+  // 颜色
+  $('lev-ret-val').className = 'text-2xl font-mono mt-0.5 ' + (levRet >= 0 ? 'text-[#10b981]' : 'text-[#ef4444]')
+}
+function loadCh17(k) {
+  const s = ch17Snap[k]
+  if (s.predict) { showModal(s.predict, () => applyCh17(k)); return }
+  applyCh17(k)
+}
+function applyCh17(k) {
+  const s = ch17Snap[k]
+  id_.value = s.id; if_.value = s.if; ds_.value = s.ds; lev_.value = s.lev; ch17Calc()
+  const n = $('ch17-note'); n.textContent = s.note; n.classList.remove('hidden')
+  if (s.flash) flashEl('ch17-output')
+}
+
+/* ===== 第 20 章 IS-LM ===== */
+const ch20Snap = {
+  '1962': { a: 28, b: 2, c: 5, d: 2, note: '1962 肯尼迪减税:IS 右移 → i*↑ Y*↑,标准凯恩斯刺激。' },
+  '1980': { a: 20, b: 2, c: 1.5, d: 2, note: '1980 沃尔克紧缩:LM 左移到极致 → i* 飙升到 19%(实际),Y* 下滑触发深衰退。' },
+  '2010': { a: 14, b: 2, c: 50, d: 2, note: '⚠️ 2010 流动性陷阱:Fed QE 让 c 飙到 50,但 i* 已 = 0,LM 推右多少 Y* 都不动。', flash: true,
+    predict: { title: '你即将切换到「2010 流动性陷阱」', q: 'Fed 把 LM 大幅右移(QE 万亿),Y* 会涨多少?',
+      options: ['Y* 大涨(教科书式刺激)','Y* 涨 1-2%(部分有效)','Y* 几乎不动(陷阱)'],
+      correct: 2, headline: '真实结果:Y* <span class="text-[#ef4444] font-mono text-lg">几乎不动</span>',
+      msg: '在 ZLB,LM 水平段无限延展,QE 把 c 推到 50 也不影响均衡 Y*。Fed "推不动弦"——这是日本 1990s 起的常态,也是为什么财政政策在陷阱里反而最有效。'
+    }},
+  '2020': { a: 30, b: 2, c: 35, d: 2, note: '2020.4:财政货币双扩张,IS 和 LM 都右移,Y* 强劲反弹但埋下 2022 通胀种子。' },
+  'today': { a: 22, b: 2, c: 8, d: 2, note: '今天:Fed QT + 财政赤字共存,IS 高 LM 紧,长债被双向推高。' }
+}
+function ch20Calc() {
+  const a = +a_.value, b = +b_.value, c = +cIslm_.value, d = +d_.value
+  $('a-val').textContent = a.toFixed(1); $('b-val').textContent = b.toFixed(1)
+  $('c-islm-val').textContent = c.toFixed(1); $('d-val').textContent = d.toFixed(1)
+  // 均衡
+  let i_star = (a - c) / (b + d)
+  let Y_star, trap = false
+  if (i_star >= 0) { Y_star = c + d * i_star }
+  else { i_star = 0; Y_star = a; trap = true }
+  $('i-star').textContent = (i_star * 1).toFixed(1)
+  $('y-star').textContent = Y_star.toFixed(1)
+  // SVG 坐标转换:Y∈[0,30] → x∈[30,300];i∈[0,12] → y∈[180,20]
+  const x = (Y) => 30 + Math.min(Math.max(Y, 0), 30) * 9
+  const y = (i) => 180 - Math.min(Math.max(i, 0), 12) * 13.33
+  // IS: i = (a - Y) / b → 端点 (Y=0, i=a/b) 到 (Y=a, i=0)
+  // 限制 i 在 [0, 12]
+  const isI0 = a / b
+  const isLine = $('is-line')
+  if (isI0 > 12) {
+    const Y_at_12 = a - 12 * b
+    isLine.setAttribute('x1', x(Y_at_12)); isLine.setAttribute('y1', y(12))
+    isLine.setAttribute('x2', x(a)); isLine.setAttribute('y2', y(0))
+  } else {
+    isLine.setAttribute('x1', x(0)); isLine.setAttribute('y1', y(isI0))
+    isLine.setAttribute('x2', x(a)); isLine.setAttribute('y2', y(0))
+  }
+  $('is-label').setAttribute('x', x(a) + 5); $('is-label').setAttribute('y', y(0) - 4)
+  // LM: 水平段 i=0 from Y=0 to Y=c,然后 i = (Y-c)/d
+  const lm1 = $('lm-line-1'), lm2 = $('lm-line-2')
+  lm1.setAttribute('x1', x(0)); lm1.setAttribute('y1', y(0))
+  lm1.setAttribute('x2', x(Math.min(c, 30))); lm1.setAttribute('y2', y(0))
+  if (c < 30) {
+    const Y_at_12 = c + 12 * d
+    lm2.setAttribute('x1', x(c)); lm2.setAttribute('y1', y(0))
+    lm2.setAttribute('x2', x(Math.min(Y_at_12, 30))); lm2.setAttribute('y2', y(Math.min(12, (30-c)/d)))
+  } else {
+    lm2.setAttribute('x1', x(30)); lm2.setAttribute('y1', y(0))
+    lm2.setAttribute('x2', x(30)); lm2.setAttribute('y2', y(0))
+  }
+  $('lm-label').setAttribute('x', x(Math.min(c + d * 12, 28)) - 5); $('lm-label').setAttribute('y', y(Math.min(12, (Math.min(c+12*d,30)-c)/d)) + 12)
+  // 均衡
+  const eq = $('eq-dot'), eql = $('eq-label')
+  eq.setAttribute('cx', x(Y_star)); eq.setAttribute('cy', y(i_star))
+  eql.setAttribute('x', x(Y_star) + 8); eql.setAttribute('y', y(i_star) - 8)
+  eql.textContent = trap ? 'E* (陷阱)' : 'E*'
+  eq.style.fill = trap ? '#f59e0b' : '#ef4444'
+}
+function loadCh20(k) {
+  const s = ch20Snap[k]
+  if (s.predict) { showModal(s.predict, () => applyCh20(k)); return }
+  applyCh20(k)
+}
+function applyCh20(k) {
+  const s = ch20Snap[k]
+  a_.value = s.a; b_.value = s.b; cIslm_.value = s.c; d_.value = s.d; ch20Calc()
+  const n = $('ch20-note'); n.innerHTML = s.note; n.classList.remove('hidden')
+  if (s.flash) flashEl('ch20-note')
+}
+
+/* ===== 通用工具 ===== */
+function $(id) { return document.getElementById(id) }
+function flashEl(id) {
+  const el = $(id); el.classList.add('flash-red')
+  setTimeout(() => el.classList.remove('flash-red'), 2100)
+}
+let pending = null
+function showModal(p, after) {
+  pending = { p, after }
+  $('modal-title').textContent = p.title
+  $('modal-q').textContent = p.q
+  const opts = $('modal-options'); opts.innerHTML = ''
+  p.options.forEach((opt, i) => {
+    const btn = document.createElement('button')
+    btn.className = 'w-full text-[13px] py-2.5 px-3 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 text-left'
+    btn.textContent = opt
+    btn.onclick = () => answerPredict(i)
+    opts.appendChild(btn)
+  })
+  $('modal').classList.remove('hidden')
+}
+function answerPredict(idx) {
+  $('modal').classList.add('hidden')
+  const p = pending.p
+  const correct = idx === p.correct
+  const prefix = correct ? '✅ 你已经把这个机制内化了' : '🎯 多数人都和你想的一样'
+  $('reveal-headline').innerHTML = prefix + ' · ' + p.headline
+  $('reveal-msg').innerHTML = p.msg
+  $('reveal').classList.remove('hidden')
+}
+function closeReveal() {
+  $('reveal').classList.add('hidden')
+  if (pending && pending.after) pending.after()
+  pending = null
+}
+
+/* ===== 元素绑定 ===== */
+const mb_ = $('mb'), r_ = $('r'), e_ = $('e'), c_ = $('c')
+const id_ = $('id'), if_ = $('if'), ds_ = $('ds'), lev_ = $('lev')
+const a_ = $('a'), b_ = $('b'), cIslm_ = $('c-islm'), d_ = $('d')
+;[mb_, r_, e_, c_].forEach(x => x.addEventListener('input', ch14Calc))
+;[id_, if_, ds_, lev_].forEach(x => x.addEventListener('input', ch17Calc))
+;[a_, b_, cIslm_, d_].forEach(x => x.addEventListener('input', ch20Calc))
+
+document.querySelectorAll('.quiz-opt').forEach(btn => {
+  btn.addEventListener('click', () => {
+    btn.parentElement.querySelectorAll('.quiz-opt').forEach(b => {
+      b.classList.remove('bg-[#3b82f6]/20','border-[#3b82f6]/40','text-[#3b82f6]')
+      b.classList.add('bg-white/5','border-white/10')
+    })
+    btn.classList.remove('bg-white/5','border-white/10')
+    btn.classList.add('bg-[#3b82f6]/20','border-[#3b82f6]/40','text-[#3b82f6]')
+  })
+})
+
+ch14Calc(); ch17Calc(); ch20Calc()
+</script>
+</body>
+</html>
