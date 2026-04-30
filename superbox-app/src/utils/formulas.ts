@@ -37,6 +37,49 @@ export function carryReturn(
   }
 }
 
+// 第 4 章 债券定价
+// P = Σ C/(1+i)^t (t=1..n) + FV/(1+i)^n
+// fv: 面值;couponRate: 票息率(0-1);ytm: 市场利率/到期收益率(0-1);years: 到期年限
+export function bondPrice(
+  fv: number,
+  couponRate: number,
+  ytm: number,
+  years: number
+): number {
+  if (years <= 0) return fv
+  if (ytm < 0.00001) return fv + fv * couponRate * years  // 零利率退化
+  const coupon = fv * couponRate
+  const pvCoupons = coupon * (1 - Math.pow(1 + ytm, -years)) / ytm
+  const pvFace = fv / Math.pow(1 + ytm, years)
+  return pvCoupons + pvFace
+}
+
+// 修正久期(近似):衡量价格对利率的敏感度
+// 近似公式:D ≈ Σ t·CF_t/(1+y)^t / P
+export function modifiedDuration(
+  fv: number,
+  couponRate: number,
+  ytm: number,
+  years: number
+): number {
+  if (years <= 0 || ytm < 0.00001) return years
+  const P = bondPrice(fv, couponRate, ytm, years)
+  if (P <= 0) return 0
+  const coupon = fv * couponRate
+  let weighted = 0
+  for (let t = 1; t <= years; t++) {
+    weighted += t * coupon / Math.pow(1 + ytm, t)
+  }
+  weighted += years * fv / Math.pow(1 + ytm, years)
+  const macaulayD = weighted / P
+  return macaulayD / (1 + ytm)
+}
+
+// 费雪方程:实际利率 ≈ 名义 - 通胀
+export function realRate(nominalRate: number, inflation: number): number {
+  return (1 + nominalRate) / (1 + inflation) - 1
+}
+
 // 第 20 章 IS-LM 均衡
 export interface ISLMEquilibrium {
   i_star: number

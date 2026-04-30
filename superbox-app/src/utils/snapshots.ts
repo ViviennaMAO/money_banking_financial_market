@@ -45,6 +45,47 @@ export const ch14Snapshots: Record<string, Ch14Snapshot> = {
   }
 }
 
+/* ===== 第 4 章 债券定价 ===== */
+export interface Ch4Snapshot {
+  fv: number; couponRate: number; ytm: number; years: number; inflation: number
+  note: string
+  flash?: boolean
+  predict?: PredictDef
+}
+
+export const ch4Snapshots: Record<string, Ch4Snapshot> = {
+  '1981': {
+    fv: 1000, couponRate: 14, ytm: 14, years: 10, inflation: 10,
+    note: '1981.9 沃尔克紧缩末:10Y 利率 ~14%,通胀 ~10%。后续 1982 起 Fed 大幅降息,债券进入超级牛市。把 ytm 从 14% 拖到 8% 看看价格变化。'
+  },
+  '2022': {
+    fv: 1000, couponRate: 1, ytm: 1, years: 20, inflation: 7,
+    note: '⚠️ 2022.3 加息冲击起点:20Y 期 1% 票息债券,利率 1%。Fed 此后把 FFR 推到 5.25%。把 ytm 拖到 5%——见证长债被屠杀。',
+    flash: true,
+    predict: {
+      title: '你即将切换到「2022 加息冲击」',
+      question: 'Fed 把 ytm 从 1% 推到 5%,20 年期、1% 票息的债券价格变化最接近?',
+      options: [
+        '+5%(避险逻辑,债券小涨)',
+        '-10%(温和下跌)',
+        '-30%(显著下跌,跟股市差不多)',
+        '价格腰斩 -50%'
+      ],
+      correctIdx: 3,
+      revealHeadline: '价格腰斩 ≈ -50%',
+      revealMsg: '20 年期、低票息债券对利率极度敏感(久期 ~18)。利率涨 4 个百分点 → 价格跌 ~50%。这就是为什么 2022 美国国债 ETF TLT 跌 -31%,比股市跌得更惨——债券不是"低风险资产",高久期债券是利率的杠杆赌注。'
+    }
+  },
+  '2024': {
+    fv: 1000, couponRate: 4, ytm: 4.5, years: 10, inflation: 3,
+    note: '2024.10:10Y 利率 ~4.5%,核心通胀 ~3%,实际利率 ~1.5%(2008 来高位)。'
+  },
+  'today': {
+    fv: 1000, couponRate: 4, ytm: 4, years: 10, inflation: 2.5,
+    note: '今天:利率回落,实际利率仍较高。试试 ytm 拖到 6%(衰退反转)看价格上涨。'
+  }
+}
+
 /* ===== 第 17 章 套息交易 ===== */
 export interface Ch17Snapshot {
   id: number; ifv: number; ds: number; lev: number
