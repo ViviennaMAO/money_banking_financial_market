@@ -4,6 +4,7 @@
   box-sizing: border-box;
 }
 
+/* ===== Hero ===== */
 .hero-tag {
   display: block;
   font-size: 22rpx;
@@ -24,6 +25,7 @@
 .hero-accent { color: #3b82f6; }
 .hero-warm { color: #f59e0b; }
 
+/* ===== 通用 card ===== */
 .card {
   margin-top: 40rpx;
   background: rgba(28, 34, 54, 0.55);
@@ -40,6 +42,7 @@
   margin-bottom: 16rpx;
 }
 
+/* 学习科学锚点 */
 .badges {
   display: flex;
   flex-wrap: wrap;
@@ -61,31 +64,46 @@
 .p-purple { background: rgba(167, 139, 250, 0.15); color: #a78bfa; }
 .p-cyan { background: rgba(6, 182, 212, 0.15); color: #06b6d4; }
 
-.ch-list {
-  margin-top: 40rpx;
+/* ===== Section 通用 ===== */
+.section {
+  margin-top: 48rpx;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 16rpx;
+}
+
+.section-tag {
+  font-size: 24rpx;
+  color: #e6edf3;
+  font-weight: 500;
+}
+
+.section-meta {
+  font-size: 20rpx;
+  color: #8b8fa8;
+}
+
+/* ===== MVP 三章大卡片 ===== */
+.mvp-list {
   display: flex;
   flex-direction: column;
   gap: 20rpx;
 }
 
-.section-tag {
-  display: block;
-  font-size: 22rpx;
-  color: #8b8fa8;
-  text-transform: uppercase;
-  letter-spacing: 2rpx;
-  margin-bottom: 8rpx;
-}
-
-.ch-card {
+.mvp-card {
   background: rgba(28, 34, 54, 0.55);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(59, 130, 246, 0.2);
   border-radius: 24rpx;
   padding: 28rpx;
   display: flex;
   flex-direction: column;
   &:active {
-    border-color: rgba(59, 130, 246, 0.4);
+    border-color: rgba(59, 130, 246, 0.5);
+    background: rgba(59, 130, 246, 0.06);
   }
 }
 
@@ -98,10 +116,152 @@
 .ch-num { display: block; font-size: 22rpx; color: #8b8fa8; }
 .ch-title { display: block; font-size: 32rpx; font-weight: 500; margin-top: 4rpx; color: #e6edf3; }
 .ch-meta { display: block; font-size: 22rpx; color: #8b8fa8; margin-top: 8rpx; }
-.ch-emoji { font-size: 48rpx; line-height: 1; }
+.ch-emoji { font-size: 56rpx; line-height: 1; }
 .ch-hook { font-size: 24rpx; color: rgba(230, 237, 243, 0.7); margin-top: 20rpx; line-height: 1.6; }
-.ch-cta { font-size: 22rpx; color: #3b82f6; margin-top: 12rpx; }
+.ch-cta { font-size: 22rpx; color: #3b82f6; margin-top: 16rpx; font-weight: 500; }
 
+/* ===== 完整目录 · 6 篇 ===== */
+.part-block {
+  margin-top: 16rpx;
+  background: rgba(28, 34, 54, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 20rpx;
+  overflow: hidden;
+}
+
+.part-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24rpx 28rpx;
+  &:active {
+    background: rgba(255, 255, 255, 0.03);
+  }
+}
+
+.part-header.open {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.part-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4rpx;
+}
+
+.part-title {
+  font-size: 28rpx;
+  font-weight: 500;
+  color: #e6edf3;
+}
+
+.part-desc {
+  font-size: 22rpx;
+  color: rgba(230, 237, 243, 0.6);
+  margin-top: 4rpx;
+}
+
+.part-meta {
+  font-size: 20rpx;
+  color: #8b8fa8;
+  margin-top: 4rpx;
+}
+
+.part-arrow {
+  font-size: 24rpx;
+  color: #8b8fa8;
+  margin-left: 16rpx;
+  font-family: ui-monospace, Menlo, monospace;
+}
+
+.part-chapters {
+  padding: 8rpx 16rpx 16rpx;
+  display: flex;
+  flex-direction: column;
+  gap: 8rpx;
+}
+
+/* ===== 章节 mini 卡片 ===== */
+.mini-card {
+  display: flex;
+  gap: 20rpx;
+  padding: 20rpx;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 16rpx;
+  &:active {
+    background: rgba(255, 255, 255, 0.05);
+  }
+}
+
+.mini-card.mini-impl {
+  background: rgba(59, 130, 246, 0.05);
+  border-color: rgba(59, 130, 246, 0.2);
+  &:active {
+    background: rgba(59, 130, 246, 0.12);
+  }
+}
+
+.mini-emoji {
+  font-size: 40rpx;
+  line-height: 1;
+  flex-shrink: 0;
+  width: 60rpx;
+  text-align: center;
+  padding-top: 4rpx;
+}
+
+.mini-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4rpx;
+}
+
+.mini-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.mini-num {
+  font-size: 20rpx;
+  color: #8b8fa8;
+}
+
+.mini-status {
+  font-size: 18rpx;
+  color: #8b8fa8;
+}
+
+.mini-status-on {
+  color: #3b82f6;
+}
+
+.mini-title {
+  font-size: 26rpx;
+  font-weight: 500;
+  color: #e6edf3;
+  margin-top: 4rpx;
+  line-height: 1.4;
+}
+
+.mini-brief {
+  font-size: 22rpx;
+  color: rgba(230, 237, 243, 0.6);
+  margin-top: 6rpx;
+  line-height: 1.5;
+}
+
+.mini-stars {
+  font-size: 18rpx;
+  color: #f59e0b;
+  margin-top: 8rpx;
+  letter-spacing: 1rpx;
+}
+
+/* ===== Footer ===== */
 .footer-note {
   margin-top: 60rpx;
   text-align: center;

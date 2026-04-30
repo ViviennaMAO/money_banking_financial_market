@@ -5,7 +5,8 @@ export default defineAppConfig({
     'pages/ch17/index',
     'pages/ch20/index',
     'pages/news/index',
-    'pages/quiz/index'
+    'pages/quiz/index',
+    'pages/placeholder/index'
   ],
   window: {
     backgroundTextStyle: 'dark',

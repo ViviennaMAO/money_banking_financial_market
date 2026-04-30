@@ -1,36 +1,8 @@
-import { View, Text, ScrollView, Button } from '@tarojs/components'
+import { View, Text, ScrollView } from '@tarojs/components'
+import { useState } from 'react'
 import Taro from '@tarojs/taro'
+import { parts, mvpChapters, totalChapters, implementedCount, type Chapter } from '../../data/chapters'
 import './index.scss'
-
-interface ChapterCard {
-  ch: number
-  emoji: string
-  title: string
-  meta: string
-  hook: string
-  path: string
-}
-
-const chapters: ChapterCard[] = [
-  {
-    ch: 14, emoji: '💱', title: '货币乘数',
-    meta: '12 分钟 · ⭐⭐⭐',
-    hook: '反预期震撼:Fed 印万亿,M2 却几乎没动。乘数砸到 1.2 那一刻。',
-    path: '/pages/ch14/index'
-  },
-  {
-    ch: 17, emoji: '🪙', title: '利率平价 · 套息交易',
-    meta: '14 分钟 · ⭐⭐⭐⭐',
-    hook: '反预期震撼:2024.8 USD/JPY 三周从 162→142,10 倍杠杆 -100%。',
-    path: '/pages/ch17/index'
-  },
-  {
-    ch: 20, emoji: '📐', title: 'IS-LM 模型',
-    meta: '15 分钟 · ⭐⭐⭐⭐⭐',
-    hook: '反预期震撼:流动性陷阱里,LM 怎么右移 Y 都不动。',
-    path: '/pages/ch20/index'
-  }
-]
 
 const principles = [
   { name: '测试效应', color: 'p-blue' },
@@ -42,11 +14,33 @@ const principles = [
 ]
 
 export default function Home() {
-  function navigate(path: string) {
-    Taro.navigateTo({ url: path })
+  // 默认展开所有篇(用户可自由折叠)
+  const [expanded, setExpanded] = useState<Set<number>>(
+    new Set(parts.map(p => p.num))
+  )
+
+  function togglePart(partNum: number) {
+    setExpanded(prev => {
+      const next = new Set(prev)
+      if (next.has(partNum)) next.delete(partNum)
+      else next.add(partNum)
+      return next
+    })
   }
+
+  function navigateToChapter(ch: Chapter, partNum: number) {
+    if (ch.implemented && ch.pagePath) {
+      Taro.navigateTo({ url: ch.pagePath })
+    } else {
+      Taro.navigateTo({
+        url: `/pages/placeholder/index?ch=${ch.num}`
+      })
+    }
+  }
+
   return (
     <ScrollView scrollY className='home'>
+      {/* Hero */}
       <View className='hero'>
         <Text className='hero-tag'>让米什金的理论 · 在今天的市场上立刻验证</Text>
         <Text className='hero-title'>
@@ -55,6 +49,7 @@ export default function Home() {
         </Text>
       </View>
 
+      {/* 学习科学 6 锚点 */}
       <View className='card principles'>
         <Text className='card-tag'>设计原则 · 6 条学习科学锚点</Text>
         <View className='badges'>
@@ -64,22 +59,92 @@ export default function Home() {
         </View>
       </View>
 
-      <View className='ch-list'>
-        <Text className='section-tag'>MVP 三章 · 全部可点</Text>
-        {chapters.map(c => (
-          <View key={c.ch} className='ch-card' onClick={() => navigate(c.path)}>
-            <View className='ch-row'>
-              <View>
-                <Text className='ch-num'>第 {c.ch} 章</Text>
-                <Text className='ch-title'>{c.title}</Text>
-                <Text className='ch-meta'>{c.meta}</Text>
+      {/* MVP 三章 · 大卡片(突出反预期) */}
+      <View className='section'>
+        <View className='section-header'>
+          <Text className='section-tag'>MVP 三章 · 已上线</Text>
+          <Text className='section-meta'>{implementedCount}/{totalChapters}</Text>
+        </View>
+        <View className='mvp-list'>
+          {mvpChapters.map(c => (
+            <View
+              key={c.num}
+              className='mvp-card'
+              onClick={() => navigateToChapter(c, 0)}
+            >
+              <View className='ch-row'>
+                <View>
+                  <Text className='ch-num'>第 {c.num} 章</Text>
+                  <Text className='ch-title'>{c.title}</Text>
+                  <Text className='ch-meta'>
+                    {c.duration} · {'⭐'.repeat(c.difficulty)}
+                  </Text>
+                </View>
+                <Text className='ch-emoji'>{c.emoji}</Text>
               </View>
-              <Text className='ch-emoji'>{c.emoji}</Text>
+              {c.hook ? <Text className='ch-hook'>{c.hook}</Text> : null}
+              <Text className='ch-cta'>立刻试一下 →</Text>
             </View>
-            <Text className='ch-hook'>{c.hook}</Text>
-            <Text className='ch-cta'>立刻试一下 →</Text>
-          </View>
-        ))}
+          ))}
+        </View>
+      </View>
+
+      {/* 完整目录 · 6 篇 25 章 */}
+      <View className='section'>
+        <View className='section-header'>
+          <Text className='section-tag'>📖 完整目录 · 6 篇 {totalChapters} 章</Text>
+          <Text className='section-meta'>点击篇名展开 / 收起</Text>
+        </View>
+
+        {parts.map(part => {
+          const isOpen = expanded.has(part.num)
+          const partImpl = part.chapters.filter(c => c.implemented).length
+          return (
+            <View key={part.num} className='part-block'>
+              <View
+                className={`part-header ${isOpen ? 'open' : ''}`}
+                onClick={() => togglePart(part.num)}
+              >
+                <View className='part-info'>
+                  <Text className='part-title'>第 {part.num} 篇 · {part.title}</Text>
+                  <Text className='part-desc'>{part.desc}</Text>
+                  <Text className='part-meta'>
+                    {part.range} · {part.chapters.length} 章
+                    {partImpl > 0 ? ` · ${partImpl} 已上线 ✓` : ''}
+                  </Text>
+                </View>
+                <Text className='part-arrow'>{isOpen ? '▾' : '▸'}</Text>
+              </View>
+
+              {isOpen ? (
+                <View className='part-chapters'>
+                  {part.chapters.map(c => (
+                    <View
+                      key={c.num}
+                      className={`mini-card ${c.implemented ? 'mini-impl' : ''}`}
+                      onClick={() => navigateToChapter(c, part.num)}
+                    >
+                      <Text className='mini-emoji'>{c.emoji}</Text>
+                      <View className='mini-body'>
+                        <View className='mini-title-row'>
+                          <Text className='mini-num'>第 {c.num} 章</Text>
+                          {c.implemented ? (
+                            <Text className='mini-status mini-status-on'>● 已上线</Text>
+                          ) : (
+                            <Text className='mini-status'>○ 规划中</Text>
+                          )}
+                        </View>
+                        <Text className='mini-title'>{c.title}</Text>
+                        <Text className='mini-brief'>{c.brief}</Text>
+                        <Text className='mini-stars'>{'⭐'.repeat(c.difficulty)}</Text>
+                      </View>
+                    </View>
+                  ))}
+                </View>
+              ) : null}
+            </View>
+          )
+        })}
       </View>
 
       <View className='footer-note'>

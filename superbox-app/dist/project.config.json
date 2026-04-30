@@ -14,16 +14,10 @@
 		"showShadowRootInWxmlPanel": true,
 		"scopeDataCheck": false,
 		"useCompilerModule": true,
-		"userConfirmedUseCompilerModuleSwitch": false,
-		"nodeModules": true,
-		"uploadWithSourceMap": true,
-		"uglifyFileName": true,
-		"remoteDebugLogEnable": true,
-		"prefetch": false
+		"userConfirmedUseCompilerModuleSwitch": false
 	},
 	"compileType": "miniprogram",
 	"simulatorType": "wechat",
-	"LuffaToolsappid": "mpqj6lz8sg9ovagh",
-	"scripts": {},
+	"LuffaToolsappid": "touristappid",
 	"condition": {}
 }
