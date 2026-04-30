@@ -1,0 +1,253 @@
+.ch9 {
+  padding: 32rpx 28rpx 80rpx;
+  height: 100vh;
+  box-sizing: border-box;
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 24rpx;
+}
+
+.page-title { font-size: 36rpx; font-weight: 600; color: #e6edf3; }
+.page-meta { font-size: 22rpx; color: #8b8fa8; }
+
+/* 资产负债表条形图 */
+.bs-card {
+  margin-top: 24rpx;
+  padding: 24rpx;
+  background: rgba(28, 34, 54, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 24rpx;
+  transition: background 0.3s, border-color 0.3s;
+}
+
+.bs-card.flash { animation: flashRed 0.7s ease 3; }
+@keyframes flashRed {
+  0%, 100% { background: rgba(28, 34, 54, 0.55); border-color: rgba(255,255,255,0.05); }
+  50% { background: rgba(239, 68, 68, 0.18); border-color: rgba(239, 68, 68, 0.4); }
+}
+
+.bs-tag {
+  display: block;
+  font-size: 22rpx;
+  color: #8b8fa8;
+  margin-bottom: 16rpx;
+}
+
+.bs-row {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+  margin-bottom: 12rpx;
+  &:last-child { margin-bottom: 0; }
+}
+
+.bs-side {
+  flex-shrink: 0;
+  font-size: 22rpx;
+  color: #8b8fa8;
+  width: 80rpx;
+}
+
+.bs-bar {
+  flex: 1;
+  display: flex;
+  height: 56rpx;
+  border-radius: 8rpx;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.bs-seg {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18rpx;
+  color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  transition: width 0.3s;
+}
+
+.seg-loan { background: linear-gradient(135deg, #3b82f6, #2563eb); }
+.seg-bond { background: linear-gradient(135deg, #f59e0b, #d97706); }
+.seg-reserve { background: linear-gradient(135deg, #10b981, #059669); }
+.seg-deposit { background: linear-gradient(135deg, #8b8fa8, #6b7280); }
+.seg-capital { background: linear-gradient(135deg, #a78bfa, #7c3aed); }
+
+.panel {
+  margin-top: 24rpx;
+  padding: 28rpx;
+  background: rgba(28, 34, 54, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 24rpx;
+  display: flex;
+  flex-direction: column;
+  gap: 8rpx;
+}
+
+.panel-tag {
+  font-size: 22rpx;
+  color: #8b8fa8;
+  margin-bottom: 8rpx;
+}
+
+/* 压力测试结果 */
+.stress-card {
+  margin-top: 24rpx;
+  padding: 28rpx;
+  border-radius: 24rpx;
+  border: 1px solid;
+}
+
+.risk-safe { background: rgba(16, 185, 129, 0.06); border-color: rgba(16, 185, 129, 0.3); }
+.risk-warn { background: rgba(245, 158, 11, 0.06); border-color: rgba(245, 158, 11, 0.3); }
+.risk-cap { background: rgba(239, 68, 68, 0.08); border-color: rgba(239, 68, 68, 0.4); }
+.risk-liq { background: rgba(239, 68, 68, 0.08); border-color: rgba(239, 68, 68, 0.4); }
+
+.stress-tag {
+  display: block;
+  font-size: 22rpx;
+  color: #8b8fa8;
+  margin-bottom: 16rpx;
+  font-weight: 500;
+}
+
+.stress-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24rpx;
+}
+
+.stress-label {
+  display: block;
+  font-size: 20rpx;
+  color: #8b8fa8;
+}
+
+.stress-big {
+  display: block;
+  font-size: 44rpx;
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  margin-top: 4rpx;
+  line-height: 1;
+}
+
+.stress-mid {
+  display: block;
+  font-size: 30rpx;
+  font-family: ui-monospace, Menlo, monospace;
+  margin-top: 4rpx;
+  line-height: 1.2;
+}
+
+.stress-mini {
+  display: block;
+  font-size: 18rpx;
+  color: #8b8fa8;
+  margin-top: 4rpx;
+}
+
+.val-good { color: #10b981; }
+.val-warn { color: #f59e0b; }
+.val-bad { color: #ef4444; }
+.val-neu { color: #e6edf3; }
+
+.status-row {
+  display: flex;
+  align-items: baseline;
+  gap: 16rpx;
+  margin-top: 24rpx;
+  padding-top: 20rpx;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.status-label { font-size: 24rpx; color: #8b8fa8; }
+.status-big { font-size: 30rpx; font-weight: 500; }
+
+.status-big.risk-safe { color: #10b981; }
+.status-big.risk-warn { color: #f59e0b; }
+.status-big.risk-cap { color: #ef4444; }
+.status-big.risk-liq { color: #ef4444; }
+
+.status-desc {
+  display: block;
+  font-size: 22rpx;
+  color: rgba(230, 237, 243, 0.85);
+  line-height: 1.6;
+  margin-top: 8rpx;
+}
+
+.ch9-note {
+  display: block;
+  margin-top: 24rpx;
+  padding: 24rpx;
+  background: rgba(245, 158, 11, 0.06);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  border-radius: 24rpx;
+  font-size: 24rpx;
+  color: #f59e0b;
+  line-height: 1.7;
+}
+
+/* 隐性风险公式卡 */
+.formula-card {
+  margin-top: 24rpx;
+  padding: 28rpx;
+  background: rgba(167, 139, 250, 0.05);
+  border: 1px solid rgba(167, 139, 250, 0.25);
+  border-radius: 24rpx;
+}
+
+.formula-tag {
+  display: block;
+  font-size: 22rpx;
+  color: #a78bfa;
+  margin-bottom: 12rpx;
+  font-weight: 500;
+}
+
+.formula-text {
+  display: block;
+  font-size: 26rpx;
+  color: #e6edf3;
+  font-family: ui-monospace, Menlo, monospace;
+  padding: 16rpx;
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: 12rpx;
+  margin-bottom: 14rpx;
+  line-height: 1.5;
+}
+
+.formula-detail {
+  display: block;
+  font-size: 22rpx;
+  color: rgba(230, 237, 243, 0.8);
+  line-height: 1.7;
+  margin-bottom: 14rpx;
+}
+
+.formula-tips {
+  padding-top: 14rpx;
+  border-top: 1px dashed rgba(167, 139, 250, 0.2);
+}
+
+.tip-line {
+  display: block;
+  font-size: 22rpx;
+  color: rgba(230, 237, 243, 0.7);
+  line-height: 1.6;
+  padding: 4rpx 0;
+}
+
+.hint {
+  display: block;
+  margin-top: 24rpx;
+  padding: 0 8rpx;
+  font-size: 22rpx;
+  color: #8b8fa8;
+  line-height: 1.6;
+}

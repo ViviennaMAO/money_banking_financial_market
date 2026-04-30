@@ -80,6 +80,58 @@ export function realRate(nominalRate: number, inflation: number): number {
   return (1 + nominalRate) / (1 + inflation) - 1
 }
 
+// 第 9 章 银行压力测试
+// 输入(占比为 0-100):
+//   deposits 总存款(单位:十亿)
+//   loanPct / longBondPct 资产端配置
+//   capitalPct 资本占资产比
+//   rateShock 利率冲击 %
+//   withdrawPct 挤兑提款比例
+export interface BankStressResult {
+  totalAssets: number
+  loans: number
+  longBonds: number
+  reserves: number
+  capital: number
+  htmLoss: number       // HTM 国债浮亏(假设久期 5)
+  realCapital: number
+  cet1Ratio: number     // 真实 CET1
+  lcr: number           // 流动性覆盖率(简化)
+  collapseRisk: 'safe' | 'warning' | 'capital_breach' | 'liquidity_run'
+}
+
+export function bankStressTest(
+  deposits: number,
+  loanPct: number,
+  longBondPct: number,
+  capitalPct: number,
+  rateShock: number,
+  withdrawPct: number
+): BankStressResult {
+  const capRatio = Math.max(0.5, capitalPct) / 100
+  const totalAssets = deposits / (1 - capRatio)
+  const loans = totalAssets * loanPct / 100
+  const longBonds = totalAssets * longBondPct / 100
+  const reserves = Math.max(0, totalAssets - loans - longBonds)
+  const capital = totalAssets * capRatio
+  // HTM 浮亏 ≈ 长债规模 × 利率冲击 × 久期(假设 5)
+  const htmLoss = longBonds * rateShock / 100 * 5
+  const realCapital = capital - htmLoss
+  const cet1Ratio = totalAssets > 0 ? realCapital / totalAssets * 100 : 0
+  const withdraw = deposits * withdrawPct / 100
+  const lcr = withdraw > 0 ? reserves / withdraw * 100 : 999
+
+  let collapseRisk: BankStressResult['collapseRisk'] = 'safe'
+  if (cet1Ratio < 0) collapseRisk = 'capital_breach'
+  else if (lcr < 100) collapseRisk = 'liquidity_run'
+  else if (cet1Ratio < 4 || lcr < 130) collapseRisk = 'warning'
+
+  return {
+    totalAssets, loans, longBonds, reserves, capital,
+    htmLoss, realCapital, cet1Ratio, lcr, collapseRisk
+  }
+}
+
 // 第 8 章 信息不对称分析
 // 输入:三个 0-100 的指标
 //   asymmetry = 信息不对称度

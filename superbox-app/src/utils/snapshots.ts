@@ -86,6 +86,56 @@ export const ch4Snapshots: Record<string, Ch4Snapshot> = {
   }
 }
 
+/* ===== 第 9 章 银行压力测试 ===== */
+export interface Ch9Snapshot {
+  deposits: number     // 十亿美元
+  loanPct: number
+  longBondPct: number
+  capitalPct: number
+  rateShock: number
+  withdrawPct: number
+  note: string
+  flash?: boolean
+  predict?: PredictDef
+}
+
+export const ch9Snapshots: Record<string, Ch9Snapshot> = {
+  'normal': {
+    deposits: 100, loanPct: 55, longBondPct: 15, capitalPct: 10, rateShock: 0, withdrawPct: 5,
+    note: '正常运营银行:55% 贷款 + 15% 长债 + 30% 准备金/短期资产,资本 10%。Fed 不动 + 提款正常。这是 Basel 标准下的健康银行。'
+  },
+  '2008': {
+    deposits: 100, loanPct: 30, longBondPct: 5, capitalPct: 3, rateShock: 0, withdrawPct: 15,
+    note: '2008.9 雷曼前夜:杠杆 30+ 倍(资本仅 3%),大量投行 RMBS/CDO 风险敞口。一旦客户撤资即资本击穿。'
+  },
+  '2023': {
+    deposits: 100, loanPct: 35, longBondPct: 40, capitalPct: 8, rateShock: 4, withdrawPct: 25,
+    note: '⚠️ 2023.3 SVB:长债占比 40%(异常高,典型 15%)+ 客户高度集中科技行业 → Fed 加息 4% 撕开 HTM 浮亏 + 储户集中提款 25%。账面看起来正常,真实资本被击穿。',
+    flash: true,
+    predict: {
+      title: '你即将切换到「2023 SVB」',
+      question: 'SVB 倒闭前看起来"正常":CET1 ~12%,LCR > 100%,无会计欺诈。为什么 48 小时倒闭?',
+      options: [
+        '经营违法',
+        '资本本来就不足,只是隐瞒',
+        'HTM 长债浮亏 + 客户集中 + 利率冲击 = 真实资本被击穿',
+        '监管查不出来'
+      ],
+      correctIdx: 2,
+      revealHeadline: '隐性风险公式:HTM + 客户集中 + 利率冲击',
+      revealMsg: 'SVB 持有大量长期国债(HTM 不计市价)。Fed 加息让这些国债浮亏 ~$15B,但账面看不出。客户集中(科技公司,90% 存款超 FDIC $250K 限额)→ 风声一来集中提款 → 被迫卖 HTM 浮亏变实亏 → 资本一夜击穿。教学点:看资产负债表,不只看账面数字,还要看*利率敏感度*和*客户结构*。Basel III 后 Fed 在监管中增加了"未实现损益"维度。'
+    }
+  },
+  '2024cre': {
+    deposits: 80, loanPct: 60, longBondPct: 10, capitalPct: 9, rateShock: 2, withdrawPct: 8,
+    note: '2024 区域银行 + 商业地产敞口:贷款占比高(60%),其中商业地产占大头。Fed 加息让商业地产违约率上升 → 拨备压力 → 利润压缩。慢性危机模式。'
+  },
+  'today': {
+    deposits: 100, loanPct: 50, longBondPct: 12, capitalPct: 12, rateShock: 1, withdrawPct: 6,
+    note: '今天:SVB 后监管收紧 + 银行主动降低长债占比。资本充足率上升,流动性储备增加。"修复后"健康水位。'
+  }
+}
+
 /* ===== 第 8 章 信息不对称 ===== */
 export interface Ch8Snapshot {
   asymmetry: number    // 0-100
