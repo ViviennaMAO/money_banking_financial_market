@@ -80,6 +80,22 @@ export function realRate(nominalRate: number, inflation: number): number {
   return (1 + nominalRate) / (1 + inflation) - 1
 }
 
+// 第 7 章 戈登增长模型
+// P = D / (r - g),其中 D 是下一期分红
+//   r 必要回报率必须 > g 永续增长率,否则模型失效
+export function gordonPrice(D: number, g: number, r: number): number {
+  const gDec = g / 100
+  const rDec = r / 100
+  if (rDec - gDec < 0.0001) return Infinity
+  return D / (rDec - gDec)
+}
+
+// 反向求隐含增长率(给定市场价 P,推 g)
+export function impliedGrowth(P: number, D: number, r: number): number {
+  if (P <= 0) return 0
+  return (r / 100 - D / P) * 100
+}
+
 // 第 5 章 利率行为 · 费雪分解
 // 名义利率 = 实际利率 + 通胀预期 + 风险/期限溢价 + Fed 政策调整
 //   - 实际利率 r* (可贷资金均衡)

@@ -86,6 +86,54 @@ export const ch4Snapshots: Record<string, Ch4Snapshot> = {
   }
 }
 
+/* ===== 第 7 章 戈登增长模型 + EMH ===== */
+export interface Ch7Snapshot {
+  D: number       // 下一期分红
+  g: number       // 永续增长率(%)
+  r: number       // 必要回报率(%)
+  marketPrice: number // 实际市场价(用于反推隐含增长)
+  note: string
+  flash?: boolean
+  predict?: PredictDef
+}
+
+export const ch7Snapshots: Record<string, Ch7Snapshot> = {
+  '1999': {
+    D: 1, g: 18, r: 8, marketPrice: 200,
+    note: '⚠️ 1999.12 dotcom 泡沫:互联网股票 PE 100+,隐含永续增长率 20%+。但 GDP 长期 ~3% — 数学上不可能。这就是泡沫。',
+    flash: true,
+    predict: {
+      title: '你即将切换到「1999 dotcom 泡沫」',
+      question: '1999 互联网股票 PE 飙到 100+。按戈登模型反推,需要假设永续增长率多少才能支撑这个估值?',
+      options: [
+        'g = 5%(温和增长)',
+        'g = 10%(科技公司常态)',
+        'g = 15%(高速期)',
+        'g = 20%+(违反 GDP 增长极限)'
+      ],
+      correctIdx: 3,
+      revealHeadline: '需要 g = 20%+,违反 GDP 增长极限',
+      revealMsg: 'GDP 长期增长 ~3%。任何公司永续增长率超过 GDP 增长 → 终极意味着这家公司将来比整个经济还大,数学上不可能。1999 dotcom 估值的"隐含 g"就是这种荒谬数字。这是戈登模型反推泡沫的经典案例。2024 部分 AI 股估值要小心同样的陷阱。'
+    }
+  },
+  '2008': {
+    D: 2, g: 2, r: 12, marketPrice: 20,
+    note: '2008.10 雷曼:风险溢价飙升 → r 升 → P 暴跌(分母 r-g 变大)。这是利率渠道传导到股价的教科书案例。'
+  },
+  '2010': {
+    D: 2, g: 5, r: 6, marketPrice: 200,
+    note: '2010-2014 QE:Fed 把无风险利率压到 0,r 大幅下降 → 股票折现率低 → P 攀升。"低利率 = 高估值"的根源。'
+  },
+  '2024': {
+    D: 4, g: 12, r: 9, marketPrice: 130,
+    note: '2024 AI 牛市:NVDA 类股票分红低 + 高增长预期。试试调 g 看 P 怎么动 — AI 概念是否真值得 g=12%?'
+  },
+  'today': {
+    D: 3, g: 4, r: 8, marketPrice: 75,
+    note: '今天:回归正常水位。D=3, g=4%, r=8% → P ≈ 75。这是"成熟蓝筹股"的典型估值。'
+  }
+}
+
 /* ===== 第 5 章 利率行为 ===== */
 export interface Ch5Snapshot {
   realRate: number

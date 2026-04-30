@@ -69,7 +69,8 @@ export const parts: Part[] = [
       { num: 7, title: '股票市场、理性预期与有效市场假说', emoji: '📉',
         brief: '戈登增长 + EMH 三种形式',
         difficulty: 3, duration: '12 分钟',
-        implemented: true, pagePath: generic(7), tier: 'basic' }
+        implemented: true, pagePath: '/pages/ch7/index', tier: 'mvp',
+        hook: '1999 dotcom 隐含 g=20%+,数学上比 GDP 还大 — 泡沫的本质' }
     ]
   },
   {
