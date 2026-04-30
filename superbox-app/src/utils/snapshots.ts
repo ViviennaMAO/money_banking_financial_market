@@ -86,6 +86,53 @@ export const ch4Snapshots: Record<string, Ch4Snapshot> = {
   }
 }
 
+/* ===== 第 8 章 信息不对称 ===== */
+export interface Ch8Snapshot {
+  asymmetry: number    // 0-100
+  monitoring: number   // 0-100
+  screening: number    // 0-100(高=筛选成本高)
+  note: string
+  flash?: boolean
+  predict?: PredictDef
+}
+
+export const ch8Snapshots: Record<string, Ch8Snapshot> = {
+  '2008': {
+    asymmetry: 88, monitoring: 22, screening: 78,
+    note: '2008 次贷危机:MBS 嵌套 CDO 嵌套 CDS,谁也不知道真实风险 → 银行间停止借贷 → TED spread 飙到史上最高。逆向选择极致。'
+  },
+  '2023': {
+    asymmetry: 75, monitoring: 35, screening: 50,
+    note: '⚠️ 2023.3 SVB 倒闭:经典挤兑被压缩到 48 小时 — 因为信息传播速度被 Twitter/银行 App 加速。',
+    flash: true,
+    predict: {
+      title: '你即将切换到「2023 SVB 倒闭」',
+      question: 'SVB 在 48 小时内被挤兑。1907 第一次教科书级挤兑发生时,完成需要数周。为什么 2023 这么快?',
+      options: [
+        '银行经营更差',
+        '信息不对称更严重',
+        '监管失败',
+        '数字时代 + 社交媒体让信息传播速度远超经典模型'
+      ],
+      correctIdx: 3,
+      revealHeadline: '数字时代信息传递速度 >> 经典模型',
+      revealMsg: '1907 经典挤兑发生在物理银行外,排队需要时间。2023 SVB:科技公司 CEO 群里一条消息 → 数小时全网扩散 → 银行 App 一键转账 → 48 小时蒸发 $42B 存款。教学点:经典信息不对称模型仍对,但参数(传递速度)需要重新校准。这就是为什么 2023 后 Fed 要更快出手 BTFP。'
+    }
+  },
+  '2014': {
+    asymmetry: 92, monitoring: 12, screening: 85,
+    note: '2014-2018 中国 P2P 爆雷:监管滞后 + 信息几乎为零 → 平台跑路 → 投资者血本无归。教科书级"无监管下的市场崩溃"。'
+  },
+  '2002': {
+    asymmetry: 60, monitoring: 28, screening: 45,
+    note: '2002 SOX 法案前:安然(Enron)/世通(WorldCom)虚假账目 → 主-代理问题失控。SOX 后大幅强化外部审计监督。'
+  },
+  'today': {
+    asymmetry: 38, monitoring: 72, screening: 32,
+    note: '今天:监管+科技减少了部分信息差(实时披露+大数据风控)。但社交媒体也加速了挤兑速度。是双刃剑。'
+  }
+}
+
 /* ===== 第 7 章 戈登增长模型 + EMH ===== */
 export interface Ch7Snapshot {
   D: number       // 下一期分红

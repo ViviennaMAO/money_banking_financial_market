@@ -80,6 +80,42 @@ export function realRate(nominalRate: number, inflation: number): number {
   return (1 + nominalRate) / (1 + inflation) - 1
 }
 
+// 第 8 章 信息不对称分析
+// 输入:三个 0-100 的指标
+//   asymmetry = 信息不对称度
+//   monitoring = 监督机制强度
+//   screening = 筛选成本(低=便于筛选)
+// 输出:市场效率 + 主导问题
+export type AsymmetryProblem = 'adverse_selection' | 'moral_hazard' | 'principal_agent' | 'balanced'
+
+export interface InfoAsymmetryResult {
+  marketEfficiency: number   // 0-100
+  dominant: AsymmetryProblem
+  collapsed: boolean
+}
+
+export function infoAsymmetryAnalysis(
+  asymmetry: number,
+  monitoring: number,
+  screening: number
+): InfoAsymmetryResult {
+  const screeningEase = 100 - screening
+  // 简化:不对称 - 监督帮助 - 筛选便利度
+  const raw = 100 - asymmetry + monitoring * 0.6 + screeningEase * 0.3
+  const efficiency = Math.max(0, Math.min(100, raw / 1.9))
+
+  let dominant: AsymmetryProblem = 'balanced'
+  if (asymmetry > 65 && screening > 55) dominant = 'adverse_selection'
+  else if (monitoring < 45 && asymmetry > 45) dominant = 'moral_hazard'
+  else if (screening > 60 && monitoring < 60) dominant = 'principal_agent'
+
+  return {
+    marketEfficiency: efficiency,
+    dominant,
+    collapsed: efficiency < 28
+  }
+}
+
 // 第 7 章 戈登增长模型
 // P = D / (r - g),其中 D 是下一期分红
 //   r 必要回报率必须 > g 永续增长率,否则模型失效
