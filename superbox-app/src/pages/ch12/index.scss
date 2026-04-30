@@ -1,0 +1,252 @@
+.ch12 {
+  padding: 32rpx 28rpx 80rpx;
+  height: 100vh;
+  box-sizing: border-box;
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 24rpx;
+}
+
+.page-title { font-size: 36rpx; font-weight: 600; color: #e6edf3; }
+.page-meta { font-size: 22rpx; color: #8b8fa8; }
+
+/* 危机介绍 */
+.crisis-card {
+  margin-top: 24rpx;
+  padding: 24rpx;
+  background: rgba(28, 34, 54, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 24rpx;
+}
+
+.crisis-row {
+  display: flex;
+  gap: 16rpx;
+  align-items: flex-start;
+}
+
+.crisis-emoji {
+  font-size: 64rpx;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.crisis-name {
+  display: block;
+  font-size: 30rpx;
+  color: #e6edf3;
+  font-weight: 500;
+  margin-bottom: 6rpx;
+}
+
+.crisis-intro {
+  display: block;
+  font-size: 22rpx;
+  color: rgba(230, 237, 243, 0.7);
+  line-height: 1.6;
+}
+
+/* 时间轴 */
+.timeline-card {
+  margin-top: 24rpx;
+  padding: 28rpx;
+  background: rgba(28, 34, 54, 0.55);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  border-radius: 24rpx;
+}
+
+.timeline-tag {
+  display: block;
+  font-size: 22rpx;
+  color: #ef4444;
+  margin-bottom: 16rpx;
+}
+
+.progress-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 12rpx;
+}
+
+.progress-value {
+  font-size: 36rpx;
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  color: #ef4444;
+}
+
+.progress-stage {
+  font-size: 24rpx;
+  color: #e6edf3;
+  font-weight: 500;
+}
+
+.stages-row {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20rpx;
+  padding-top: 20rpx;
+  border-top: 1px dashed rgba(255, 255, 255, 0.08);
+}
+
+.stage-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8rpx;
+  flex: 1;
+}
+
+.stage-label {
+  font-size: 18rpx;
+  color: #8b8fa8;
+  text-align: center;
+}
+
+.stage-dot {
+  width: 16rpx;
+  height: 16rpx;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.stage-cell.active .stage-dot {
+  width: 24rpx;
+  height: 24rpx;
+  box-shadow: 0 0 0 6rpx rgba(255, 255, 255, 0.05);
+}
+
+.stage-cell.st-pre.active .stage-dot { background: #8b8fa8; }
+.stage-cell.st-1.active .stage-dot { background: #f59e0b; }
+.stage-cell.st-2.active .stage-dot { background: #ef4444; box-shadow: 0 0 0 6rpx rgba(239, 68, 68, 0.2); }
+.stage-cell.st-3.active .stage-dot { background: #a78bfa; }
+.stage-cell.st-rec.active .stage-dot { background: #10b981; }
+
+.stage-cell.active .stage-label {
+  color: #e6edf3;
+  font-weight: 500;
+}
+
+/* 指标网格 */
+.indicators-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12rpx;
+  margin-top: 24rpx;
+}
+
+.ind-card {
+  padding: 20rpx;
+  background: rgba(28, 34, 54, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 16rpx;
+}
+
+.ind-card.ind-bad { border-color: rgba(239, 68, 68, 0.4); background: rgba(239, 68, 68, 0.06); }
+.ind-card.ind-warn { border-color: rgba(245, 158, 11, 0.4); background: rgba(245, 158, 11, 0.06); }
+.ind-card.ind-good { border-color: rgba(16, 185, 129, 0.3); background: rgba(16, 185, 129, 0.04); }
+.ind-card.ind-resp { border-color: rgba(59, 130, 246, 0.4); background: rgba(59, 130, 246, 0.06); }
+.ind-card.ind-neu { border-color: rgba(255, 255, 255, 0.05); }
+
+.ind-label {
+  display: block;
+  font-size: 20rpx;
+  color: #8b8fa8;
+  margin-bottom: 6rpx;
+}
+
+.ind-value {
+  display: block;
+  font-size: 32rpx;
+  font-family: ui-monospace, Menlo, monospace;
+  color: #e6edf3;
+  line-height: 1.1;
+}
+
+.ind-bad .ind-value { color: #ef4444; }
+.ind-warn .ind-value { color: #f59e0b; }
+.ind-good .ind-value { color: #10b981; }
+.ind-resp .ind-value { color: #3b82f6; }
+
+/* 事件 */
+.event-card {
+  margin-top: 20rpx;
+  padding: 20rpx 24rpx;
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.06), transparent);
+  border: 1px solid rgba(245, 158, 11, 0.25);
+  border-radius: 20rpx;
+}
+
+.event-tag {
+  display: block;
+  font-size: 22rpx;
+  color: #f59e0b;
+  margin-bottom: 8rpx;
+}
+
+.event-note {
+  display: block;
+  font-size: 24rpx;
+  color: #e6edf3;
+  line-height: 1.6;
+}
+
+/* 三阶段教学卡 */
+.framework-card {
+  margin-top: 24rpx;
+  padding: 28rpx;
+  background: rgba(167, 139, 250, 0.05);
+  border: 1px solid rgba(167, 139, 250, 0.2);
+  border-radius: 24rpx;
+}
+
+.framework-tag {
+  display: block;
+  font-size: 22rpx;
+  color: #a78bfa;
+  margin-bottom: 16rpx;
+  font-weight: 500;
+}
+
+.fw-item {
+  display: flex;
+  gap: 16rpx;
+  align-items: flex-start;
+  padding: 14rpx 0;
+}
+
+.fw-num {
+  flex-shrink: 0;
+  width: 36rpx;
+  height: 36rpx;
+  border-radius: 50%;
+  font-size: 22rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  margin-top: 4rpx;
+  color: #fff;
+}
+
+.st-1-color { background: rgba(245, 158, 11, 0.5); }
+.st-2-color { background: rgba(239, 68, 68, 0.6); }
+.st-3-color { background: rgba(167, 139, 250, 0.6); }
+
+.fw-body { flex: 1; display: flex; flex-direction: column; gap: 4rpx; }
+.fw-title { font-size: 26rpx; font-weight: 500; color: #e6edf3; }
+.fw-desc { font-size: 22rpx; color: rgba(230, 237, 243, 0.75); line-height: 1.6; }
+.fw-emp { font-size: 22rpx; color: #f59e0b; margin-top: 6rpx; line-height: 1.6; }
+
+.hint {
+  display: block;
+  margin-top: 24rpx;
+  padding: 0 8rpx;
+  font-size: 22rpx;
+  color: #8b8fa8;
+  line-height: 1.6;
+}

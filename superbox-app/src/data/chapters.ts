@@ -97,7 +97,8 @@ export const parts: Part[] = [
       { num: 12, title: '金融危机', emoji: '🔥',
         brief: '危机三阶段 · 2008 / 2020 / 2023 案例',
         difficulty: 4, duration: '15 分钟',
-        implemented: true, pagePath: generic(12), tier: 'basic' }
+        implemented: true, pagePath: '/pages/ch12/index', tier: 'mvp',
+        hook: '2020 疫情跳过阶段三 — Fed 极速救助打破米什金经典框架' }
     ]
   },
   {

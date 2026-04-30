@@ -80,6 +80,34 @@ export function realRate(nominalRate: number, inflation: number): number {
   return (1 + nominalRate) / (1 + inflation) - 1
 }
 
+// 第 12 章 危机时序帧插值
+// 在两个相邻 frame 之间线性插值(progress 0-100)
+import type { CrisisFrame } from '../data/ch12-crises'
+
+export function interpolateCrisis(frames: CrisisFrame[], progress: number): CrisisFrame {
+  const p = Math.max(0, Math.min(100, progress))
+  // 找到相邻两帧
+  for (let i = 0; i < frames.length - 1; i++) {
+    const a = frames[i]
+    const b = frames[i + 1]
+    if (p >= a.progress && p <= b.progress) {
+      const t = (p - a.progress) / Math.max(1, b.progress - a.progress)
+      return {
+        progress: p,
+        creditSpread: a.creditSpread + (b.creditSpread - a.creditSpread) * t,
+        vix: a.vix + (b.vix - a.vix) * t,
+        bankFailures: a.bankFailures + (b.bankFailures - a.bankFailures) * t,
+        fedResponse: a.fedResponse + (b.fedResponse - a.fedResponse) * t,
+        // 阶段标签:用接近的那一帧
+        stage: t < 0.5 ? a.stage : b.stage,
+        stageLabel: t < 0.5 ? a.stageLabel : b.stageLabel,
+        eventNote: t < 0.5 ? a.eventNote : b.eventNote
+      }
+    }
+  }
+  return frames[frames.length - 1]
+}
+
 // 第 9 章 银行压力测试
 // 输入(占比为 0-100):
 //   deposits 总存款(单位:十亿)
