@@ -80,6 +80,32 @@ export function realRate(nominalRate: number, inflation: number): number {
   return (1 + nominalRate) / (1 + inflation) - 1
 }
 
+// 第 5 章 利率行为 · 费雪分解
+// 名义利率 = 实际利率 + 通胀预期 + 风险/期限溢价 + Fed 政策调整
+//   - 实际利率 r* (可贷资金均衡)
+//   - 通胀预期 π_e(费雪效应)
+//   - 风险溢价 ρ(信用 / 期限)
+//   - Fed 调整(流动性偏好视角下,Fed 通过 OMO / IORB 推/拉)
+export interface RateBreakdown {
+  realRate: number
+  inflationExpect: number
+  riskPremium: number
+  fedAdjust: number
+  nominal: number
+}
+
+export function decomposeRate(
+  r: number, piE: number, rho: number, fed: number
+): RateBreakdown {
+  return {
+    realRate: r,
+    inflationExpect: piE,
+    riskPremium: rho,
+    fedAdjust: fed,
+    nominal: r + piE + rho + fed
+  }
+}
+
 // 第 6 章 收益率曲线
 // 模型:y(t) = shortEnd + (longEnd - shortEnd) × w + curveBow × 4w(1-w)
 //   其中 w = t/30(期限权重)

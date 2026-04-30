@@ -1,0 +1,214 @@
+.ch5 {
+  padding: 32rpx 28rpx 80rpx;
+  height: 100vh;
+  box-sizing: border-box;
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 24rpx;
+}
+
+.page-title { font-size: 36rpx; font-weight: 600; color: #e6edf3; }
+.page-meta { font-size: 22rpx; color: #8b8fa8; }
+
+.output {
+  margin-top: 24rpx;
+  padding: 28rpx;
+  background: rgba(28, 34, 54, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 24rpx;
+}
+
+.output.flash { animation: flashRed 0.7s ease 3; }
+@keyframes flashRed {
+  0%, 100% { background: rgba(28, 34, 54, 0.55); border-color: rgba(255,255,255,0.05); }
+  50% { background: rgba(239, 68, 68, 0.18); border-color: rgba(239, 68, 68, 0.4); }
+}
+
+.output-label { display: block; font-size: 22rpx; color: #8b8fa8; }
+.output-big {
+  display: block;
+  font-size: 64rpx;
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  color: #e6edf3;
+  line-height: 1;
+  margin-top: 8rpx;
+}
+.output-formula {
+  display: block;
+  font-size: 22rpx;
+  color: #8b8fa8;
+  margin-top: 8rpx;
+  font-family: ui-monospace, Menlo, monospace;
+}
+
+.comp-stack {
+  margin-top: 24rpx;
+  padding-top: 24rpx;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 14rpx;
+}
+
+.comp-row {
+  display: grid;
+  grid-template-columns: 200rpx 1fr 110rpx;
+  gap: 16rpx;
+  align-items: center;
+}
+
+.comp-label {
+  font-size: 22rpx;
+  line-height: 1.4;
+}
+
+.comp-bar-wrap {
+  height: 16rpx;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8rpx;
+  overflow: hidden;
+}
+
+.comp-bar {
+  height: 100%;
+  border-radius: 8rpx;
+  transition: width 0.3s;
+}
+
+.comp-bar.neg { background: linear-gradient(90deg, currentColor, currentColor) !important; opacity: 0.5; }
+
+.comp-value {
+  font-size: 22rpx;
+  font-family: ui-monospace, Menlo, monospace;
+  text-align: right;
+}
+
+.comp-real { color: #10b981; }
+.comp-real.comp-bar { background: #10b981; }
+.comp-pi { color: #ef4444; }
+.comp-pi.comp-bar { background: #ef4444; }
+.comp-rho { color: #f59e0b; }
+.comp-rho.comp-bar { background: #f59e0b; }
+.comp-fed { color: #3b82f6; }
+.comp-fed.comp-bar { background: #3b82f6; }
+
+.panel {
+  margin-top: 24rpx;
+  padding: 28rpx;
+  background: rgba(28, 34, 54, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 24rpx;
+  display: flex;
+  flex-direction: column;
+  gap: 8rpx;
+}
+
+.panel-tag {
+  font-size: 22rpx;
+  color: #8b8fa8;
+  margin-bottom: 8rpx;
+}
+
+.output-note {
+  display: block;
+  margin-top: 24rpx;
+  padding: 24rpx 28rpx;
+  background: rgba(245, 158, 11, 0.06);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  border-radius: 24rpx;
+  font-size: 24rpx;
+  color: #f59e0b;
+  line-height: 1.7;
+}
+
+/* 双视角 */
+.dual-card {
+  margin-top: 24rpx;
+  padding: 28rpx;
+  background: rgba(167, 139, 250, 0.05);
+  border: 1px solid rgba(167, 139, 250, 0.2);
+  border-radius: 24rpx;
+}
+
+.dual-tag {
+  display: block;
+  font-size: 22rpx;
+  color: #a78bfa;
+  margin-bottom: 16rpx;
+  font-weight: 500;
+}
+
+.dual-row {
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+}
+
+.dual-box {
+  padding: 20rpx;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 16rpx;
+}
+
+.dual-lf {
+  background: rgba(16, 185, 129, 0.04);
+  border-color: rgba(16, 185, 129, 0.2);
+}
+
+.dual-lp {
+  background: rgba(59, 130, 246, 0.04);
+  border-color: rgba(59, 130, 246, 0.2);
+}
+
+.dual-title {
+  display: block;
+  font-size: 26rpx;
+  font-weight: 500;
+  color: #e6edf3;
+  margin-bottom: 8rpx;
+}
+
+.dual-text {
+  display: block;
+  font-size: 22rpx;
+  color: rgba(230, 237, 243, 0.8);
+  line-height: 1.6;
+  margin-bottom: 12rpx;
+}
+
+.dual-now {
+  display: block;
+  font-size: 22rpx;
+  color: #e6edf3;
+  padding-top: 10rpx;
+  border-top: 1px dashed rgba(255, 255, 255, 0.1);
+  font-style: italic;
+}
+
+.dual-lf .dual-now { color: #10b981; }
+.dual-lp .dual-now { color: #3b82f6; }
+
+.dual-note {
+  display: block;
+  margin-top: 16rpx;
+  padding-top: 16rpx;
+  border-top: 1px solid rgba(167, 139, 250, 0.15);
+  font-size: 22rpx;
+  color: rgba(167, 139, 250, 0.85);
+  line-height: 1.6;
+}
+
+.emp { color: #e6edf3; font-weight: 500; }
+
+.hint {
+  display: block;
+  margin-top: 24rpx;
+  padding: 0 8rpx;
+  font-size: 22rpx;
+  color: #8b8fa8;
+  line-height: 1.6;
+}

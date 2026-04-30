@@ -86,6 +86,54 @@ export const ch4Snapshots: Record<string, Ch4Snapshot> = {
   }
 }
 
+/* ===== 第 5 章 利率行为 ===== */
+export interface Ch5Snapshot {
+  realRate: number
+  inflationExpect: number
+  riskPremium: number
+  fedAdjust: number
+  note: string
+  flash?: boolean
+  predict?: PredictDef
+}
+
+export const ch5Snapshots: Record<string, Ch5Snapshot> = {
+  '1981': {
+    realRate: 2, inflationExpect: 10, riskPremium: 1, fedAdjust: 1,
+    note: '1981 沃尔克紧缩巅峰:π_e 高位失锚 → 名义利率被推到 14%。这就是高通胀环境下的费雪效应。'
+  },
+  '2008': {
+    realRate: 0, inflationExpect: 2, riskPremium: 3, fedAdjust: -1,
+    note: '2008.10 雷曼:风险溢价飙升(避险持币),Fed 紧急降息救市。流动性偏好视角主导:大家想持现金,Fed 投放流动性满足。'
+  },
+  '2010': {
+    realRate: -1, inflationExpect: 2, riskPremium: 0.5, fedAdjust: -1.5,
+    note: '2010-2014 QE:实际利率为负(财政抑制),Fed 通过 QE 进一步压低长端 → 流动性偏好视角的"流动性陷阱"特征。'
+  },
+  '2022': {
+    realRate: 0, inflationExpect: 2, riskPremium: 0.5, fedAdjust: 0,
+    note: '⚠️ 2022.3 通胀冲击起点:Fed 还没加息,但通胀预期从 2% 飙升。下面看费雪效应如何独立推高名义利率。',
+    flash: true,
+    predict: {
+      title: '你即将切换到「2022 通胀冲击」',
+      question: '2022.3 之前 Fed 还没正式加息,但 π_e 从 2% 飙到 4%。10Y 国债收益率应该?',
+      options: [
+        '没变化(Fed 没动,利率不动)',
+        '小幅上升 +50bp',
+        '大幅上升 +200bp+(费雪效应)',
+        '反而下降(衰退预期)'
+      ],
+      correctIdx: 2,
+      revealHeadline: '大幅上升 +200bp+ — 费雪效应',
+      revealMsg: '实际利率不变,名义利率几乎完全反映通胀预期上升 — 这就是费雪效应。Fed 还没加息,10Y 已飙 200bp+。教学点:**通胀预期是利率的主要推手,Fed 只是其中一个因素**。后续 Fed 才被迫加息追赶。'
+    }
+  },
+  'today': {
+    realRate: 1.5, inflationExpect: 2.5, riskPremium: 0.5, fedAdjust: 0,
+    note: '今天:实际利率 +1.5%(2008 后高位),通胀预期回到 2.5%,Fed 中性。这是"正常水位"的样子。'
+  }
+}
+
 /* ===== 第 6 章 收益率曲线 ===== */
 export interface Ch6Snapshot {
   shortEnd: number      // 2Y 短端
