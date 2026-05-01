@@ -86,6 +86,54 @@ export const ch4Snapshots: Record<string, Ch4Snapshot> = {
   }
 }
 
+/* ===== 第 19 章 货币需求 MV=PY ===== */
+export interface Ch19Snapshot {
+  m: number       // M2 万亿
+  v: number       // V 速度
+  p: number       // 价格指数
+  y: number       // 实际 GDP 万亿
+  note: string
+  flash?: boolean
+  predict?: PredictDef
+}
+
+export const ch19Snapshots: Record<string, Ch19Snapshot> = {
+  '1960s': {
+    m: 0.4, v: 4.0, p: 0.2, y: 8,
+    note: '1960s 数量论时代:V 稳定在 4 左右(那时 M 用 M1)。Friedman 认为 V 是稳定函数,数量论可预测通胀。这是数量论的"鼎盛期"。'
+  },
+  '1980s': {
+    m: 1.6, v: 1.95, p: 0.5, y: 6.3,
+    note: '1980s 沃尔克紧缩:M 增速放缓,但通胀下降 + 实际 GDP 反弹。V 适度上升(高利率 + 持币机会成本上升)。'
+  },
+  '2008': {
+    m: 21, v: 1.4, p: 1.0, y: 21,
+    note: '⚠️ 2008-2014 QE:M2 从 8 → 12T(+50%),CPI 只 +1.7%/年。V 从 2.0 跌到 1.4(-30%)直接抵消了 M 增长 → MV 缓增 = PY 缓增。',
+    flash: true,
+    predict: {
+      title: '你即将切换到「2008-2014 QE 期」',
+      question: 'Friedman 说"通胀就是货币现象 — 印多少钱,通胀涨多少"。但 2008-2014 美国 M2 +50%,CPI 只 +1.7%/年。原因?',
+      options: [
+        'Fed 数据撒谎',
+        'M2 没真的增加',
+        '货币流通速度 V 大幅下降抵消了 M 增长',
+        '通胀数据错'
+      ],
+      correctIdx: 2,
+      revealHeadline: 'V 暴跌 30% 抵消了 M 增长',
+      revealMsg: '**MV = PY 是会计恒等式,不是行为方程**。当 V 不稳定,数量论失效。2008-2014 V 从 2.0 跌到 1.4(下降 30%),抵消了 M2 +50% 的影响。原因:① 危机后家庭/企业去杠杆,持币不消费;② 银行准备金锁住不放贷(联系第 14 章 m 砸到 1);③ 利率到 0,持币机会成本极低。**Friedman 假设 V 稳定 — 这个假设短期不成立**。教学点:数量论是"长期渐近真理",短期 V 波动可让 M 与 P 关系完全失效。'
+    }
+  },
+  '2022': {
+    m: 21.7, v: 1.55, p: 1.18, y: 22,
+    note: '2022 通胀:M2 从 18 飙到 21.7(2020-2021 +25%),V 触底回升到 1.55,P 从 1.0 → 1.18(累积 18%)。V 部分恢复 + M 增长 → CPI 飙到 9.1%。'
+  },
+  'today': {
+    m: 21, v: 1.7, p: 1.22, y: 25,
+    note: '今天:M2 平稳,V 接近 1.7(略低于历史均值)。P 累积上涨,Y 增长。MV ≈ PY 大致平衡。'
+  }
+}
+
 /* ===== 第 24 章 通胀 4 机制 ===== */
 export interface Ch24Snapshot {
   m2Growth: number

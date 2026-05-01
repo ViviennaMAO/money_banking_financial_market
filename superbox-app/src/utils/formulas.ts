@@ -80,6 +80,29 @@ export function realRate(nominalRate: number, inflation: number): number {
   return (1 + nominalRate) / (1 + inflation) - 1
 }
 
+// 第 19 章 MV = PY 货币数量方程
+export interface MvpyResult {
+  m: number
+  v: number
+  p: number
+  y: number
+  mvSide: number
+  pySide: number
+  isBalanced: boolean
+  imbalance: number
+}
+
+export function mvpyCheck(m: number, v: number, p: number, y: number): MvpyResult {
+  const mvSide = m * v
+  const pySide = p * y
+  const imbalance = mvSide - pySide
+  return {
+    m, v, p, y, mvSide, pySide,
+    isBalanced: Math.abs(imbalance) < 1.0,
+    imbalance
+  }
+}
+
 // 第 24 章 通胀 4 机制拆解
 // 通胀 = 基础 + 货币贡献 + 需求贡献 + 供给贡献 + 预期贡献
 export interface InflationComponent {

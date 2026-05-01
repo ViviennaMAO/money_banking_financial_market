@@ -1,0 +1,259 @@
+.ch19 {
+  padding: 32rpx 28rpx 80rpx;
+  height: 100vh;
+  box-sizing: border-box;
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 24rpx;
+}
+
+.page-title { font-size: 36rpx; font-weight: 600; color: #e6edf3; }
+.page-meta { font-size: 22rpx; color: #8b8fa8; }
+
+/* 平衡卡 */
+.balance-card {
+  margin-top: 24rpx;
+  padding: 28rpx;
+  background: rgba(28, 34, 54, 0.55);
+  border: 1px solid;
+  border-radius: 24rpx;
+  transition: background 0.3s, border-color 0.3s;
+}
+
+.balance-card.bal-ok { border-color: rgba(16, 185, 129, 0.3); }
+.balance-card.bal-off { border-color: rgba(245, 158, 11, 0.4); }
+
+.balance-card.flash { animation: flashRed 0.7s ease 3; }
+@keyframes flashRed {
+  0%, 100% { background: rgba(28, 34, 54, 0.55); }
+  50% { background: rgba(239, 68, 68, 0.18); }
+}
+
+.balance-tag {
+  display: block;
+  font-size: 22rpx;
+  color: #8b8fa8;
+  margin-bottom: 16rpx;
+}
+
+.side-row {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+}
+
+.side {
+  flex: 1;
+  padding: 18rpx 16rpx;
+  border-radius: 16rpx;
+  text-align: center;
+}
+
+.side-left {
+  background: rgba(59, 130, 246, 0.06);
+  border: 1px solid rgba(59, 130, 246, 0.25);
+}
+
+.side-right {
+  background: rgba(245, 158, 11, 0.06);
+  border: 1px solid rgba(245, 158, 11, 0.25);
+}
+
+.side-label {
+  display: block;
+  font-size: 22rpx;
+  color: #8b8fa8;
+  margin-bottom: 4rpx;
+}
+
+.side-formula {
+  display: block;
+  font-size: 22rpx;
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  color: rgba(230, 237, 243, 0.7);
+  margin-bottom: 6rpx;
+}
+
+.side-value {
+  display: block;
+  font-size: 44rpx;
+  font-family: ui-monospace, Menlo, monospace;
+  line-height: 1;
+}
+
+.side-left .side-value { color: #3b82f6; }
+.side-right .side-value { color: #f59e0b; }
+
+.side-mini {
+  display: block;
+  font-size: 18rpx;
+  color: #8b8fa8;
+  margin-top: 4rpx;
+}
+
+.equals {
+  font-size: 48rpx;
+  font-family: ui-monospace, Menlo, monospace;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.equals.bal-ok { color: #10b981; }
+.equals.bal-off { color: #ef4444; }
+
+.balance-row {
+  margin-top: 20rpx;
+  padding: 14rpx 18rpx;
+  border-radius: 12rpx;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.balance-row.bal-ok { background: rgba(16, 185, 129, 0.1); }
+.balance-row.bal-off { background: rgba(245, 158, 11, 0.12); }
+
+.balance-label { font-size: 24rpx; font-weight: 500; }
+.bal-ok .balance-label { color: #10b981; }
+.bal-off .balance-label { color: #f59e0b; }
+
+.balance-imbalance {
+  font-size: 22rpx;
+  font-family: ui-monospace, Menlo, monospace;
+  color: rgba(230, 237, 243, 0.85);
+}
+
+.ch19-note {
+  display: block;
+  margin-top: 24rpx;
+  padding: 24rpx;
+  background: rgba(245, 158, 11, 0.06);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  border-radius: 24rpx;
+  font-size: 24rpx;
+  color: #f59e0b;
+  line-height: 1.7;
+}
+
+.panel {
+  margin-top: 24rpx;
+  padding: 28rpx;
+  background: rgba(28, 34, 54, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 24rpx;
+  display: flex;
+  flex-direction: column;
+  gap: 8rpx;
+}
+
+.panel-tag {
+  font-size: 22rpx;
+  color: #8b8fa8;
+  margin-bottom: 8rpx;
+}
+
+.hint-box {
+  margin-top: 16rpx;
+  padding: 16rpx 20rpx;
+  background: rgba(255, 255, 255, 0.03);
+  border-left: 4rpx solid #06b6d4;
+  border-radius: 8rpx;
+}
+
+.hint-text {
+  font-size: 20rpx;
+  color: rgba(230, 237, 243, 0.75);
+  line-height: 1.7;
+}
+
+/* 动机理论 */
+.motives-card {
+  margin-top: 24rpx;
+  padding: 28rpx;
+  background: rgba(167, 139, 250, 0.05);
+  border: 1px solid rgba(167, 139, 250, 0.2);
+  border-radius: 24rpx;
+}
+
+.motives-tag {
+  display: block;
+  font-size: 22rpx;
+  color: #a78bfa;
+  margin-bottom: 16rpx;
+  font-weight: 500;
+}
+
+.motive-item {
+  display: flex;
+  gap: 14rpx;
+  align-items: flex-start;
+  padding: 14rpx 0;
+  border-bottom: 1px dashed rgba(167, 139, 250, 0.12);
+  &:last-child { border-bottom: none; }
+}
+
+.motive-emoji { font-size: 36rpx; line-height: 1; flex-shrink: 0; width: 50rpx; text-align: center; }
+.motive-body { flex: 1; display: flex; flex-direction: column; gap: 4rpx; }
+.motive-name { font-size: 26rpx; font-weight: 500; color: #e6edf3; }
+.motive-desc { font-size: 22rpx; color: rgba(230, 237, 243, 0.75); line-height: 1.6; }
+.motive-effect { font-size: 20rpx; color: #a78bfa; line-height: 1.5; margin-top: 2rpx; }
+
+/* Friedman 失败 */
+.friedman-collapse {
+  margin-top: 24rpx;
+  padding: 28rpx;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 24rpx;
+}
+
+.fc-tag {
+  display: block;
+  font-size: 22rpx;
+  color: #e6edf3;
+  margin-bottom: 14rpx;
+  font-weight: 500;
+}
+
+.fc-text {
+  display: block;
+  font-size: 22rpx;
+  color: rgba(230, 237, 243, 0.85);
+  line-height: 1.7;
+  margin-bottom: 12rpx;
+}
+
+.fc-text-bad {
+  display: block;
+  font-size: 22rpx;
+  color: rgba(230, 237, 243, 0.85);
+  line-height: 1.7;
+  margin-bottom: 12rpx;
+  padding: 12rpx 16rpx;
+  background: rgba(239, 68, 68, 0.06);
+  border-left: 4rpx solid #ef4444;
+  border-radius: 8rpx;
+}
+
+.fc-conclusion {
+  display: block;
+  font-size: 22rpx;
+  color: #10b981;
+  line-height: 1.7;
+  padding: 12rpx 16rpx;
+  background: rgba(16, 185, 129, 0.06);
+  border-radius: 8rpx;
+}
+
+.hint {
+  display: block;
+  margin-top: 24rpx;
+  padding: 0 8rpx;
+  font-size: 22rpx;
+  color: #8b8fa8;
+  line-height: 1.6;
+}
