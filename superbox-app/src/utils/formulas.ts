@@ -80,6 +80,66 @@ export function realRate(nominalRate: number, inflation: number): number {
   return (1 + nominalRate) / (1 + inflation) - 1
 }
 
+// 第 23 章 货币政策 5 大传导渠道
+// 给定 Fed 行动 + 经济状态,计算每个渠道的"传导强度"(0-100)
+// 5 渠道:
+//   1 利率渠道 — Fed 利率 → 投资 / 消费
+//   2 资产价格 — 利率 → 股 / 房 → 财富效应
+//   3 信贷渠道 — 银行愿不愿放贷
+//   4 资产负债表 — 借款人净值 → 信用可获得
+//   5 流动性效应 — 消费者去/加杠杆
+export interface Channel {
+  key: string
+  name: string
+  strength: number      // 0-100 该渠道当前传导强度
+}
+
+export interface ChannelResult {
+  channels: Channel[]
+  total: number          // 总政策有效性 0-100
+  dominant: string       // 当前最强渠道
+  weakest: string        // 当前最弱渠道
+}
+
+export function channelTransmission(
+  fedAction: number,        // -100(强紧缩)~ +100(强宽松)
+  bankHealth: number,       // 0-100 银行体系健康
+  borrowerNetworth: number, // 0-100 借款人资产负债表
+  ratePosition: number,     // 当前利率位置 0-100(0 = ZLB, 100 = 高位)
+  consumerLeverage: number  // 0-100 消费者杠杆水平
+): ChannelResult {
+  // 简化:每个渠道的强度 = f(渠道相关因素)
+  const fedAbs = Math.abs(fedAction)
+  // 1 利率渠道:在高利率位置传导强,ZLB 时弱
+  const c1 = Math.min(100, fedAbs * 0.5 + ratePosition * 0.4)
+  // 2 资产价格:在 bull market 时强(简化为 ratePosition + bankHealth)
+  const c2 = Math.min(100, fedAbs * 0.4 + (bankHealth + ratePosition) / 4)
+  // 3 信贷渠道:银行健康度直接决定
+  const c3 = Math.min(100, fedAbs * 0.3 + bankHealth * 0.7)
+  // 4 资产负债表:借款人净值
+  const c4 = Math.min(100, fedAbs * 0.3 + borrowerNetworth * 0.7)
+  // 5 流动性效应:消费者杠杆 + Fed 行动
+  const c5 = Math.min(100, fedAbs * 0.4 + (100 - consumerLeverage) * 0.5)
+
+  const channels: Channel[] = [
+    { key: 'rate',     name: '① 利率渠道',           strength: c1 },
+    { key: 'asset',    name: '② 资产价格 / 财富效应', strength: c2 },
+    { key: 'credit',   name: '③ 信贷渠道',           strength: c3 },
+    { key: 'balance',  name: '④ 资产负债表渠道',     strength: c4 },
+    { key: 'liquid',   name: '⑤ 流动性效应',         strength: c5 }
+  ]
+
+  const total = channels.reduce((sum, c) => sum + c.strength, 0) / 5
+  const sorted = [...channels].sort((a, b) => b.strength - a.strength)
+
+  return {
+    channels,
+    total,
+    dominant: sorted[0].name,
+    weakest: sorted[sorted.length - 1].name
+  }
+}
+
 // 第 22 章 AD-AS 模型
 // 简化方程:
 //   AD : Y = 100 + 5·adShift - 1.5·P     (负斜率)

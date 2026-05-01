@@ -86,6 +86,55 @@ export const ch4Snapshots: Record<string, Ch4Snapshot> = {
   }
 }
 
+/* ===== 第 23 章 货币政策 5 大传导渠道 ===== */
+export interface Ch23Snapshot {
+  fedAction: number
+  bankHealth: number
+  borrowerNetworth: number
+  ratePosition: number
+  consumerLeverage: number
+  note: string
+  flash?: boolean
+  predict?: PredictDef
+}
+
+export const ch23Snapshots: Record<string, Ch23Snapshot> = {
+  '1990s': {
+    fedAction: 30, bankHealth: 75, borrowerNetworth: 70, ratePosition: 60, consumerLeverage: 55,
+    note: '1990s 大缓和:5 大渠道全开。银行健康 + 借款人净值好 + 消费者杠杆中等。Fed 一调利率立刻传导,经典菲利普斯曲线适用。'
+  },
+  '2001': {
+    fedAction: -60, bankHealth: 70, borrowerNetworth: 60, ratePosition: 65, consumerLeverage: 60,
+    note: '2001 dotcom 后:Fed 大幅降息(6.5%→1%)。利率渠道 + 资产价格渠道有效,但信贷渠道弱(银行对科技业警惕)。最终带动房贷大潮 → 埋下 2008 种子。'
+  },
+  '2008': {
+    fedAction: -90, bankHealth: 22, borrowerNetworth: 28, ratePosition: 5, consumerLeverage: 80,
+    note: '⚠️ 2008-2014 QE 期:Fed 极致宽松($4T+)+ 利率到 ZLB。但银行不放贷 + 借款人净值崩塌 + 消费者去杠杆 → 5 个渠道里 3 个失效。',
+    flash: true,
+    predict: {
+      title: '你即将切换到「2008-2014 QE 期」',
+      question: 'Fed 把利率推到 0 + QE 万亿规模 + 7 年极致宽松。但 GDP 复苏极其缓慢,失业率 10%+ 持续。为什么?',
+      options: [
+        '财政紧缩抵消',
+        '5 大传导渠道里 3 个失效:信贷阻塞 + 资产负债表崩 + 流动性陷阱',
+        '通胀预期失锚',
+        '美元贬值'
+      ],
+      correctIdx: 1,
+      revealHeadline: '5 渠道里 3 个失效',
+      revealMsg: '利率渠道:✗ 已 ZLB,无法继续降。资产价格:○ 部分有效(QE 推高股价 + 房价)。**信贷渠道**:✗ 银行净值受损,不愿放贷。**资产负债表**:✗ 借款人净值被资产价格暴跌击穿,信用受限。**流动性效应**:✗ 消费者集体去杠杆,不借钱不消费。**Fed 把"水"灌进系统但流不到实体**——这就是为什么 QE 万亿 M2 几乎不增。教学点:**货币政策不是单一管道,是 5 通道并联。任一渠道阻塞都会减弱整体效果**。'
+    }
+  },
+  '2020': {
+    fedAction: -85, bankHealth: 75, borrowerNetworth: 75, ratePosition: 5, consumerLeverage: 65,
+    note: '2020 疫情应对:Fed 极致宽松,但银行健康 + 借款人净值高(2008 后修复)+ 财政直接发钱(stimulus check)绕过银行。这次 5 渠道有 4 个工作 → V 型反弹。'
+  },
+  '2022': {
+    fedAction: 90, bankHealth: 80, borrowerNetworth: 70, ratePosition: 95, consumerLeverage: 60,
+    note: '2022 加息周期:Fed 极致紧缩(525bp/16 个月)。5 渠道全开,传导效率高 → 但因起点位置极高 + 财政赤字大,通胀仍 9.1% 才回落。'
+  }
+}
+
 /* ===== 第 22 章 AD-AS 模型 ===== */
 export interface Ch22Snapshot {
   adShift: number
