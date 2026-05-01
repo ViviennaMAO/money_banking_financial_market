@@ -1,0 +1,281 @@
+.ch15 {
+  padding: 32rpx 28rpx 80rpx;
+  height: 100vh;
+  box-sizing: border-box;
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 24rpx;
+}
+
+.page-title { font-size: 36rpx; font-weight: 600; color: #e6edf3; }
+.page-meta { font-size: 22rpx; color: #8b8fa8; }
+
+/* 利率走廊可视化 */
+.corridor-card {
+  margin-top: 24rpx;
+  padding: 28rpx;
+  background: rgba(28, 34, 54, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 24rpx;
+}
+
+.corridor-card.flash { animation: flashRed 0.7s ease 3; }
+@keyframes flashRed {
+  0%, 100% { background: rgba(28, 34, 54, 0.55); border-color: rgba(255,255,255,0.05); }
+  50% { background: rgba(239, 68, 68, 0.18); border-color: rgba(239, 68, 68, 0.4); }
+}
+
+.corridor-tag {
+  display: block;
+  font-size: 22rpx;
+  color: #8b8fa8;
+  margin-bottom: 16rpx;
+}
+
+.corridor-viz {
+  position: relative;
+  height: 280rpx;
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 12rpx;
+  margin-bottom: 16rpx;
+}
+
+.cor-line {
+  position: absolute;
+  left: 16rpx;
+  right: 16rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4rpx 12rpx;
+  border-radius: 8rpx;
+  height: 40rpx;
+  margin-top: -20rpx;
+  transition: top 0.3s, background 0.3s;
+}
+
+.cor-iorb {
+  background: rgba(239, 68, 68, 0.15);
+  border: 1px solid rgba(239, 68, 68, 0.4);
+}
+
+.cor-effr {
+  background: rgba(59, 130, 246, 0.2);
+  border: 2px solid rgba(59, 130, 246, 0.6);
+  z-index: 2;
+}
+
+.cor-onrrp {
+  background: rgba(16, 185, 129, 0.15);
+  border: 1px solid rgba(16, 185, 129, 0.4);
+}
+
+.cor-repo {
+  background: rgba(245, 158, 11, 0.12);
+  border: 1px dashed rgba(245, 158, 11, 0.4);
+}
+
+.cor-repo-spike {
+  background: rgba(239, 68, 68, 0.3);
+  border: 2px solid rgba(239, 68, 68, 0.8);
+  animation: pulse 1s infinite;
+  z-index: 3;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+.cor-label {
+  font-size: 22rpx;
+  color: #e6edf3;
+  font-weight: 500;
+}
+
+.cor-iorb .cor-label { color: #ef4444; }
+.cor-effr .cor-label { color: #3b82f6; }
+.cor-onrrp .cor-label { color: #10b981; }
+.cor-repo .cor-label { color: #f59e0b; }
+.cor-repo-spike .cor-label { color: #ef4444; }
+
+.cor-rate {
+  font-size: 22rpx;
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  color: #e6edf3;
+}
+
+.status-row {
+  display: flex;
+  align-items: baseline;
+  gap: 16rpx;
+  padding: 14rpx 20rpx;
+  border-radius: 12rpx;
+  border: 1px solid;
+  margin-bottom: 8rpx;
+}
+
+.cor-normal { background: rgba(16, 185, 129, 0.06); border-color: rgba(16, 185, 129, 0.3); }
+.cor-tight { background: rgba(245, 158, 11, 0.06); border-color: rgba(245, 158, 11, 0.3); }
+.cor-broken { background: rgba(239, 68, 68, 0.08); border-color: rgba(239, 68, 68, 0.4); }
+
+.status-big {
+  font-size: 26rpx;
+  font-weight: 500;
+}
+
+.status-pct {
+  font-size: 22rpx;
+  color: #8b8fa8;
+  margin-left: auto;
+}
+
+.status-desc {
+  display: block;
+  font-size: 22rpx;
+  color: rgba(230, 237, 243, 0.85);
+  line-height: 1.6;
+  padding: 0 4rpx;
+}
+
+.ch15-note {
+  display: block;
+  margin-top: 24rpx;
+  padding: 24rpx;
+  background: rgba(245, 158, 11, 0.06);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  border-radius: 24rpx;
+  font-size: 24rpx;
+  color: #f59e0b;
+  line-height: 1.7;
+}
+
+.panel {
+  margin-top: 24rpx;
+  padding: 28rpx;
+  background: rgba(28, 34, 54, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 24rpx;
+  display: flex;
+  flex-direction: column;
+  gap: 8rpx;
+}
+
+.panel-tag {
+  font-size: 22rpx;
+  color: #8b8fa8;
+  margin-bottom: 8rpx;
+}
+
+/* IORB 合并提示 */
+.iorb-callout {
+  margin-top: 24rpx;
+  padding: 24rpx;
+  background: linear-gradient(135deg, rgba(167, 139, 250, 0.06), rgba(167, 139, 250, 0.02));
+  border: 1px solid rgba(167, 139, 250, 0.3);
+  border-radius: 24rpx;
+}
+
+.iorb-tag {
+  display: block;
+  font-size: 22rpx;
+  color: #a78bfa;
+  margin-bottom: 10rpx;
+  font-weight: 500;
+}
+
+.iorb-text {
+  display: block;
+  font-size: 22rpx;
+  color: rgba(230, 237, 243, 0.85);
+  line-height: 1.7;
+}
+
+.iorb-text .emp { color: #a78bfa; font-weight: 500; }
+
+/* 工具箱时间轴 */
+.timeline-card {
+  margin-top: 24rpx;
+  padding: 28rpx;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 24rpx;
+}
+
+.timeline-tag {
+  display: block;
+  font-size: 22rpx;
+  color: #e6edf3;
+  margin-bottom: 16rpx;
+  font-weight: 500;
+}
+
+.tl-item {
+  display: flex;
+  gap: 14rpx;
+  padding: 14rpx 0;
+  border-bottom: 1px dashed rgba(255, 255, 255, 0.06);
+  &:last-child { border-bottom: none; }
+}
+
+.tl-item.tl-emp {
+  background: linear-gradient(90deg, rgba(245, 158, 11, 0.04), transparent);
+  margin: 0 -16rpx;
+  padding: 14rpx 16rpx;
+  border-radius: 8rpx;
+}
+
+.tl-left {
+  flex-shrink: 0;
+  width: 100rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.tl-emoji {
+  font-size: 32rpx;
+  line-height: 1;
+}
+
+.tl-year {
+  font-size: 18rpx;
+  color: #8b8fa8;
+  font-family: ui-monospace, Menlo, monospace;
+  margin-top: 4rpx;
+}
+
+.tl-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4rpx;
+}
+
+.tl-name {
+  font-size: 26rpx;
+  color: #e6edf3;
+  font-weight: 500;
+}
+
+.tl-emp .tl-name { color: #f59e0b; }
+
+.tl-desc {
+  font-size: 22rpx;
+  color: rgba(230, 237, 243, 0.7);
+  line-height: 1.6;
+}
+
+.hint {
+  display: block;
+  margin-top: 24rpx;
+  padding: 0 8rpx;
+  font-size: 22rpx;
+  color: #8b8fa8;
+  line-height: 1.6;
+}

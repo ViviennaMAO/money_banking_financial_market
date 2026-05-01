@@ -1,0 +1,4 @@
+export default definePageConfig({
+  navigationBarTitleText: '第 15 章 · Fed 工具箱',
+  enableShareAppMessage: true
+})

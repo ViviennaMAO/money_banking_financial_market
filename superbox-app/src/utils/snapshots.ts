@@ -86,6 +86,53 @@ export const ch4Snapshots: Record<string, Ch4Snapshot> = {
   }
 }
 
+/* ===== 第 15 章 Fed 利率走廊 ===== */
+export interface Ch15Snapshot {
+  iorb: number
+  onRrp: number
+  reserves: number      // $T
+  note: string
+  flash?: boolean
+  predict?: PredictDef
+}
+
+export const ch15Snapshots: Record<string, Ch15Snapshot> = {
+  '2008': {
+    iorb: 0.25, onRrp: 0.05, reserves: 0.05,
+    note: '2008 危机前:OMO 是唯一工具,准备金水平极低($0.05T)。Fed 直接用 OMO 微调短端,模型简单但风险大。'
+  },
+  '2014': {
+    iorb: 0.25, onRrp: 0.05, reserves: 2.6,
+    note: '2014 充足准备金期:QE3 后准备金 $2.6T,Fed 用 IOER + ON RRP 形成利率走廊。这是新制度的实际起点。'
+  },
+  '2019': {
+    iorb: 2.10, onRrp: 1.95, reserves: 1.4,
+    note: '⚠️ 2019.9 REPO 危机:Fed 缩表过头,准备金降到 $1.4T(< 充足水平)。隔夜 REPO 飙到 10%,IORB 失控。',
+    flash: true,
+    predict: {
+      title: '你即将切换到「2019.9 REPO 危机」',
+      question: '2019.9 美国 REPO 利率突然飙到 10%(正常 2%)。IORB 是 2.10%,Fed 理论上能用 IORB 锁住短期利率。为什么走廊崩了?',
+      options: [
+        'Fed 操作错误',
+        '银行联手操纵',
+        'Fed 缩表过头,银行准备金 $1.4T(< 充足水平 $3T),走廊失锚',
+        '监管失败'
+      ],
+      correctIdx: 2,
+      revealHeadline: '准备金不足让 IORB 失去控制力',
+      revealMsg: '教科书:"Fed 用 IORB 锁住短期利率"。现实:**当银行准备金供给不足时 IORB 不再起作用**。Fed 此前 2018-2019 缩表把准备金从 $2.6T 缩到 $1.4T(过激),银行间流动性紧张 → 隔夜借钱市场崩 → REPO 飙到 10%。Fed 几小时内紧急启动"非 QE"扩表,后又创设 SRF(2021.7)永久解决。教学点:**利率走廊只在"充足准备金"制度下有效**——这是教材没说清的关键边界条件。'
+    }
+  },
+  '2024': {
+    iorb: 4.65, onRrp: 4.55, reserves: 3.3,
+    note: '2024:Fed 已完成 2 年 QT,准备金从 $4.5T 降到 $3.3T。主动降速 + SRF 兜底,精确控制走廊。**注意:IORB 是 2021.7 合并 IOER+IORR 后的单一工具**(教材未更新)。'
+  },
+  'today': {
+    iorb: 4.40, onRrp: 4.30, reserves: 3.0,
+    note: '今天:Fed 降息但仍 QT。准备金接近"充足"下限。SRF 已待命,可应对类似 2019.9 的场景。'
+  }
+}
+
 /* ===== 第 16 章 泰勒规则 ===== */
 export interface Ch16Snapshot {
   inflation: number

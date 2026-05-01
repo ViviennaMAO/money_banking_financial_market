@@ -80,6 +80,49 @@ export function realRate(nominalRate: number, inflation: number): number {
   return (1 + nominalRate) / (1 + inflation) - 1
 }
 
+// 第 15 章 Fed 利率走廊
+// 模型:
+//   - 准备金充足(reserves ≥ 目标 $3T):EFFR 在 IORB 与 ON RRP 之间,接近 ON RRP
+//   - 紧张(70-100%):EFFR 接近 IORB
+//   - 严重短缺(<70%):IORB 失去控制,EFFR 与 REPO 突破上限(2019.9 状态)
+export interface CorridorResult {
+  effr: number              // EFFR 估算(%)
+  repo: number              // REPO 利率(%)
+  corridor: 'normal' | 'tight' | 'broken'
+  reservesPct: number       // 准备金占目标 %
+}
+
+export function rateCorridor(
+  iorb: number,
+  onRrp: number,
+  reserves: number,
+  reservesTarget: number = 3.0
+): CorridorResult {
+  const ratio = reserves / reservesTarget
+  let effr: number, repo: number
+  let corridor: CorridorResult['corridor']
+
+  if (ratio >= 1.0) {
+    // 充足:EFFR 在走廊内,接近 ON RRP + 部分溢价
+    effr = onRrp + (iorb - onRrp) * 0.5
+    repo = effr - 0.02
+    corridor = 'normal'
+  } else if (ratio >= 0.7) {
+    // 紧张:EFFR 接近 IORB
+    effr = iorb - (1 - ratio) * 0.3
+    repo = effr + 0.1
+    corridor = 'tight'
+  } else {
+    // 严重短缺:走廊失控
+    const spike = (0.7 - ratio) / 0.7
+    effr = iorb + spike * 1.0
+    repo = iorb + spike * 6.0  // REPO 飙升(2019.9 模式)
+    corridor = 'broken'
+  }
+
+  return { effr, repo, corridor, reservesPct: ratio * 100 }
+}
+
 // 第 16 章 泰勒规则
 // i* = r* + π + α(π - π*) + β(y - y*)
 //   r* 自然实际利率
