@@ -92,6 +92,175 @@
   margin-top: 32rpx;
 }
 
+/* ===== 5 大功能卡片(水平大卡) ===== */
+.feature-card {
+  margin-top: 16rpx;
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+  padding: 22rpx 24rpx;
+  background: rgba(28, 34, 54, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 18rpx;
+  &:active { background: rgba(255, 255, 255, 0.04); }
+}
+
+.feature-card.feature-blue { border-color: rgba(59, 130, 246, 0.35); }
+.feature-card.feature-amber { border-color: rgba(245, 158, 11, 0.35); }
+.feature-card.feature-purple { border-color: rgba(167, 139, 250, 0.35); }
+.feature-card.feature-green { border-color: rgba(16, 185, 129, 0.35); }
+
+.feat-emoji {
+  font-size: 56rpx;
+  line-height: 1;
+  flex-shrink: 0;
+  width: 70rpx;
+  text-align: center;
+}
+
+.feat-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.feat-title {
+  display: block;
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #e6edf3;
+  line-height: 1.3;
+}
+
+.feature-blue .feat-title { color: #3b82f6; }
+.feature-amber .feat-title { color: #f59e0b; }
+.feature-purple .feat-title { color: #a78bfa; }
+.feature-green .feat-title { color: #10b981; }
+
+.feat-desc {
+  display: block;
+  font-size: 22rpx;
+  color: rgba(230, 237, 243, 0.8);
+  line-height: 1.5;
+  margin-top: 4rpx;
+}
+
+.feat-meta {
+  display: block;
+  font-size: 19rpx;
+  color: rgba(230, 237, 243, 0.5);
+  margin-top: 4rpx;
+}
+
+.feat-arrow {
+  font-size: 32rpx;
+  flex-shrink: 0;
+  font-weight: 300;
+}
+
+.feature-blue .feat-arrow { color: #3b82f6; }
+.feature-amber .feat-arrow { color: #f59e0b; }
+.feature-purple .feat-arrow { color: #a78bfa; }
+.feature-green .feat-arrow { color: #10b981; }
+
+/* ===== 因子看板(跨小程序跳转) ===== */
+.boards-block {
+  margin-top: 16rpx;
+}
+
+.boards-head {
+  margin-bottom: 12rpx;
+  padding: 0 4rpx;
+}
+
+.boards-title {
+  display: block;
+  font-size: 22rpx;
+  font-weight: 600;
+  color: #e6edf3;
+}
+
+.boards-desc {
+  display: block;
+  font-size: 18rpx;
+  color: rgba(230, 237, 243, 0.5);
+  margin-top: 2rpx;
+}
+
+.boards-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10rpx;
+}
+
+.board-card {
+  display: flex;
+  align-items: center;
+  gap: 14rpx;
+  padding: 16rpx 18rpx;
+  background: rgba(28, 34, 54, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 14rpx;
+  &:active { transform: scale(0.99); }
+}
+
+.board-card.bd-green {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.10), rgba(16, 185, 129, 0.04));
+  border-color: rgba(16, 185, 129, 0.3);
+}
+
+.board-card.bd-orange {
+  background: linear-gradient(135deg, rgba(249, 115, 22, 0.10), rgba(249, 115, 22, 0.04));
+  border-color: rgba(249, 115, 22, 0.3);
+}
+
+.board-card.bd-yellow {
+  background: linear-gradient(135deg, rgba(234, 179, 8, 0.10), rgba(234, 179, 8, 0.04));
+  border-color: rgba(234, 179, 8, 0.3);
+}
+
+.board-card.board-pending {
+  opacity: 0.62;
+}
+
+.board-emoji {
+  font-size: 40rpx;
+  line-height: 1;
+  flex-shrink: 0;
+  width: 56rpx;
+  text-align: center;
+}
+
+.board-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.board-name {
+  display: block;
+  font-size: 24rpx;
+  font-weight: 500;
+  color: #e6edf3;
+  line-height: 1.3;
+}
+
+.board-desc {
+  display: block;
+  font-size: 18rpx;
+  color: rgba(230, 237, 243, 0.55);
+  margin-top: 3rpx;
+  line-height: 1.4;
+}
+
+.board-arrow {
+  font-size: 28rpx;
+  color: rgba(230, 237, 243, 0.65);
+  flex-shrink: 0;
+}
+
+.bd-green .board-arrow { color: #10b981; }
+.bd-orange .board-arrow { color: #f97316; }
+.bd-yellow .board-arrow { color: #eab308; }
+
 /* ===== 进度迷你卡片 ===== */
 .progress-mini {
   margin-top: 24rpx;

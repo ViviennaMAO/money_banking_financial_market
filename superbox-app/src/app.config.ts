@@ -41,5 +41,11 @@ export default defineAppConfig({
     navigationBarTitleText: '货币金融学互动学习',
     navigationBarTextStyle: 'white',
     backgroundColor: '#0a0e1a'
-  }
+  },
+  /* 跨小程序跳转白名单 — 把"美元/通胀/黄金因子看板"的 appId 填进来后,首页"今日核心数据"卡片才能跳过去 */
+  navigateToMiniProgramAppIdList: [
+    // 'wxXXXXXXXXXXXXXXX',  // 美元因子看板
+    // 'wxXXXXXXXXXXXXXXX',  // 通胀因子看板
+    // 'wxXXXXXXXXXXXXXXX',  // 黄金因子看板
+  ]
 })
