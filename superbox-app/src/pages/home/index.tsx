@@ -6,14 +6,12 @@ import { totalTerms } from '../../data/glossary'
 import { learningPaths } from '../../data/learning-paths'
 import { newsTop10 } from '../../data/news'
 import { totalQuizCount } from '../../data/chapter-quiz'
-import { factorBoards, isBoardConfigured, type FactorBoard } from '../../data/factor-boards'
 import {
   loadProgress,
   completedCount,
   dueReviews,
   type ProgressData
 } from '../../utils/progress'
-import LiveData from '../../components/LiveData'
 import './index.scss'
 
 export default function Home() {
@@ -38,32 +36,6 @@ export default function Home() {
   function navigateToChapter(ch: Chapter) {
     const url = ch.pagePath || `/pages/chapter/index?ch=${ch.num}`
     Taro.navigateTo({ url })
-  }
-
-  /** 跳转到外部小程序看板 */
-  function openBoard(board: FactorBoard) {
-    if (!isBoardConfigured(board)) {
-      Taro.showModal({
-        title: `${board.emoji} ${board.name}`,
-        content: '该看板的小程序 appId 还未配置。在 src/data/factor-boards.ts 填入目标 appId,并把同一 appId 加到 app.config.ts 的 navigateToMiniProgramAppIdList 后即可跳转。',
-        showCancel: false,
-        confirmText: '我知道了'
-      })
-      return
-    }
-    Taro.navigateToMiniProgram({
-      appId: board.appId,
-      path: board.path,
-      extraData: board.extraData,
-      envVersion: 'release',
-      fail: err => {
-        Taro.showToast({
-          title: `跳转失败:${err?.errMsg || '未知'}`,
-          icon: 'none',
-          duration: 2500
-        })
-      }
-    })
   }
 
   const completed = progress ? completedCount(progress) : 0
@@ -264,47 +236,6 @@ export default function Home() {
               </View>
             </View>
           ))}
-        </View>
-      </View>
-
-      {/* ==================== 7. 今日核心数据 + 因子看板 ==================== */}
-      <View className='live-block'>
-        <LiveData
-          title='📡 今日核心数据'
-          subtitle='FRED 数据每日同步 · 让米什金的理论看到此刻的市场'
-          tiles={[
-            { id: 'DFF', label: '联邦基金利率' },
-            { id: 'DGS10', label: '10 年期美债' },
-            { id: 'T10Y2Y', label: '2s10s 利差' },
-            { id: 'MORTGAGE30US', label: '30Y 房贷利率' }
-          ]}
-        />
-
-        {/* 因子看板入口 — 跳转外部小程序 */}
-        <View className='boards-block'>
-          <View className='boards-head'>
-            <Text className='boards-title'>🔗 延伸因子看板</Text>
-            <Text className='boards-desc'>跳转到对应小程序,看更细粒度的实时因子</Text>
-          </View>
-          <View className='boards-list'>
-            {factorBoards.map(b => {
-              const configured = isBoardConfigured(b)
-              return (
-                <View
-                  key={b.id}
-                  className={`board-card ${b.color} ${configured ? '' : 'board-pending'}`}
-                  onClick={() => openBoard(b)}
-                >
-                  <Text className='board-emoji'>{b.emoji}</Text>
-                  <View className='board-body'>
-                    <Text className='board-name'>{b.name}</Text>
-                    <Text className='board-desc'>{b.desc}</Text>
-                  </View>
-                  <Text className='board-arrow'>{configured ? '↗' : '⚙'}</Text>
-                </View>
-              )
-            })}
-          </View>
         </View>
       </View>
 
