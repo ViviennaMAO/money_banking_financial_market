@@ -86,6 +86,62 @@ export const ch4Snapshots: Record<string, Ch4Snapshot> = {
   }
 }
 
+/* ===== 第 16 章 泰勒规则 ===== */
+export interface Ch16Snapshot {
+  inflation: number
+  inflationTarget: number
+  outputGap: number
+  naturalRate: number
+  alpha: number
+  beta: number
+  actualFFR: number       // 实际联邦基金利率
+  note: string
+  flash?: boolean
+  predict?: PredictDef
+}
+
+export const ch16Snapshots: Record<string, Ch16Snapshot> = {
+  '1981': {
+    inflation: 10, inflationTarget: 2, outputGap: -2, naturalRate: 0.5,
+    alpha: 1.5, beta: 0.5, actualFFR: 14,
+    note: '1981 沃尔克紧缩:通胀 10%。沃尔克用极激进 α=1.5 → 隐含利率 14%+,实际 FFR 也到 14%。"Fed 真信通胀目标"的标志。'
+  },
+  '2008': {
+    inflation: 2, inflationTarget: 2, outputGap: -4, naturalRate: 0.5,
+    alpha: 0.5, beta: 0.5, actualFFR: 1.0,
+    note: '2008 危机:通胀达标 + 产出缺口 -4%。泰勒规则要求 i* = 0.5(过松),但 ZLB 限制让实际只能到 0%。'
+  },
+  '2010': {
+    inflation: 1.5, inflationTarget: 2, outputGap: -3, naturalRate: 0.5,
+    alpha: 0.5, beta: 0.5, actualFFR: 0.25,
+    note: '2010-2014 QE 期:通胀低于目标 + 衰退后复苏。泰勒说要 i*=-0.75%,但 ZLB → Fed 用 QE 替代降息。陷阱期间泰勒规则失灵。'
+  },
+  '2022': {
+    inflation: 9.1, inflationTarget: 2, outputGap: 1, naturalRate: 0.5,
+    alpha: 0.5, beta: 0.5, actualFFR: 1.25,
+    note: '⚠️ 2022.6 通胀峰值:CPI 达 9.1%,但 Fed 才开始加息,实际 FFR 仅 1.25%。泰勒规则隐含 13%+。1980 来最大滞后。',
+    flash: true,
+    predict: {
+      title: '你即将切换到「2022.6 通胀冲击」',
+      question: '2022.6 美国 CPI 达到 9.1% 峰值,实际 FFR 还在 1.25%。按泰勒规则(α=β=0.5),Fed 应该把利率定在?',
+      options: [
+        '2.5%(温和加息)',
+        '5%(快速追赶)',
+        '7.5%(激进)',
+        '13%+(沃尔克级激进)'
+      ],
+      correctIdx: 3,
+      revealHeadline: '泰勒规则隐含 13%+ · Fed 偏离 12 个百分点',
+      revealMsg: '按泰勒:i* = 0.5 + 9.1 + 0.5×(9.1-2) + 0.5×1 = 13.7%。实际 FFR 仅 1.25%。**1980 来最大滞后**。原因:① FAIT 战略允许"暂时"超调;② 判断为暂时性供给冲击;③ 不愿激进打击就业。后果:被迫以 1980 来最快速度追赶加息(2022.3-2023.7 共 525bp)。教学点:**FAIT 容忍超调让 Fed 反应慢**——这是该战略的内在矛盾。'
+    }
+  },
+  'today': {
+    inflation: 3, inflationTarget: 2, outputGap: 0, naturalRate: 0.5,
+    alpha: 0.5, beta: 0.5, actualFFR: 4.5,
+    note: '今天:通胀回落到 3%,Fed 已降息到 4.5%。泰勒规则:i* = 0.5 + 3 + 0.5×1 = 4%。实际略偏紧,Fed 谨慎中。'
+  }
+}
+
 /* ===== 第 9 章 银行压力测试 ===== */
 export interface Ch9Snapshot {
   deposits: number     // 十亿美元

@@ -120,7 +120,8 @@ export const parts: Part[] = [
       { num: 16, title: '货币政策操作:战略与战术', emoji: '🎯',
         brief: '泰勒规则 · FAIT · 通胀目标制',
         difficulty: 4, duration: '14 分钟',
-        implemented: true, pagePath: generic(16), tier: 'basic' }
+        implemented: true, pagePath: '/pages/ch16/index', tier: 'mvp',
+        hook: '2022 通胀 9.1%,泰勒说 13%+,Fed 实际 1.25% — 1980 来最大滞后' }
     ]
   },
   {

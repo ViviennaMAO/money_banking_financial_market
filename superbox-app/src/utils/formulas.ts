@@ -80,6 +80,34 @@ export function realRate(nominalRate: number, inflation: number): number {
   return (1 + nominalRate) / (1 + inflation) - 1
 }
 
+// 第 16 章 泰勒规则
+// i* = r* + π + α(π - π*) + β(y - y*)
+//   r* 自然实际利率
+//   π 当前通胀,π* 通胀目标(默认 2%)
+//   y - y* 产出缺口(正 = 过热,负 = 衰退)
+//   α / β 反应系数(标准 = 0.5)
+export interface TaylorRuleResult {
+  impliedRate: number     // 泰勒规则隐含利率
+  inflationGap: number    // π - π*
+  inflationContrib: number  // α × inflationGap
+  outputContrib: number     // β × outputGap
+}
+
+export function taylorRule(
+  inflation: number,
+  inflationTarget: number,
+  outputGap: number,
+  naturalRate: number,
+  alpha: number = 0.5,
+  beta: number = 0.5
+): TaylorRuleResult {
+  const inflationGap = inflation - inflationTarget
+  const inflationContrib = alpha * inflationGap
+  const outputContrib = beta * outputGap
+  const impliedRate = naturalRate + inflation + inflationContrib + outputContrib
+  return { impliedRate, inflationGap, inflationContrib, outputContrib }
+}
+
 // 第 12 章 危机时序帧插值
 // 在两个相邻 frame 之间线性插值(progress 0-100)
 import type { CrisisFrame } from '../data/ch12-crises'
