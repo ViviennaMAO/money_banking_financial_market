@@ -80,6 +80,64 @@ export function realRate(nominalRate: number, inflation: number): number {
   return (1 + nominalRate) / (1 + inflation) - 1
 }
 
+// 第 21 章 IS-LM 政策组合
+export interface PolicyMixResult {
+  fiscalEffect: number
+  monetaryEffect: number
+  totalY: number
+  totalI: number
+  combo: 'expansionary' | 'contractionary' | 'mixed_loose' | 'mixed_tight' | 'conflict' | 'neutral'
+  comboLabel: string
+  comboCls: string
+  sideEffect: string
+}
+
+export function policyMix(fiscalShift: number, monetaryShift: number): PolicyMixResult {
+  const fiscalEffect = fiscalShift * 0.4
+  const monetaryEffect = monetaryShift * 0.4
+  const totalY = fiscalEffect + monetaryEffect
+  const totalI = fiscalShift * 0.3 - monetaryShift * 0.3
+
+  let combo: PolicyMixResult['combo'] = 'neutral'
+  let comboLabel = '中性 / 微调'
+  let comboCls = 'mix-neutral'
+  let sideEffect = '政策力度温和,无明显副作用'
+
+  if (fiscalShift > 30 && monetaryShift > 30) {
+    combo = 'expansionary'
+    comboLabel = '🔥 双扩张'
+    comboCls = 'mix-expand'
+    sideEffect = '产出强劲增长 + 利率温和(双向抵消)。例:2020 疫情应对。副作用:埋下通胀种子。'
+  } else if (fiscalShift < -30 && monetaryShift < -30) {
+    combo = 'contractionary'
+    comboLabel = '❄️ 双紧缩'
+    comboCls = 'mix-contract'
+    sideEffect = '产出大幅萎缩 + 利率温和。罕见,通常危机后整顿。例:1990s 早期克林顿 + Greenspan。'
+  } else if (fiscalShift > 30 && monetaryShift < -30) {
+    combo = 'conflict'
+    comboLabel = '⚡ 冲突 · 财扩 + 货紧'
+    comboCls = 'mix-conflict'
+    sideEffect = '利率飙升 + 美元强 + 挤出私人投资 + 触发新兴市场危机。例:1981-82 里根 + 沃尔克 → LDC 危机。'
+  } else if (fiscalShift < -30 && monetaryShift > 30) {
+    combo = 'conflict'
+    comboLabel = '🌊 冲突 · 财紧 + 货宽'
+    comboCls = 'mix-conflict'
+    sideEffect = '利率被压低 + 资产价格上升。例:1990s 末期克林顿减赤 + Fed 低利率 → dotcom 泡沫种子。'
+  } else if (fiscalShift > 0 && monetaryShift > 0) {
+    combo = 'mixed_loose'
+    comboLabel = '🟢 温和宽松'
+    comboCls = 'mix-loose'
+    sideEffect = '产出温和增长,标准反衰退应对。'
+  } else if (fiscalShift < 0 && monetaryShift < 0) {
+    combo = 'mixed_tight'
+    comboLabel = '🟠 温和紧缩'
+    comboCls = 'mix-tight'
+    sideEffect = '产出适度降温,反通胀常见场景。'
+  }
+
+  return { fiscalEffect, monetaryEffect, totalY, totalI, combo, comboLabel, comboCls, sideEffect }
+}
+
 // 第 25 章 卢卡斯批判 · 政策预期模型
 // 政策有效性 = f(政策力度, 预期度, 可信度)
 //   - 完全未预期:政策 100% 有效(经典模型适用)

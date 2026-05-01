@@ -86,6 +86,52 @@ export const ch4Snapshots: Record<string, Ch4Snapshot> = {
   }
 }
 
+/* ===== 第 21 章 IS-LM 政策组合 ===== */
+export interface Ch21Snapshot {
+  fiscalShift: number
+  monetaryShift: number
+  note: string
+  flash?: boolean
+  predict?: PredictDef
+}
+
+export const ch21Snapshots: Record<string, Ch21Snapshot> = {
+  '1981': {
+    fiscalShift: 70, monetaryShift: -90,
+    note: '⚠️ 1981-82 里根 + 沃尔克:财政大幅扩张(减税 + 国防)+ 货币极致紧缩(FFR 推到 19%)。**政策冲突教科书案例** — USD 飙升 + LDC 拉美债务危机爆发。',
+    flash: true,
+    predict: {
+      title: '你即将切换到「1981-82 里根 + 沃尔克」',
+      question: '1981 里根减税 + 国防扩张(财政扩张),沃尔克把 FFR 推到 19% 反通胀(货币极紧)。这种"财扩 + 货紧"组合的最大副作用?',
+      options: [
+        '通胀失控',
+        '经济陷入大萧条',
+        'USD 飙升 + 触发拉美 LDC 债务危机',
+        '美国财政破产'
+      ],
+      correctIdx: 2,
+      revealHeadline: 'USD 飙升 + 拉美债务危机',
+      revealMsg: '1981-85 USD 升值 50%(对 G10 货币),原因:① 高利率吸引外资 ② 高增长预期。但拉美国家(墨西哥、阿根廷、巴西)用美元借钱,USD 升值意味着**还款负担飙升 50%+** → 1982.8 墨西哥违约,触发 LDC 债务危机。10 年间拉美 GDP 累计下滑,被称为"失落的十年"。**政策组合冲突的副作用从不只在国内,会通过汇率渠道传染全球**。今日 2024 美国"财政赤字 + Fed 紧缩"是同一组合的现代版。'
+    }
+  },
+  '2008': {
+    fiscalShift: 50, monetaryShift: 90,
+    note: '2008-09 双扩张:奥巴马 ARRA 财政刺激(0.8T)+ Fed QE1 + ZLB。利率被压到 0,产出温和恢复。但 ZLB 后政策力度被打折(联系第 23 章)。'
+  },
+  '1995': {
+    fiscalShift: -40, monetaryShift: 30,
+    note: '1990s 末克林顿 + Greenspan:财政减赤(预算盈余)+ 货币温和宽松。低利率推高资产价 → 1999 dotcom 泡沫种子。'
+  },
+  '2020': {
+    fiscalShift: 90, monetaryShift: 90,
+    note: '2020 疫情双扩张极致:CARES 系列 5T+ 财政 + Fed 无限 QE。两个 90% 上限组合 — 史无前例。结果:V 型反弹 + 2022 通胀 9.1%。'
+  },
+  '2024': {
+    fiscalShift: 60, monetaryShift: -70,
+    note: '2024 现状:美国财政赤字 GDP 6%(扩张)+ Fed 紧缩 5.5% / QT 进行中。"财扩 + 货紧"组合再现,长债被双向推高。'
+  }
+}
+
 /* ===== 第 25 章 卢卡斯批判 ===== */
 export interface Ch25Snapshot {
   policyStrength: number     // 政策力度
