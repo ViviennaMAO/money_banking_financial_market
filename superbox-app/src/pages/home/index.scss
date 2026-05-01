@@ -87,7 +87,78 @@
   color: #8b8fa8;
 }
 
-/* ===== MVP 三章大卡片 ===== */
+/* ===== MVP 单一入口卡 ===== */
+.mvp-entry {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 18rpx;
+  padding: 28rpx;
+  margin-top: 40rpx;
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.12), rgba(239, 68, 68, 0.08));
+  border: 1px solid rgba(245, 158, 11, 0.4);
+  border-radius: 24rpx;
+  overflow: hidden;
+  &:active {
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.18), rgba(239, 68, 68, 0.12));
+    border-color: rgba(245, 158, 11, 0.6);
+  }
+}
+
+.entry-glow {
+  position: absolute;
+  top: -40rpx;
+  right: -40rpx;
+  width: 200rpx;
+  height: 200rpx;
+  background: radial-gradient(circle, rgba(245, 158, 11, 0.15), transparent 70%);
+  pointer-events: none;
+}
+
+.entry-emoji {
+  font-size: 64rpx;
+  line-height: 1;
+  flex-shrink: 0;
+  width: 80rpx;
+  text-align: center;
+}
+
+.entry-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4rpx;
+  z-index: 1;
+}
+
+.entry-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #f59e0b;
+}
+
+.entry-desc {
+  font-size: 22rpx;
+  color: rgba(230, 237, 243, 0.85);
+  line-height: 1.5;
+  margin-top: 2rpx;
+}
+
+.entry-meta {
+  font-size: 18rpx;
+  color: rgba(245, 158, 11, 0.7);
+  margin-top: 6rpx;
+}
+
+.entry-arrow {
+  font-size: 36rpx;
+  color: #f59e0b;
+  flex-shrink: 0;
+  font-weight: 300;
+  z-index: 1;
+}
+
+/* (旧)MVP 大卡片 — 保留但不再使用 */
 .mvp-list {
   display: flex;
   flex-direction: column;

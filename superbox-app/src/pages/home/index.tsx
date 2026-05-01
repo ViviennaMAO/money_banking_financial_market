@@ -1,7 +1,7 @@
 import { View, Text, ScrollView } from '@tarojs/components'
 import { useState } from 'react'
 import Taro from '@tarojs/taro'
-import { parts, mvpChapters, totalChapters, mvpCount, basicCount, type Chapter } from '../../data/chapters'
+import { parts, totalChapters, mvpCount, type Chapter } from '../../data/chapters'
 import './index.scss'
 
 const principles = [
@@ -54,34 +54,21 @@ export default function Home() {
         </View>
       </View>
 
-      {/* MVP 三章 · 大卡片(突出反预期) */}
-      <View className='section'>
-        <View className='section-header'>
-          <Text className='section-tag'>⭐ MVP 三章 · 专属互动模拟器</Text>
-          <Text className='section-meta'>{mvpCount}/{totalChapters}</Text>
+      {/* MVP 反预期精选 · 单一入口 */}
+      <View
+        className='mvp-entry'
+        onClick={() => Taro.navigateTo({ url: '/pages/mvp/index' })}
+      >
+        <View className='entry-glow'></View>
+        <Text className='entry-emoji'>⭐</Text>
+        <View className='entry-body'>
+          <Text className='entry-title'>反预期精选</Text>
+          <Text className='entry-desc'>
+            {mvpCount} 个震撼时刻 · 教材没说但市场会教你的瞬间
+          </Text>
+          <Text className='entry-meta'>历史快照 · 预测先行 · 互动模拟器</Text>
         </View>
-        <View className='mvp-list'>
-          {mvpChapters.map(c => (
-            <View
-              key={c.num}
-              className='mvp-card'
-              onClick={() => navigateToChapter(c, 0)}
-            >
-              <View className='ch-row'>
-                <View>
-                  <Text className='ch-num'>第 {c.num} 章</Text>
-                  <Text className='ch-title'>{c.title}</Text>
-                  <Text className='ch-meta'>
-                    {c.duration} · {'⭐'.repeat(c.difficulty)}
-                  </Text>
-                </View>
-                <Text className='ch-emoji'>{c.emoji}</Text>
-              </View>
-              {c.hook ? <Text className='ch-hook'>{c.hook}</Text> : null}
-              <Text className='ch-cta'>立刻试一下 →</Text>
-            </View>
-          ))}
-        </View>
+        <Text className='entry-arrow'>→</Text>
       </View>
 
       {/* 完整目录 · 6 篇 25 章 */}
