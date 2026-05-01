@@ -78,10 +78,14 @@ async function main() {
   const series = {}
   for (const def of SERIES) {
     try {
-      const obs = await fetchSeries(def.id)
+      let obs = await fetchSeries(def.id)
       if (!obs.length) {
         console.warn(`⚠️  ${def.id} 无数据`)
         continue
+      }
+      // 单位归一:WALCL 在 FRED 是 millions of $,统一到 billions(与 M1/M2 一致)
+      if (def.id === 'WALCL') {
+        obs = obs.map(o => ({ date: o.date, value: o.value / 1000 }))
       }
       const latest = obs[obs.length - 1]
       const prev   = obs[obs.length - 2]
@@ -139,6 +143,7 @@ async function main() {
   }
 
   // Fed 资产负债表 vs 峰值 (T)
+  // WALCL 已在拉取时归一为 billions,这里转 trillions
   if (series.WALCL) {
     const valueT = round(series.WALCL.value / 1000, 2)
     derived.walclVsPeak = { value: valueT, peak: 8.96, unit: 'T', date: series.WALCL.date }
