@@ -86,6 +86,59 @@ export const ch4Snapshots: Record<string, Ch4Snapshot> = {
   }
 }
 
+/* ===== 第 18 章 国际金融体系(三元悖论) ===== */
+export type TrilemmaPick = 'fixed' | 'free' | 'independent'  // 固定汇率 / 资本自由 / 独立货币政策
+
+export interface Ch18Snapshot {
+  picks: TrilemmaPick[]    // 用户选择的两个
+  example: string          // 代表经济体
+  note: string
+  flash?: boolean
+  predict?: PredictDef
+}
+
+export const ch18Snapshots: Record<string, Ch18Snapshot> = {
+  'china': {
+    picks: ['fixed', 'independent'],
+    example: '🇨🇳 中国 · 越南 · 印度',
+    note: '制度 1:固定汇率 + 独立货币政策 + 资本管制。中国选择放弃资本自由流动,换取汇率稳定 + 货币政策独立。代价:跨境投资受限,人民币国际化受阻。'
+  },
+  'us': {
+    picks: ['free', 'independent'],
+    example: '🇺🇸 美国 · 🇯🇵 日本 · 🇨🇦 加拿大 · 🇦🇺 澳大利亚',
+    note: '制度 2:浮动汇率 + 资本自由 + 独立货币政策。多数发达国家选择放弃汇率稳定,接受汇率波动。代价:出口企业承担汇率风险,需要复杂对冲。'
+  },
+  'hk': {
+    picks: ['fixed', 'free'],
+    example: '🇭🇰 香港(联系汇率)· 🇪🇺 欧元区成员',
+    note: '制度 3:固定汇率 + 资本自由 + 放弃独立货币政策。香港 1983 起钉住 USD,完全跟随 Fed。2022 Fed 加息时港府被迫加息至 5%+,本地经济衰退,但港币稳定。**这是制度选择的代价**。'
+  },
+  'gbp1992': {
+    picks: ['fixed', 'free', 'independent'],   // 试图三个都要 — 不可能
+    example: '⚠️ 1992.9 英镑危机',
+    note: '⚠️ 1992.9.16 黑色星期三:英国试图同时维持固定汇率(ERM)+ 资本自由 + 独立货币政策。Soros 看穿矛盾大举做空,BoE 一天用 $3.4B 保卫,最终被迫退出 ERM。',
+    flash: true,
+    predict: {
+      title: '你即将切换到「1992.9 英镑危机」',
+      question: '1992.9 BoE 用尽外汇储备保卫英镑钉住马克的 ERM 制度。Soros 大举做空英镑,BoE 一天用掉 $3.4B。结果?',
+      options: [
+        'BoE 成功保卫,英镑稳定',
+        '英镑波动但留在 ERM',
+        '9.16 黑色星期三:英镑被迫退出 ERM,贬值 15%。Soros 赚 10 亿',
+        '欧元区成立提前'
+      ],
+      correctIdx: 2,
+      revealHeadline: '英镑被迫退出 ERM · Soros 赚 10 亿',
+      revealMsg: 'BoE 在 1992.9.16 终于宣布退出 ERM,英镑贬值 15%。**这是三元悖论被市场强制执行的经典案例**:英国试图同时维持(1)固定汇率(钉马克)+(2)资本自由 +(3)独立货币政策 → 不可能。Soros 看穿这个矛盾,在 BoE 弹尽粮绝时大举做空,赚了 10 亿美金。教学点:**三元悖论不是理论,是市场会强制执行的物理定律**。1997 亚洲金融危机、2015 SNB 脱钩 EUR/CHF 都是同一机制。'
+    }
+  },
+  'today': {
+    picks: ['free', 'independent'],
+    example: '默认 · 浮动汇率体系',
+    note: '今天:多数主要经济体选制度 2(浮动汇率)。但去美元化趋势让"哪种制度更好"的争论重新激烈。'
+  }
+}
+
 /* ===== 第 13 章 FOMC 点阵图 ===== */
 export interface Ch13Snapshot {
   inflationGap: number

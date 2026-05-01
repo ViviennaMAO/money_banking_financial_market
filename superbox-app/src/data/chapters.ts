@@ -137,7 +137,8 @@ export const parts: Part[] = [
       { num: 18, title: '国际金融体系', emoji: '🌏',
         brief: '美元体系 + Fed swap line + 制度演进',
         difficulty: 4, duration: '12 分钟',
-        implemented: true, pagePath: generic(18), tier: 'basic' }
+        implemented: true, pagePath: '/pages/ch18/index', tier: 'mvp',
+        hook: '1992 英镑危机 — 三元悖论是市场会强制执行的物理定律' }
     ]
   },
   {
