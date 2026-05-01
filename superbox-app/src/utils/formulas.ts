@@ -80,6 +80,51 @@ export function realRate(nominalRate: number, inflation: number): number {
   return (1 + nominalRate) / (1 + inflation) - 1
 }
 
+// 第 24 章 通胀 4 机制拆解
+// 通胀 = 基础 + 货币贡献 + 需求贡献 + 供给贡献 + 预期贡献
+export interface InflationComponent {
+  key: string
+  name: string
+  value: number
+}
+
+export interface InflationDecomp {
+  monetary: number
+  demand: number
+  supply: number
+  expect: number
+  base: number
+  total: number
+  components: InflationComponent[]
+  dominant: string
+}
+
+export function inflationDecomp(
+  m2Growth: number,
+  outputGap: number,
+  oilShock: number,
+  expectGap: number
+): InflationDecomp {
+  const monetary = Math.max(0, (m2Growth - 5) * 0.3)
+  const demand = Math.max(0, outputGap * 0.6)
+  const supply = oilShock * 0.04
+  const expect = expectGap * 0.7
+  const base = 1.5
+  const total = base + monetary + demand + supply + expect
+
+  const components: InflationComponent[] = [
+    { key: 'mon', name: '货币驱动 M', value: monetary },
+    { key: 'dem', name: '需求拉动 D', value: demand },
+    { key: 'sup', name: '供给推动 S', value: supply },
+    { key: 'exp', name: '预期驱动 E', value: expect }
+  ]
+  const sorted = [...components].sort((a, b) => Math.abs(b.value) - Math.abs(a.value))
+  return {
+    monetary, demand, supply, expect, base, total, components,
+    dominant: sorted[0].name
+  }
+}
+
 // 第 23 章 货币政策 5 大传导渠道
 // 给定 Fed 行动 + 经济状态,计算每个渠道的"传导强度"(0-100)
 // 5 渠道:

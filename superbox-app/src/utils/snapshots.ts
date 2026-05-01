@@ -86,6 +86,54 @@ export const ch4Snapshots: Record<string, Ch4Snapshot> = {
   }
 }
 
+/* ===== 第 24 章 通胀 4 机制 ===== */
+export interface Ch24Snapshot {
+  m2Growth: number
+  outputGap: number
+  oilShock: number
+  expectGap: number
+  note: string
+  flash?: boolean
+  predict?: PredictDef
+}
+
+export const ch24Snapshots: Record<string, Ch24Snapshot> = {
+  '1979': {
+    m2Growth: 10, outputGap: -1, oilShock: 120, expectGap: 6,
+    note: '1979 滞胀峰值:石油冲击主导(供给 +5%)+ 货币容忍(M2 增 10%)+ 预期失锚(+4%)= CPI 13.5%。供给冲击是核心。'
+  },
+  '1990s': {
+    m2Growth: 4, outputGap: 1, oilShock: 5, expectGap: 0,
+    note: '1990s 大缓和:4 机制全在锚定状态。M2 适度增 + 经济温和过热 + 油价稳 + 预期锚定 → CPI 2-3%。教科书"理想通胀"。'
+  },
+  '2008': {
+    m2Growth: 8, outputGap: -3, oilShock: -30, expectGap: -0.5,
+    note: '2008-2014 QE 期:M2 增 8% 看似多,但货币乘数砸到 1 → 实际"基础货币"扩张没传到通胀。需求负 + 油跌 + 预期偏低 → CPI 仅 1.7%。"印钱不通胀"案例。'
+  },
+  '2022': {
+    m2Growth: 12, outputGap: 2, oilShock: 80, expectGap: 2,
+    note: '⚠️ 2022 通胀冲击:4 机制叠加 — 货币(QE 无限)+ 需求(财政发钱)+ 供给(疫情+俄乌)+ 预期(开始失锚)→ CPI 9.1%。完美风暴。',
+    flash: true,
+    predict: {
+      title: '你即将切换到「2022 通胀冲击」',
+      question: '2022.6 美国 CPI 9.1% 创 40 年新高。最准确的归因(选最完整的)?',
+      options: [
+        '仅货币驱动(Fed 印钱)',
+        '仅供给冲击(疫情 + 俄乌)',
+        '4 机制全有,以供给 + 预期为主',
+        '与 Fed 完全无关'
+      ],
+      correctIdx: 2,
+      revealHeadline: '4 机制全有 · 以供给 + 预期为主',
+      revealMsg: '2022 通胀是**完美风暴**:① 货币(2020-2021 QE 无限 + M2 +25%);② 需求(财政 stimulus 直接发钱 5T);③ 供给(疫情供应链 + 俄乌能源);④ 预期(被"暂时性"误判 → 开始失锚)。任一单因素解释都不完整。**弗里德曼"通胀始终是货币现象"对长期对,短期太简化**。教学点:**2022 是 4 种机制叠加,只看一个机制会误判**。这就是为什么 Fed 一开始的"暂时性"判断错了——他们只看了供给侧。'
+    }
+  },
+  'today': {
+    m2Growth: 3, outputGap: 0.5, oilShock: -5, expectGap: 1,
+    note: '今天:M2 回落 + 经济温和 + 油价稳 + 预期接近锚。CPI 3% 左右,接近 Fed 2% 目标但仍在限制性区间。'
+  }
+}
+
 /* ===== 第 23 章 货币政策 5 大传导渠道 ===== */
 export interface Ch23Snapshot {
   fedAction: number
