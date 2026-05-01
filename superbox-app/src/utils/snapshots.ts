@@ -86,6 +86,53 @@ export const ch4Snapshots: Record<string, Ch4Snapshot> = {
   }
 }
 
+/* ===== 第 22 章 AD-AS 模型 ===== */
+export interface Ch22Snapshot {
+  adShift: number
+  srasShift: number
+  potentialY: number
+  note: string
+  flash?: boolean
+  predict?: PredictDef
+}
+
+export const ch22Snapshots: Record<string, Ch22Snapshot> = {
+  '1960s': {
+    adShift: 1, srasShift: 0, potentialY: 100,
+    note: '1960s 大缓和:温和 AD 增 + SRAS 平稳。经典菲利普斯曲线时期(失业↓ → 通胀↑ 权衡)。这就是 Burns/Greenspan 早期信奉的世界。'
+  },
+  '1973': {
+    adShift: 0, srasShift: 4, potentialY: 100,
+    note: '1973 OPEC 石油禁运:SRAS 大幅左移(原油从 $3 飙到 $12)。AD 几乎不动。教科书级"成本推动型通胀"——同时通胀↑+失业↑+产出↓。'
+  },
+  '1979': {
+    adShift: 1, srasShift: 8, potentialY: 100,
+    note: '⚠️ 1979 滞胀峰值:CPI 13.5%(战后最高)+ 失业 5.8% + 经济衰退。Burns 宽松货币 + 第二次石油危机叠加 → 滞胀失控。',
+    flash: true,
+    predict: {
+      title: '你即将切换到「1979 滞胀峰值」',
+      question: '1973 OPEC 石油禁运后,Fed 主席 Burns 选择"保就业"继续宽松货币。1979 美国 CPI 通胀峰值多少?',
+      options: [
+        '5%(轻度通胀)',
+        '8%(中度)',
+        '13.5%(战后最高)',
+        '20%(失控)'
+      ],
+      correctIdx: 2,
+      revealHeadline: '1979 CPI 13.5% — 战后最高',
+      revealMsg: '1979 CPI 13.5% 创战后最高,但**失业率仍 5.8%,GDP 还在缩**。这就是滞胀——经典菲利普斯曲线被打破:"失业↓→通胀↑"变成"高失业 + 高通胀"同时存在。原因:**供给冲击(石油)直接推高 SRAS,而非 AD**——经典菲利普斯只描述需求冲击。教学点:**菲利普斯曲线只在需求冲击主导时有效;供给冲击时它失效**。1979 沃尔克接手,用 20% FFR 三年才把通胀打下来(详见第 13 章)。'
+    }
+  },
+  '2008': {
+    adShift: -7, srasShift: 0, potentialY: 100,
+    note: '2008 危机:AD 大幅左移(信贷冻结 + 信心崩塌)。短期通缩压力 + 失业飙到 10%。需求冲击的教科书案例,与 1973 供给冲击形成对照。'
+  },
+  '2022': {
+    adShift: 5, srasShift: 5, potentialY: 100,
+    note: '2022 疫情通胀:AD 大幅右移(财政刺激 + QE 无限)+ SRAS 左移(供应链 + 能源)。**双向夹击 → CPI 9.1%**。这是 1979 来最复杂的通胀。'
+  }
+}
+
 /* ===== 第 18 章 国际金融体系(三元悖论) ===== */
 export type TrilemmaPick = 'fixed' | 'free' | 'independent'  // 固定汇率 / 资本自由 / 独立货币政策
 

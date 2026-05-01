@@ -80,6 +80,41 @@ export function realRate(nominalRate: number, inflation: number): number {
   return (1 + nominalRate) / (1 + inflation) - 1
 }
 
+// 第 22 章 AD-AS 模型
+// 简化方程:
+//   AD : Y = 100 + 5·adShift - 1.5·P     (负斜率)
+//   SRAS: P = 4 + srasShift + 0.3·(Y - 100)  (正斜率,短期工资粘性)
+//   LRAS: Y = potentialY                  (垂直,长期由供给决定)
+export interface ADASEquilibrium {
+  shortP: number      // 短期均衡价格水平
+  shortY: number      // 短期均衡产出
+  longP: number       // 长期均衡价格(在 LRAS 上)
+  longY: number       // = potentialY
+  outputGap: number   // shortY - potentialY(>0 过热,<0 衰退)
+  inflationPressure: 'rising' | 'falling' | 'stable'
+}
+
+export function adasEquilibrium(
+  adShift: number,
+  srasShift: number,
+  potentialY: number
+): ADASEquilibrium {
+  // 联立 AD 和 SRAS:
+  // P = (4 + srasShift + 1.5·adShift) / 1.45
+  const shortP = (4 + srasShift + 1.5 * adShift) / 1.45
+  const shortY = 100 + 5 * adShift - 1.5 * shortP
+
+  // 长期 P 在 LRAS 上(Y = potentialY)
+  const longP = (100 + 5 * adShift - potentialY) / 1.5
+
+  const outputGap = shortY - potentialY
+  let inflationPressure: ADASEquilibrium['inflationPressure'] = 'stable'
+  if (outputGap > 1) inflationPressure = 'rising'
+  else if (outputGap < -1) inflationPressure = 'falling'
+
+  return { shortP, shortY, longP, longY: potentialY, outputGap, inflationPressure }
+}
+
 // 第 13 章 FOMC 点阵图
 // 给定经济状态(通胀缺口/产出缺口/不确定性),模拟 12 位委员的点阵分布
 export interface FomcDot {

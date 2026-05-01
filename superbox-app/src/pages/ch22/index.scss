@@ -1,0 +1,272 @@
+.ch22 {
+  padding: 32rpx 28rpx 80rpx;
+  height: 100vh;
+  box-sizing: border-box;
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 24rpx;
+}
+
+.page-title { font-size: 36rpx; font-weight: 600; color: #e6edf3; }
+.page-meta { font-size: 22rpx; color: #8b8fa8; }
+
+.canvas-card {
+  margin-top: 24rpx;
+  padding: 24rpx;
+  background: rgba(28, 34, 54, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 24rpx;
+  transition: background 0.3s, border-color 0.3s;
+}
+
+.canvas-card.flash { animation: flashRed 0.7s ease 3; }
+@keyframes flashRed {
+  0%, 100% { background: rgba(28, 34, 54, 0.55); border-color: rgba(255,255,255,0.05); }
+  50% { background: rgba(239, 68, 68, 0.18); border-color: rgba(239, 68, 68, 0.4); }
+}
+
+.canvas-tag {
+  display: block;
+  font-size: 22rpx;
+  color: #8b8fa8;
+  margin-bottom: 16rpx;
+}
+
+.legend-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16rpx;
+  margin-top: 12rpx;
+  padding-top: 12rpx;
+  border-top: 1px dashed rgba(255, 255, 255, 0.08);
+}
+
+.legend-item {
+  font-size: 20rpx;
+  font-family: ui-monospace, Menlo, monospace;
+}
+
+.legend-ad { color: #3b82f6; }
+.legend-sras { color: #f59e0b; }
+.legend-lras { color: #10b981; }
+
+.eq-card {
+  margin-top: 20rpx;
+  padding: 24rpx;
+  background: rgba(28, 34, 54, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 24rpx;
+}
+
+.eq-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 16rpx;
+}
+
+.eq-label {
+  display: block;
+  font-size: 18rpx;
+  color: #8b8fa8;
+  margin-bottom: 4rpx;
+}
+
+.eq-big {
+  display: block;
+  font-size: 36rpx;
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  color: #ef4444;
+  line-height: 1;
+}
+
+.eq-mid {
+  display: block;
+  font-size: 26rpx;
+  font-family: ui-monospace, Menlo, monospace;
+  line-height: 1.1;
+}
+
+.gap-pos { color: #ef4444; }
+.gap-neg { color: #3b82f6; }
+.gap-zero { color: #10b981; }
+
+.dominant-row {
+  margin-top: 16rpx;
+  padding: 14rpx 18rpx;
+  border-radius: 16rpx;
+  border: 1px solid;
+}
+
+.d-demand { background: rgba(59, 130, 246, 0.06); border-color: rgba(59, 130, 246, 0.3); }
+.d-supply { background: rgba(239, 68, 68, 0.08); border-color: rgba(239, 68, 68, 0.4); }
+.d-mixed  { background: rgba(245, 158, 11, 0.06); border-color: rgba(245, 158, 11, 0.3); }
+
+.dom-label {
+  display: block;
+  font-size: 24rpx;
+  font-weight: 500;
+  margin-bottom: 4rpx;
+}
+
+.d-demand .dom-label { color: #3b82f6; }
+.d-supply .dom-label { color: #ef4444; }
+.d-mixed  .dom-label { color: #f59e0b; }
+
+.dom-desc {
+  display: block;
+  font-size: 20rpx;
+  color: rgba(230, 237, 243, 0.75);
+  line-height: 1.5;
+}
+
+.ch22-note {
+  display: block;
+  margin-top: 24rpx;
+  padding: 24rpx;
+  background: rgba(245, 158, 11, 0.06);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  border-radius: 24rpx;
+  font-size: 24rpx;
+  color: #f59e0b;
+  line-height: 1.7;
+}
+
+.panel {
+  margin-top: 24rpx;
+  padding: 28rpx;
+  background: rgba(28, 34, 54, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 24rpx;
+  display: flex;
+  flex-direction: column;
+  gap: 8rpx;
+}
+
+.panel-tag {
+  font-size: 22rpx;
+  color: #8b8fa8;
+  margin-bottom: 8rpx;
+}
+
+/* 冲击对比 */
+.shocks-card {
+  margin-top: 24rpx;
+  padding: 28rpx;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 24rpx;
+}
+
+.shocks-tag {
+  display: block;
+  font-size: 22rpx;
+  color: #e6edf3;
+  margin-bottom: 16rpx;
+  font-weight: 500;
+}
+
+.shock-row {
+  display: flex;
+  gap: 14rpx;
+  align-items: flex-start;
+  padding: 14rpx 16rpx;
+  border-radius: 14rpx;
+  margin-bottom: 12rpx;
+  border: 1px solid;
+  &:last-child { margin-bottom: 0; }
+}
+
+.shock-demand { background: rgba(59, 130, 246, 0.04); border-color: rgba(59, 130, 246, 0.2); }
+.shock-supply { background: rgba(239, 68, 68, 0.05); border-color: rgba(239, 68, 68, 0.3); }
+.shock-mixed  { background: rgba(245, 158, 11, 0.04); border-color: rgba(245, 158, 11, 0.25); }
+
+.shock-num {
+  flex-shrink: 0;
+  font-size: 32rpx;
+  line-height: 1;
+  width: 50rpx;
+  text-align: center;
+  margin-top: 2rpx;
+}
+
+.shock-body { flex: 1; display: flex; flex-direction: column; gap: 4rpx; }
+
+.shock-title {
+  font-size: 24rpx;
+  font-weight: 500;
+}
+
+.shock-demand .shock-title { color: #3b82f6; }
+.shock-supply .shock-title { color: #ef4444; }
+.shock-mixed  .shock-title { color: #f59e0b; }
+
+.shock-desc {
+  font-size: 22rpx;
+  color: rgba(230, 237, 243, 0.85);
+  line-height: 1.6;
+}
+
+.shock-policy {
+  font-size: 20rpx;
+  color: #10b981;
+  line-height: 1.5;
+  margin-top: 4rpx;
+}
+
+/* 菲利普斯卡 */
+.phillips-card {
+  margin-top: 24rpx;
+  padding: 28rpx;
+  background: rgba(167, 139, 250, 0.05);
+  border: 1px solid rgba(167, 139, 250, 0.2);
+  border-radius: 24rpx;
+}
+
+.phillips-tag {
+  display: block;
+  font-size: 22rpx;
+  color: #a78bfa;
+  margin-bottom: 12rpx;
+  font-weight: 500;
+}
+
+.phillips-text {
+  display: block;
+  font-size: 22rpx;
+  color: rgba(230, 237, 243, 0.85);
+  line-height: 1.7;
+  margin-bottom: 14rpx;
+}
+
+.phillips-emp {
+  display: block;
+  font-size: 22rpx;
+  color: #ef4444;
+  line-height: 1.7;
+  margin-bottom: 14rpx;
+  padding: 12rpx 16rpx;
+  background: rgba(239, 68, 68, 0.08);
+  border-left: 4rpx solid #ef4444;
+  border-radius: 8rpx;
+}
+
+.phillips-modern {
+  display: block;
+  font-size: 20rpx;
+  color: rgba(230, 237, 243, 0.7);
+  line-height: 1.7;
+  font-style: italic;
+}
+
+.hint {
+  display: block;
+  margin-top: 24rpx;
+  padding: 0 8rpx;
+  font-size: 22rpx;
+  color: #8b8fa8;
+  line-height: 1.6;
+}
