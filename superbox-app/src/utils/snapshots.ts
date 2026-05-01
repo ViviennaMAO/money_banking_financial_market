@@ -86,6 +86,97 @@ export const ch4Snapshots: Record<string, Ch4Snapshot> = {
   }
 }
 
+/* ===== 第 11 章 金融监管 Basel ===== */
+export interface Ch11Snapshot {
+  era: string
+  baselReq: number
+  bankActual: number
+  note: string
+  flash?: boolean
+  predict?: PredictDef
+}
+
+export const ch11Snapshots: Record<string, Ch11Snapshot> = {
+  'basel1': {
+    era: 'Basel I (1988)', baselReq: 8, bankActual: 9,
+    note: 'Basel I:简单的 8% 资本充足率 / 风险加权资产。粗糙但开创了监管全球化。'
+  },
+  '2008': {
+    era: 'Basel II 失败', baselReq: 8, bankActual: 7,
+    note: '2008 危机:Basel II 失败 — 银行用"内部模型"低估风险,实际杠杆 30+ 倍。雷曼倒闭前 CET1 看起来正常。'
+  },
+  '2018': {
+    era: 'Basel III 全面实施', baselReq: 11, bankActual: 13,
+    note: 'Basel III (2010-2018):大幅加严 — 最低 CET1 4.5% + 资本缓冲 2.5% + 稳健缓冲 2-3% = ~10-13%。引入 LCR / NSFR。'
+  },
+  '2023': {
+    era: 'SVB 在 Basel III 下倒闭', baselReq: 11, bankActual: 12,
+    note: '⚠️ 2023.3 SVB:CET1 12% > Basel III 要求,LCR > 100%。所有指标都"合规"。但仍 48 小时倒闭。',
+    flash: true,
+    predict: {
+      title: '你即将切换到「2023 SVB Basel III 下倒闭」',
+      question: 'SVB 倒闭前:CET1 12% > Basel III 要求(11%),LCR > 100%,所有监管指标合规。为什么 Basel III 没能阻止 SVB?',
+      options: [
+        '监管太宽松',
+        'Basel III 漏掉了"利率风险"和"客户集中度"',
+        'SVB 数据造假',
+        '监管套利'
+      ],
+      correctIdx: 1,
+      revealHeadline: 'Basel III 漏掉了利率风险 + 客户集中度',
+      revealMsg: 'Basel III 主要监管"信用风险"+ "市场风险"+ "操作风险"。但 SVB 的根源是:① **HTM 长债浮亏被会计豁免** — 持有到期不计市价 → 监管看不到;② **客户集中度** — 90% 科技公司,FDIC 限额外存款 → 挤兑速度远超模型。**Basel III 在 SVB 后被进一步修订(2024+),把利率风险和集中度纳入新框架**。**监管永远是"上次危机的解药" — 危机会找新的形式爆发**。'
+    }
+  },
+  'today': {
+    era: '2024+ Basel "末班车"', baselReq: 13, bankActual: 13,
+    note: '今天:Fed 在 SVB 后提议"Basel III 末班车"修订,加严利率风险监管 + 客户集中度。但仍未完全实施。监管落后于现实是常态。'
+  }
+}
+
+/* ===== 第 10 章 银行业结构 ===== */
+export interface Ch10Snapshot {
+  iorb: number
+  mmfYield: number
+  bankDeposits: number
+  mmfSize: number
+  note: string
+  flash?: boolean
+  predict?: PredictDef
+}
+
+export const ch10Snapshots: Record<string, Ch10Snapshot> = {
+  '1980': {
+    iorb: 0.05, mmfYield: 0.05, bankDeposits: 1.5, mmfSize: 0.05,
+    note: '1980 影子银行萌芽:MMF 刚诞生,规模微小。商业银行仍是绝对主力。'
+  },
+  '2008': {
+    iorb: 2.0, mmfYield: 2.0, bankDeposits: 7.5, mmfSize: 3.5,
+    note: '2008 危机:MMF 挤兑(雷曼后 Reserve Primary Fund "破净")— Fed 紧急 backstop 才稳住。监管首次正视影子银行。'
+  },
+  '2023': {
+    iorb: 4.65, mmfYield: 5.05, bankDeposits: 17.6, mmfSize: 6.0,
+    note: '⚠️ 2023.3 SVB 后:MMF 收益 5.05% vs 银行存款 ~0.5%,资金加速迁移。MMF 规模 $6T 超过中小银行总存款。',
+    flash: true,
+    predict: {
+      title: '你即将切换到「2023.3 SVB 后的资金大迁移」',
+      question: '2023.3 SVB 倒闭后,IORB 4.65% vs MMF 5%+,但商业银行存款利率仍 ~0.5%。一周内有多少资金从银行流向 MMF?',
+      options: [
+        '$200B(常规波动)',
+        '$500B',
+        '$1T 左右',
+        '$2.5T+(史上最大单周迁移)'
+      ],
+      correctIdx: 3,
+      revealHeadline: '$2.5T+ 单周迁移 · 史上最大',
+      revealMsg: 'SVB 倒闭引发的"利率套利大迁移":银行存款 0.5%,MMF 5%+,差距太大。客户大举把存款转到 MMF。**MMF 规模到 $6T,超过美国所有中小银行总存款**。**影子银行不再是"次要的灰色地带",而是美国金融体系核心**。Fed 不得不创设 BTFP 救银行 + ON RRP 接住 MMF 的钱 — 影子银行 + 传统银行 + 央行三体平衡。'
+    }
+  },
+  'today': {
+    iorb: 4.40, mmfYield: 4.50, bankDeposits: 18, mmfSize: 6.4,
+    note: '今天:Fed 已降息,但 MMF/银行差距仍在,资金继续偏向 MMF。"利率走廊"时代新常态。'
+  }
+}
+
 /* ===== 第 21 章 IS-LM 政策组合 ===== */
 export interface Ch21Snapshot {
   fiscalShift: number

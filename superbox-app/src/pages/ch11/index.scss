@@ -1,0 +1,152 @@
+.ch11 {
+  padding: 32rpx 28rpx 80rpx;
+  height: 100vh;
+  box-sizing: border-box;
+}
+
+.page-header {
+  display: flex; justify-content: space-between; align-items: baseline;
+  margin-bottom: 24rpx;
+}
+
+.page-title { font-size: 36rpx; font-weight: 600; color: #e6edf3; }
+.page-meta { font-size: 22rpx; color: #8b8fa8; }
+
+.compare-card {
+  margin-top: 24rpx;
+  padding: 28rpx;
+  background: rgba(28, 34, 54, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 24rpx;
+}
+
+.compare-card.flash { animation: flashRed 0.7s ease 3; }
+@keyframes flashRed {
+  0%, 100% { background: rgba(28, 34, 54, 0.55); border-color: rgba(255,255,255,0.05); }
+  50% { background: rgba(239, 68, 68, 0.18); border-color: rgba(239, 68, 68, 0.4); }
+}
+
+.compare-tag { display: block; font-size: 22rpx; color: #8b8fa8; margin-bottom: 16rpx; }
+
+.cap-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 20rpx;
+  margin-bottom: 16rpx;
+}
+
+.cap-label { display: block; font-size: 20rpx; color: #8b8fa8; margin-bottom: 4rpx; }
+
+.cap-big { display: block; font-size: 40rpx; font-family: ui-monospace, Menlo, monospace; color: #f59e0b; line-height: 1; }
+.cap-actual { display: block; font-size: 40rpx; font-family: ui-monospace, Menlo, monospace; color: #3b82f6; line-height: 1; }
+.cap-buffer { display: block; font-size: 32rpx; font-family: ui-monospace, Menlo, monospace; line-height: 1.1; }
+
+.val-pos { color: #10b981; }
+.val-neg { color: #ef4444; }
+
+.compliance-row {
+  margin-top: 12rpx;
+  padding: 12rpx 18rpx;
+  border-radius: 12rpx;
+  text-align: center;
+}
+
+.cmp-good { background: rgba(16, 185, 129, 0.1); }
+.cmp-mid { background: rgba(245, 158, 11, 0.1); }
+.cmp-bad { background: rgba(239, 68, 68, 0.12); }
+
+.compliance-label { font-size: 24rpx; font-weight: 500; }
+.cmp-good .compliance-label { color: #10b981; }
+.cmp-mid .compliance-label { color: #f59e0b; }
+.cmp-bad .compliance-label { color: #ef4444; }
+
+.ch11-note {
+  display: block;
+  margin-top: 20rpx;
+  padding: 24rpx;
+  background: rgba(245, 158, 11, 0.06);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  border-radius: 24rpx;
+  font-size: 24rpx;
+  color: #f59e0b;
+  line-height: 1.7;
+}
+
+.panel {
+  margin-top: 24rpx;
+  padding: 28rpx;
+  background: rgba(28, 34, 54, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 24rpx;
+  display: flex;
+  flex-direction: column;
+  gap: 8rpx;
+}
+
+.panel-tag { font-size: 22rpx; color: #8b8fa8; margin-bottom: 8rpx; }
+
+.evolution-card {
+  margin-top: 24rpx;
+  padding: 28rpx;
+  background: rgba(167, 139, 250, 0.05);
+  border: 1px solid rgba(167, 139, 250, 0.2);
+  border-radius: 24rpx;
+}
+
+.evo-tag { display: block; font-size: 22rpx; color: #a78bfa; margin-bottom: 16rpx; font-weight: 500; }
+
+.evo-row {
+  display: flex;
+  gap: 14rpx;
+  padding: 14rpx 0;
+  border-bottom: 1px dashed rgba(167, 139, 250, 0.12);
+  &:last-child { border-bottom: none; }
+}
+
+.evo-left {
+  flex-shrink: 0;
+  width: 110rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.evo-emoji { font-size: 32rpx; line-height: 1; }
+.evo-year { font-size: 18rpx; color: #8b8fa8; font-family: ui-monospace, Menlo, monospace; margin-top: 4rpx; }
+
+.evo-body { flex: 1; display: flex; flex-direction: column; gap: 4rpx; }
+.evo-name { font-size: 24rpx; color: #e6edf3; font-weight: 500; }
+.evo-detail { font-size: 22rpx; color: rgba(230, 237, 243, 0.75); line-height: 1.6; }
+
+.dilemma-card {
+  margin-top: 24rpx;
+  padding: 28rpx;
+  background: rgba(239, 68, 68, 0.04);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  border-radius: 24rpx;
+}
+
+.dilemma-tag { display: block; font-size: 22rpx; color: #ef4444; margin-bottom: 14rpx; font-weight: 500; }
+
+.dil-row {
+  display: flex;
+  gap: 14rpx;
+  align-items: flex-start;
+  padding: 12rpx 0;
+  border-bottom: 1px dashed rgba(239, 68, 68, 0.15);
+  &:last-child { border-bottom: none; }
+}
+
+.dil-emoji { font-size: 32rpx; line-height: 1; flex-shrink: 0; width: 50rpx; text-align: center; }
+.dil-body { flex: 1; display: flex; flex-direction: column; gap: 4rpx; }
+.dil-title { font-size: 24rpx; color: #e6edf3; font-weight: 500; }
+.dil-desc { font-size: 22rpx; color: rgba(230, 237, 243, 0.8); line-height: 1.6; }
+
+.hint {
+  display: block;
+  margin-top: 24rpx;
+  padding: 0 8rpx;
+  font-size: 22rpx;
+  color: #8b8fa8;
+  line-height: 1.6;
+}

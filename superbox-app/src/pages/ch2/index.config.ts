@@ -1,0 +1,4 @@
+export default definePageConfig({
+  navigationBarTitleText: '第 2 章 · 金融体系概览',
+  enableShareAppMessage: true
+})

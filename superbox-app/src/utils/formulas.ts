@@ -80,6 +80,18 @@ export function realRate(nominalRate: number, inflation: number): number {
   return (1 + nominalRate) / (1 + inflation) - 1
 }
 
+// 第 1 章 房贷月供
+export function mortgagePayment(
+  principal: number, annualRate: number, years: number
+): { monthly: number; total: number; interest: number } {
+  const r = annualRate / 100 / 12
+  const n = years * 12
+  if (r < 0.0001) return { monthly: principal / n, total: principal, interest: 0 }
+  const monthly = principal * r * Math.pow(1 + r, n) / (Math.pow(1 + r, n) - 1)
+  const total = monthly * n
+  return { monthly, total, interest: total - principal }
+}
+
 // 第 21 章 IS-LM 政策组合
 export interface PolicyMixResult {
   fiscalEffect: number
