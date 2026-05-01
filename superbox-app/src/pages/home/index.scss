@@ -87,7 +87,190 @@
   color: #8b8fa8;
 }
 
-/* ===== MVP 单一入口卡 ===== */
+/* ===== 进度迷你卡片 ===== */
+.progress-mini {
+  margin-top: 24rpx;
+  padding: 20rpx 24rpx;
+  background: rgba(28, 34, 54, 0.55);
+  border: 1px solid rgba(16, 185, 129, 0.25);
+  border-radius: 18rpx;
+  display: flex;
+  align-items: center;
+  gap: 14rpx;
+  &:active {
+    background: rgba(16, 185, 129, 0.06);
+    border-color: rgba(16, 185, 129, 0.5);
+  }
+}
+
+.progress-mini-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.pm-label {
+  display: block;
+  font-size: 22rpx;
+  font-weight: 600;
+  color: #10b981;
+}
+
+.pm-bar {
+  width: 100%;
+  height: 8rpx;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 9999rpx;
+  margin-top: 10rpx;
+  overflow: hidden;
+}
+
+.pm-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #10b981, #3b82f6);
+  border-radius: 9999rpx;
+  transition: width 0.4s ease;
+}
+
+.pm-meta {
+  display: block;
+  font-size: 18rpx;
+  color: rgba(230, 237, 243, 0.6);
+  margin-top: 8rpx;
+}
+
+.pm-arrow {
+  font-size: 28rpx;
+  color: #10b981;
+  flex-shrink: 0;
+}
+
+/* ===== 4 入口 grid ===== */
+.entry-grid {
+  margin-top: 32rpx;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12rpx;
+}
+
+.entry-tile {
+  flex: 1 1 calc(50% - 6rpx);
+  min-width: calc(50% - 6rpx);
+  padding: 20rpx;
+  background: rgba(28, 34, 54, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 18rpx;
+  display: flex;
+  flex-direction: column;
+  gap: 4rpx;
+  box-sizing: border-box;
+  &:active { background: rgba(255, 255, 255, 0.04); }
+}
+
+.entry-tile.entry-amber { border-color: rgba(245, 158, 11, 0.35); }
+.entry-tile.entry-blue { border-color: rgba(59, 130, 246, 0.35); }
+.entry-tile.entry-purple { border-color: rgba(167, 139, 250, 0.35); }
+.entry-tile.entry-green { border-color: rgba(16, 185, 129, 0.35); }
+
+.tile-emoji {
+  font-size: 40rpx;
+  line-height: 1;
+  margin-bottom: 8rpx;
+}
+
+.tile-title {
+  font-size: 26rpx;
+  font-weight: 600;
+  color: #e6edf3;
+  line-height: 1.3;
+}
+
+.entry-amber .tile-title { color: #f59e0b; }
+.entry-blue .tile-title { color: #3b82f6; }
+.entry-purple .tile-title { color: #a78bfa; }
+.entry-green .tile-title { color: #10b981; }
+
+.tile-meta {
+  font-size: 18rpx;
+  color: rgba(230, 237, 243, 0.55);
+  line-height: 1.5;
+  margin-top: 4rpx;
+}
+
+/* ===== 新闻迷你列表 ===== */
+.news-block {
+  margin-top: 36rpx;
+}
+
+.section-link {
+  font-size: 20rpx;
+  color: #3b82f6;
+}
+
+.news-mini-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10rpx;
+}
+
+.news-mini {
+  display: flex;
+  gap: 12rpx;
+  padding: 14rpx 16rpx;
+  background: rgba(28, 34, 54, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 12rpx;
+  align-items: center;
+  &:active {
+    background: rgba(245, 158, 11, 0.06);
+    border-color: rgba(245, 158, 11, 0.3);
+  }
+}
+
+.news-mini-rank {
+  font-size: 26rpx;
+  font-weight: 700;
+  color: rgba(245, 158, 11, 0.85);
+  flex-shrink: 0;
+  width: 36rpx;
+  text-align: center;
+}
+
+.news-mini-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.news-mini-title {
+  display: block;
+  font-size: 22rpx;
+  color: #e6edf3;
+  line-height: 1.4;
+}
+
+.news-mini-tags {
+  display: flex;
+  gap: 6rpx;
+  margin-top: 6rpx;
+  flex-wrap: wrap;
+}
+
+.news-mini-tag {
+  font-size: 16rpx;
+  color: #3b82f6;
+  background: rgba(59, 130, 246, 0.08);
+  padding: 1rpx 8rpx;
+  border-radius: 9999rpx;
+}
+
+/* ===== 已学状态 ===== */
+.mini-status-done {
+  color: #10b981;
+  background: rgba(16, 185, 129, 0.12);
+  padding: 2rpx 10rpx;
+  border-radius: 9999rpx;
+}
+
+/* ===== MVP 单一入口卡(保留) ===== */
 .mvp-entry {
   position: relative;
   display: flex;

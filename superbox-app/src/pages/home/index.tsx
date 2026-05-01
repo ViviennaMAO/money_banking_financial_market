@@ -1,7 +1,17 @@
 import { View, Text, ScrollView } from '@tarojs/components'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Taro from '@tarojs/taro'
 import { parts, totalChapters, mvpCount, type Chapter } from '../../data/chapters'
+import { totalTerms } from '../../data/glossary'
+import { learningPaths } from '../../data/learning-paths'
+import { newsTop10 } from '../../data/news'
+import { totalQuizCount } from '../../data/chapter-quiz'
+import {
+  loadProgress,
+  completedCount,
+  dueReviews,
+  type ProgressData
+} from '../../utils/progress'
 import './index.scss'
 
 const principles = [
@@ -14,10 +24,14 @@ const principles = [
 ]
 
 export default function Home() {
-  // 默认展开所有篇(用户可自由折叠)
   const [expanded, setExpanded] = useState<Set<number>>(
     new Set(parts.map(p => p.num))
   )
+  const [progress, setProgress] = useState<ProgressData | null>(null)
+
+  useEffect(() => {
+    setProgress(loadProgress())
+  }, [])
 
   function togglePart(partNum: number) {
     setExpanded(prev => {
@@ -28,10 +42,16 @@ export default function Home() {
     })
   }
 
-  function navigateToChapter(ch: Chapter, _partNum: number) {
+  function navigateToChapter(ch: Chapter) {
     const url = ch.pagePath || `/pages/chapter/index?ch=${ch.num}`
     Taro.navigateTo({ url })
   }
+
+  const completed = progress ? completedCount(progress) : 0
+  const dueCount = progress ? dueReviews(progress).length : 0
+  const completionPct = totalChapters > 0
+    ? Math.round((completed / totalChapters) * 100)
+    : 0
 
   return (
     <ScrollView scrollY className='home'>
@@ -54,27 +74,106 @@ export default function Home() {
         </View>
       </View>
 
-      {/* MVP 反预期精选 · 单一入口 */}
-      <View
-        className='mvp-entry'
-        onClick={() => Taro.navigateTo({ url: '/pages/mvp/index' })}
-      >
-        <View className='entry-glow'></View>
-        <Text className='entry-emoji'>⭐</Text>
-        <View className='entry-body'>
-          <Text className='entry-title'>反预期精选</Text>
-          <Text className='entry-desc'>
-            {mvpCount} 个震撼时刻 · 教材没说但市场会教你的瞬间
-          </Text>
-          <Text className='entry-meta'>历史快照 · 预测先行 · 互动模拟器</Text>
+      {/* 进度概览 + 仪表板入口 */}
+      {progress && (completed > 0 || dueCount > 0) ? (
+        <View
+          className='progress-mini'
+          onClick={() => Taro.navigateTo({ url: '/pages/progress/index' })}
+        >
+          <View className='progress-mini-info'>
+            <Text className='pm-label'>📊 学习仪表板</Text>
+            <View className='pm-bar'>
+              <View
+                className='pm-bar-fill'
+                style={{ width: `${completionPct}%` }}
+              ></View>
+            </View>
+            <Text className='pm-meta'>
+              {completed}/{totalChapters} 章完成 · 连续 {progress.streakDays} 天
+              {dueCount > 0 ? ` · ⏰ ${dueCount} 章待复习` : ''}
+            </Text>
+          </View>
+          <Text className='pm-arrow'>→</Text>
         </View>
-        <Text className='entry-arrow'>→</Text>
+      ) : null}
+
+      {/* 4 大入口 — 新功能 */}
+      <View className='entry-grid'>
+        <View
+          className='entry-tile entry-amber'
+          onClick={() => Taro.navigateTo({ url: '/pages/mvp/index' })}
+        >
+          <Text className='tile-emoji'>⭐</Text>
+          <Text className='tile-title'>反预期精选</Text>
+          <Text className='tile-meta'>{mvpCount} 章 · 教材没说但市场会教你</Text>
+        </View>
+
+        <View
+          className='entry-tile entry-blue'
+          onClick={() => Taro.navigateTo({ url: '/pages/paths/index' })}
+        >
+          <Text className='tile-emoji'>🗺️</Text>
+          <Text className='tile-title'>学习地图</Text>
+          <Text className='tile-meta'>{learningPaths.length} 条路径 · 按思维模块重组</Text>
+        </View>
+
+        <View
+          className='entry-tile entry-purple'
+          onClick={() => Taro.navigateTo({ url: '/pages/quiz/index' })}
+        >
+          <Text className='tile-emoji'>🧩</Text>
+          <Text className='tile-title'>跨章测验</Text>
+          <Text className='tile-meta'>{totalQuizCount} 题精选 · 单章 / 跨章 / 随机</Text>
+        </View>
+
+        <View
+          className='entry-tile entry-green'
+          onClick={() => Taro.navigateTo({ url: '/pages/glossary/index' })}
+        >
+          <Text className='tile-emoji'>📖</Text>
+          <Text className='tile-title'>词汇附录</Text>
+          <Text className='tile-meta'>{totalTerms} 词条 · 中英对照 · 反预期定义</Text>
+        </View>
+      </View>
+
+      {/* 当日财经 Top 10 */}
+      <View className='news-block'>
+        <View className='section-header'>
+          <Text className='section-tag'>📰 今日财经 Top 10</Text>
+          <Text
+            className='section-link'
+            onClick={() => Taro.navigateTo({ url: '/pages/news/index' })}
+          >
+            查看全部 →
+          </Text>
+        </View>
+        <View className='news-mini-list'>
+          {newsTop10.slice(0, 3).map(n => (
+            <View
+              key={n.id}
+              className='news-mini'
+              onClick={() => Taro.navigateTo({ url: '/pages/news/index' })}
+            >
+              <Text className='news-mini-rank'>{n.rank}</Text>
+              <View className='news-mini-body'>
+                <Text className='news-mini-title'>{n.title}</Text>
+                <View className='news-mini-tags'>
+                  {n.knowledge.slice(0, 2).map((k, i) => (
+                    <Text key={i} className='news-mini-tag'>
+                      {k.type === 'chapter' ? `Ch${k.ref}` : k.ref}
+                    </Text>
+                  ))}
+                </View>
+              </View>
+            </View>
+          ))}
+        </View>
       </View>
 
       {/* 完整目录 · 6 篇 25 章 */}
       <View className='section'>
         <View className='section-header'>
-          <Text className='section-tag'>📖 完整目录 · 6 篇 {totalChapters} 章</Text>
+          <Text className='section-tag'>📚 完整目录 · 6 篇 {totalChapters} 章</Text>
           <Text className='section-meta'>点击篇名展开 / 收起</Text>
         </View>
 
@@ -100,28 +199,33 @@ export default function Home() {
 
               {isOpen ? (
                 <View className='part-chapters'>
-                  {part.chapters.map(c => (
-                    <View
-                      key={c.num}
-                      className={`mini-card mini-${c.tier}`}
-                      onClick={() => navigateToChapter(c, part.num)}
-                    >
-                      <Text className='mini-emoji'>{c.emoji}</Text>
-                      <View className='mini-body'>
-                        <View className='mini-title-row'>
-                          <Text className='mini-num'>第 {c.num} 章</Text>
-                          {c.tier === 'mvp' ? (
-                            <Text className='mini-status mini-status-mvp'>⭐ 专属</Text>
-                          ) : (
-                            <Text className='mini-status mini-status-basic'>● 概览版</Text>
-                          )}
+                  {part.chapters.map(c => {
+                    const stat = progress?.chapterStats[c.num]
+                    return (
+                      <View
+                        key={c.num}
+                        className={`mini-card mini-${c.tier}`}
+                        onClick={() => navigateToChapter(c)}
+                      >
+                        <Text className='mini-emoji'>{c.emoji}</Text>
+                        <View className='mini-body'>
+                          <View className='mini-title-row'>
+                            <Text className='mini-num'>第 {c.num} 章</Text>
+                            {stat?.completed ? (
+                              <Text className='mini-status mini-status-done'>✓ 已学</Text>
+                            ) : c.tier === 'mvp' ? (
+                              <Text className='mini-status mini-status-mvp'>⭐ 专属</Text>
+                            ) : (
+                              <Text className='mini-status mini-status-basic'>● 概览版</Text>
+                            )}
+                          </View>
+                          <Text className='mini-title'>{c.title}</Text>
+                          <Text className='mini-brief'>{c.brief}</Text>
+                          <Text className='mini-stars'>{'⭐'.repeat(c.difficulty)}</Text>
                         </View>
-                        <Text className='mini-title'>{c.title}</Text>
-                        <Text className='mini-brief'>{c.brief}</Text>
-                        <Text className='mini-stars'>{'⭐'.repeat(c.difficulty)}</Text>
                       </View>
-                    </View>
-                  ))}
+                    )
+                  })}
                 </View>
               ) : null}
             </View>
@@ -130,7 +234,7 @@ export default function Home() {
       </View>
 
       <View className='footer-note'>
-        <Text>原型 v1 · 米什金教材内容版权属 Pearson</Text>
+        <Text>原型 v2 · 米什金教材内容版权属 Pearson</Text>
       </View>
     </ScrollView>
   )

@@ -51,6 +51,18 @@
   </button>
 </template>
 
+<template name="tmpl_0_33">
+  <template is="{{xs.c(i, 'tmpl_0_')}}" data="{{i:i,c:c}}" />
+</template>
+
+<template name="tmpl_0_33_focus">
+  <input value="{{i.p25}}" type="{{i.p24||''}}" password="{{i.p12||!1}}" placeholder="{{i.p13}}" placeholder-style="{{i.p15}}" placeholder-class="{{i.p14||'input-placeholder'}}" disabled="{{i.p8}}" maxlength="{{xs.b(i.p10,140)}}" cursor-spacing="{{xs.b(i.p7,0)}}" focus="{{i.focus||!1}}" confirm-type="{{i.p4||'done'}}" confirm-hold="{{i.p3||!1}}" cursor="{{xs.b(i.p5,i.p25?i.p25.length:-1)}}" selection-start="{{xs.b(i.p23,-1)}}" selection-end="{{xs.b(i.p22,-1)}}" bindinput="eh" bindfocus="eh" bindblur="eh" bindconfirm="eh" name="{{i.p11}}" always-embed="{{xs.b(i.p1,false)}}" adjust-position="{{xs.b(i.p0,true)}}" hold-keyboard="{{xs.b(i.p9,false)}}" safe-password-cert-path="{{i.p16}}" safe-password-length="{{i.p18}}" safe-password-time-stamp="{{i.p21}}" safe-password-nonce="{{i.p19}}" safe-password-salt="{{i.p20}}" safe-password-custom-hash="{{i.p17}}" auto-fill="{{i.p2}}" cursor-color="{{i.p6}}" bindkeyboardheightchange="eh" bindnicknamereview="eh" bindselectionchange="eh" bindkeyboardcompositionstart="eh" bindkeyboardcompositionupdate="eh" bindkeyboardcompositionend="eh" style="{{i.st}}" class="{{i.cl}}" bindtap="eh"  id="{{i.uid||i.sid}}" data-sid="{{i.sid}}"></input>
+</template>
+
+<template name="tmpl_0_33_blur">
+  <input value="{{i.p25}}" type="{{i.p24||''}}" password="{{i.p12||!1}}" placeholder="{{i.p13}}" placeholder-style="{{i.p15}}" placeholder-class="{{i.p14||'input-placeholder'}}" disabled="{{i.p8}}" maxlength="{{xs.b(i.p10,140)}}" cursor-spacing="{{xs.b(i.p7,0)}}" confirm-type="{{i.p4||'done'}}" confirm-hold="{{i.p3||!1}}" cursor="{{xs.b(i.p5,i.p25?i.p25.length:-1)}}" selection-start="{{xs.b(i.p23,-1)}}" selection-end="{{xs.b(i.p22,-1)}}" bindinput="eh" bindfocus="eh" bindblur="eh" bindconfirm="eh" name="{{i.p11}}" always-embed="{{xs.b(i.p1,false)}}" adjust-position="{{xs.b(i.p0,true)}}" hold-keyboard="{{xs.b(i.p9,false)}}" safe-password-cert-path="{{i.p16}}" safe-password-length="{{i.p18}}" safe-password-time-stamp="{{i.p21}}" safe-password-nonce="{{i.p19}}" safe-password-salt="{{i.p20}}" safe-password-custom-hash="{{i.p17}}" auto-fill="{{i.p2}}" cursor-color="{{i.p6}}" bindkeyboardheightchange="eh" bindnicknamereview="eh" bindselectionchange="eh" bindkeyboardcompositionstart="eh" bindkeyboardcompositionupdate="eh" bindkeyboardcompositionend="eh" style="{{i.st}}" class="{{i.cl}}" bindtap="eh"  id="{{i.uid||i.sid}}" data-sid="{{i.sid}}"></input>
+</template>
+
 <template name="tmpl_0_68">
   <slider min="{{xs.b(i.p7,0)}}" max="{{xs.b(i.p6,100)}}" step="{{xs.b(i.p11,1)}}" disabled="{{i.p5}}" value="{{xs.b(i.p12,0)}}" activeColor="{{i.p0||'#1aad19'}}" backgroundColor="{{i.p1||'#e9e9e9'}}" block-size="{{xs.b(i.p3,28)}}" block-color="{{i.p2||'#ffffff'}}" show-value="{{i.p10||!1}}" bindchange="eh" bindchanging="eh" name="{{i.p8}}" color="{{i.p4||'#e9e9e9'}}" selected-color="{{i.p9||'#1aad19'}}" style="{{i.st}}" class="{{i.cl}}" bindtap="eh"  id="{{i.uid||i.sid}}" data-sid="{{i.sid}}"></slider>
 </template>

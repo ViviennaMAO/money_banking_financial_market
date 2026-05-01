@@ -1,65 +1,128 @@
-import { View, Text, ScrollView, Button } from '@tarojs/components'
+import { View, Text, ScrollView } from '@tarojs/components'
 import { useState } from 'react'
 import Taro from '@tarojs/taro'
+import { newsTop10, newsCategoryLabel, type NewsItem } from '../../data/news'
+import { findChapter } from '../../data/chapters'
 import './index.scss'
 
-const choices = ['有', '没有', '看情况']
-
 export default function NewsPage() {
-  const [picked, setPicked] = useState<number | null>(null)
+  const [active, setActive] = useState<NewsItem | null>(null)
+
+  function open(item: NewsItem) {
+    setActive(item)
+  }
+  function back() {
+    setActive(null)
+  }
+
+  function goKnowledge(k: NewsItem['knowledge'][number]) {
+    if (k.type === 'chapter') {
+      const ch = findChapter(Number(k.ref))?.chapter
+      const url = ch?.pagePath || `/pages/chapter/index?ch=${k.ref}`
+      Taro.navigateTo({ url })
+    } else if (k.type === 'glossary') {
+      Taro.navigateTo({ url: '/pages/glossary/index' })
+    } else if (k.type === 'path') {
+      Taro.navigateTo({ url: '/pages/paths/index' })
+    }
+  }
+
+  if (active) {
+    return (
+      <ScrollView scrollY className='news-page'>
+        <View className='back-bar' onClick={back}>
+          <Text>← 返回 Top 10</Text>
+        </View>
+
+        <View className='detail-head'>
+          <View className='detail-meta'>
+            <Text className='detail-rank'>#{active.rank}</Text>
+            <Text className='detail-cat'>{newsCategoryLabel[active.category]}</Text>
+            <Text className='detail-date'>{active.date}</Text>
+          </View>
+          <Text className='detail-title'>{active.title}</Text>
+          <Text className='detail-summary'>{active.summary}</Text>
+        </View>
+
+        <View className='detail-body'>
+          <Text className='detail-tag'>📰 深度分析</Text>
+          {active.body.split('\n\n').map((para, i) => (
+            <Text key={i} className='detail-para'>{para}</Text>
+          ))}
+        </View>
+
+        <View className='detail-twist'>
+          <Text className='twist-flag'>⚡ 反预期</Text>
+          <Text className='twist-text'>{active.twist}</Text>
+        </View>
+
+        <View className='detail-knowledge'>
+          <Text className='kn-tag'>🎓 涉及知识点 · 点击进入学习</Text>
+          {active.knowledge.map((k, i) => (
+            <View
+              key={i}
+              className='kn-card'
+              onClick={() => goKnowledge(k)}
+            >
+              <View className='kn-info'>
+                <Text className='kn-type'>
+                  {k.type === 'chapter' ? `第 ${k.ref} 章` : k.type === 'glossary' ? `词条 · ${k.ref}` : `路径 · ${k.ref}`}
+                </Text>
+                <Text className='kn-why'>{k.why}</Text>
+              </View>
+              <Text className='kn-arrow'>→</Text>
+            </View>
+          ))}
+        </View>
+
+        <View className='footer-note'>
+          <Text>新闻为模拟版 · 数据基于 2024-25 真实事件改编</Text>
+        </View>
+      </ScrollView>
+    )
+  }
 
   return (
-    <ScrollView scrollY className='news'>
-      <View className='page-header'>
-        <Text className='page-title'>📰 新闻三联单</Text>
-        <Text className='page-meta'>每日 1-3 条</Text>
+    <ScrollView scrollY className='news-page'>
+      <View className='news-hero'>
+        <Text className='hero-emoji'>📰</Text>
+        <Text className='hero-title'>每日财经 Top 10</Text>
+        <Text className='hero-subtitle'>每条新闻 → 即时拆解涉及的知识点 → 跳转学习</Text>
+        <Text className='hero-date'>{newsTop10[0].date}</Text>
       </View>
-      <Text className='intro'>一张图同时给"新闻 + 数据 + 理论 + 互动"。</Text>
 
-      <View className='card'>
-        <View className='card-news'>
-          <Text className='news-date'>📰 2024.7.31</Text>
-          <Text className='news-title'>BOJ 意外加息 25bp,Powell 暗示 9 月降息</Text>
-          <Text className='news-detail'>日央行 0.10% → 0.25%(2007 来最大)。Fed 当晚措辞转向。</Text>
-        </View>
-
-        <View className='card-section'>
-          <Text className='section-tag'>📊 看板信号 · 决议后 48 小时</Text>
-          <View className='kpi-row'><Text>USD/JPY</Text><Text className='kpi-neg'>155 → 142 (-8.4%)</Text></View>
-          <View className='kpi-row'><Text>日经 225</Text><Text className='kpi-neg'>-12% 单日</Text></View>
-          <View className='kpi-row'><Text>VIX</Text><Text className='kpi-warn'>16 → 38</Text></View>
-        </View>
-
-        <View className='card-section'>
-          <Text className='section-tag'>🎓 教材原理 · 第 17 章 利率平价</Text>
-          <Text className='theory'>
-            i_d↓ + i_f↑ → carry 利差快速收窄 → 套息平仓潮 → 反向资金推升 JPY → 杠杆放大 → 流动性挤兑
-          </Text>
-        </View>
-
-        <View className='card-section card-q'>
-          <Text className='q-tag'>❓ 渐进追问 L1 · 直觉层</Text>
-          <Text className='q-text'>这事对持有美股的散户有影响吗?</Text>
-          <View className='q-options'>
-            {choices.map((c, i) => (
-              <Button
-                key={i}
-                className={`q-btn ${picked === i ? 'picked' : ''}`}
-                onClick={() => setPicked(i)}
-              >
-                {c}
-              </Button>
-            ))}
+      <View className='news-list'>
+        {newsTop10.map(item => (
+          <View
+            key={item.id}
+            className='news-card'
+            onClick={() => open(item)}
+          >
+            <View className='news-rank'>{item.rank}</View>
+            <View className='news-body'>
+              <View className='news-meta'>
+                <Text className='news-cat'>{newsCategoryLabel[item.category]}</Text>
+                <Text className='news-emoji'>{item.emoji}</Text>
+              </View>
+              <Text className='news-title'>{item.title}</Text>
+              <Text className='news-summary'>{item.summary}</Text>
+              <View className='news-footer'>
+                <View className='kn-pills'>
+                  {item.knowledge.slice(0, 3).map((k, i) => (
+                    <Text key={i} className='kn-pill'>
+                      {k.type === 'chapter' ? `Ch${k.ref}` : k.type === 'glossary' ? k.ref : k.ref}
+                    </Text>
+                  ))}
+                </View>
+                <Text className='news-go'>展开 →</Text>
+              </View>
+            </View>
           </View>
-          {picked !== null ? <Text className='q-after'>答完显示 L2 机制层(自由文本)→ L3 反事实(高难度)</Text> : null}
-        </View>
+        ))}
+      </View>
 
-        <View className='card-actions'>
-          <Button className='action-share'>📤 分享到 Luffa</Button>
-          <Button className='action-sim' onClick={() => Taro.navigateTo({ url: '/pages/ch17/index' })}>
-            🪙 套息器试一下
-          </Button>
-        </View>
+      <View className='footer-note'>
+        <Text>每日推送 · 真实事件改编模拟版</Text>
       </View>
     </ScrollView>
   )
