@@ -80,6 +80,46 @@ export function realRate(nominalRate: number, inflation: number): number {
   return (1 + nominalRate) / (1 + inflation) - 1
 }
 
+// 第 25 章 卢卡斯批判 · 政策预期模型
+// 政策有效性 = f(政策力度, 预期度, 可信度)
+//   - 完全未预期:政策 100% 有效(经典模型适用)
+//   - 完全预期:政策 30% 有效(理性预期消化)
+//   - 不可信央行:即使政策对,效果打折
+export interface PolicyResult {
+  basePredict: number      // 经典模型预测(基于历史数据)
+  rationalActual: number   // 理性预期下的实际效果
+  surprise: number         // 经典预测 - 实际(模型偏差)
+  effectiveness: number    // 0-100 政策实际有效性
+  modelMisses: boolean     // 经典模型是否大幅失误
+}
+
+export function policyExpectation(
+  policyStrength: number,    // -100 紧缩 ~ +100 宽松
+  expectedness: number,      // 0-100 公众预期度
+  credibility: number        // 0-100 央行可信度
+): PolicyResult {
+  const baseAbs = Math.abs(policyStrength)
+  const sign = Math.sign(policyStrength)
+
+  // 经典模型预测(假设政策完全有效)
+  const basePredict = policyStrength * 0.6
+
+  // 理性预期实际效果:
+  //   未预期(expectedness=0):效果 ~ 基础 × credibility
+  //   完全预期(expectedness=100):效果 ~ 基础 × 0.25 × credibility
+  const surpriseFactor = (100 - expectedness) / 100
+  const credFactor = credibility / 100
+  const rationalActual = sign * baseAbs * (0.25 + 0.55 * surpriseFactor) * credFactor
+
+  const surprise = basePredict - rationalActual
+  const effectiveness = baseAbs > 0
+    ? Math.min(100, Math.abs(rationalActual) / (baseAbs * 0.6) * 100)
+    : 0
+  const modelMisses = Math.abs(surprise) > Math.abs(rationalActual) * 0.5
+
+  return { basePredict, rationalActual, surprise, effectiveness, modelMisses }
+}
+
 // 第 19 章 MV = PY 货币数量方程
 export interface MvpyResult {
   m: number

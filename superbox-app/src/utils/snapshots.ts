@@ -86,6 +86,53 @@ export const ch4Snapshots: Record<string, Ch4Snapshot> = {
   }
 }
 
+/* ===== 第 25 章 卢卡斯批判 ===== */
+export interface Ch25Snapshot {
+  policyStrength: number     // 政策力度
+  expectedness: number       // 公众预期度
+  credibility: number        // 央行可信度
+  note: string
+  flash?: boolean
+  predict?: PredictDef
+}
+
+export const ch25Snapshots: Record<string, Ch25Snapshot> = {
+  '1979pre': {
+    policyStrength: 50, expectedness: 25, credibility: 25,
+    note: '1979 沃尔克前夜:Burns 时代 Fed 信誉差。即使想紧缩,公众认为"会让步",政策力度被打折。**没有可信度,政策乘数严重弱化**。'
+  },
+  '1982': {
+    policyStrength: 80, expectedness: 70, credibility: 80,
+    note: '1982 沃尔克坚守:经过 3 年极致紧缩,公众已相信"Fed 真的反通胀"。可信度建立后,即使政策被预期,效果仍然显著(预期反向 → 通胀预期下降 → 自我强化反通胀)。'
+  },
+  '2008': {
+    policyStrength: 80, expectedness: 10, credibility: 70,
+    note: '⚠️ 2008.11 QE1 启动:史上首次,经典模型(IS-LM)基于历史数据预测通胀飙升。但 QE 是新政策,公众和模型都没"经验"。结果:模型预测全错。',
+    flash: true,
+    predict: {
+      title: '你即将切换到「2008.11 QE1 启动」',
+      question: '2008 Fed 启动 QE1,经济学家(基于 IS-LM 等历史模型)预测美国通胀 1-2 年内飙到 5-10%。实际 2009-2014 通胀?',
+      options: [
+        '5-10%(模型预测对)',
+        '3-5%(温和上升)',
+        '2% 左右(基本稳定)',
+        '1.7%(几乎没动)'
+      ],
+      correctIdx: 3,
+      revealHeadline: '通胀仅 1.7% · 历史模型预测全错',
+      revealMsg: '经典模型基于历史数据(1980 通胀时代)估计 M → P 系数。但 QE 是史上首次,公众没有"经验"预测它。结果:① 银行持币不放贷(乘数砸到 1)② 公众通胀预期保持 2% 锚定,自我强化稳定。**这就是卢卡斯批判的活生生案例**:估计的"政策乘数"基于旧政策环境,改了政策本身,系数不再适用。教学点:**模型不能只看历史数据,要看"政策制度"是否改变**——这是为什么 2020 后宏观经济学家更谨慎使用历史回归。'
+    }
+  },
+  '2020': {
+    policyStrength: 70, expectedness: 85, credibility: 70,
+    note: '2020 FAIT 战略:Fed 提前宣布"允许通胀短期超调"。公众完全预期 → 政策效果被消化。同时"暂时性"判断让 Fed 反应慢 → 2022 通胀失锚。'
+  },
+  'today': {
+    policyStrength: 30, expectedness: 65, credibility: 75,
+    note: '今天:Fed 信誉中等(2022 后部分受损)。政策力度温和,被市场充分预期 → 效果可预测但温和。'
+  }
+}
+
 /* ===== 第 19 章 货币需求 MV=PY ===== */
 export interface Ch19Snapshot {
   m: number       // M2 万亿

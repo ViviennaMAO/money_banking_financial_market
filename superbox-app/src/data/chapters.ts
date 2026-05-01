@@ -176,7 +176,8 @@ export const parts: Part[] = [
       { num: 25, title: '理性预期与政策含义', emoji: '🧠',
         brief: '卢卡斯批判 · 时间不一致性',
         difficulty: 5, duration: '12 分钟',
-        implemented: true, pagePath: generic(25), tier: 'basic' }
+        implemented: true, pagePath: '/pages/ch25/index', tier: 'mvp',
+        hook: '2008 QE 历史模型预测通胀 5-10%,实际 1.7% — 卢卡斯批判活案例' }
     ]
   }
 ]
