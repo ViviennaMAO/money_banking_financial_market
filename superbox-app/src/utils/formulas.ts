@@ -80,6 +80,63 @@ export function realRate(nominalRate: number, inflation: number): number {
   return (1 + nominalRate) / (1 + inflation) - 1
 }
 
+// 第 13 章 FOMC 点阵图
+// 给定经济状态(通胀缺口/产出缺口/不确定性),模拟 12 位委员的点阵分布
+export interface FomcDot {
+  position: number     // 委员预测的政策利率
+  faction: 'hawk' | 'mid' | 'dove'
+}
+
+export interface FomcDotPlotResult {
+  dots: FomcDot[]
+  median: number
+  hawkPct: number
+  midPct: number
+  dovePct: number
+}
+
+export function fomcDotPlot(
+  inflationGap: number,    // π - π*
+  outputGap: number,       // y - y*
+  uncertainty: number      // 0-100,委员意见分歧度
+): FomcDotPlotResult {
+  // 中心 ≈ 泰勒规则隐含利率(简化:r* + π_target + 通胀缺口贡献 + 产出贡献)
+  const center = 0.5 + 2.0 + inflationGap * 1.5 + outputGap * 0.5
+  // 散布度 = 不确定性 + 通胀缺口波动
+  const spread = uncertainty / 30 + Math.abs(inflationGap) * 0.2
+
+  // 12 位委员,围绕中心散布
+  const dots: FomcDot[] = []
+  const N = 12
+  for (let i = 0; i < N; i++) {
+    // 偏移按顺序分布,左右对称
+    const offset = ((i - (N - 1) / 2) / (N - 1)) * spread * 5
+    const position = Math.max(0, center + offset)
+    let faction: 'hawk' | 'mid' | 'dove'
+    if (offset > spread * 0.8) faction = 'hawk'
+    else if (offset < -spread * 0.8) faction = 'dove'
+    else faction = 'mid'
+    dots.push({ position, faction })
+  }
+
+  const sorted = [...dots].sort((a, b) => a.position - b.position)
+  const median = sorted.length % 2 === 0
+    ? (sorted[sorted.length / 2 - 1].position + sorted[sorted.length / 2].position) / 2
+    : sorted[Math.floor(sorted.length / 2)].position
+
+  const hawks = dots.filter(d => d.faction === 'hawk').length
+  const mids = dots.filter(d => d.faction === 'mid').length
+  const doves = dots.filter(d => d.faction === 'dove').length
+
+  return {
+    dots,
+    median,
+    hawkPct: hawks / N * 100,
+    midPct: mids / N * 100,
+    dovePct: doves / N * 100
+  }
+}
+
 // 第 15 章 Fed 利率走廊
 // 模型:
 //   - 准备金充足(reserves ≥ 目标 $3T):EFFR 在 IORB 与 ON RRP 之间,接近 ON RRP

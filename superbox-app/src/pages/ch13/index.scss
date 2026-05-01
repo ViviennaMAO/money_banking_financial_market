@@ -1,0 +1,316 @@
+.ch13 {
+  padding: 32rpx 28rpx 80rpx;
+  height: 100vh;
+  box-sizing: border-box;
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 24rpx;
+}
+
+.page-title { font-size: 36rpx; font-weight: 600; color: #e6edf3; }
+.page-meta { font-size: 22rpx; color: #8b8fa8; }
+
+/* 点阵图 */
+.dotplot-card {
+  margin-top: 24rpx;
+  padding: 28rpx;
+  background: rgba(28, 34, 54, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 24rpx;
+  transition: background 0.3s, border-color 0.3s;
+}
+
+.dotplot-card.flash { animation: flashRed 0.7s ease 3; }
+@keyframes flashRed {
+  0%, 100% { background: rgba(28, 34, 54, 0.55); border-color: rgba(255,255,255,0.05); }
+  50% { background: rgba(239, 68, 68, 0.18); border-color: rgba(239, 68, 68, 0.4); }
+}
+
+.dotplot-tag {
+  display: block;
+  font-size: 22rpx;
+  color: #8b8fa8;
+  margin-bottom: 16rpx;
+}
+
+.dotplot-viz {
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: 12rpx;
+  padding: 12rpx;
+  display: flex;
+  flex-direction: column;
+  gap: 6rpx;
+  min-height: 280rpx;
+}
+
+.bin-row {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+  min-height: 36rpx;
+}
+
+.bin-rate {
+  flex-shrink: 0;
+  width: 70rpx;
+  font-size: 20rpx;
+  color: #8b8fa8;
+  text-align: right;
+  font-family: ui-monospace, Menlo, monospace;
+}
+
+.bin-dots {
+  flex: 1;
+  display: flex;
+  gap: 8rpx;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.fomc-dot {
+  width: 24rpx;
+  height: 24rpx;
+  border-radius: 50%;
+}
+
+.dot-hawk { background: #ef4444; box-shadow: 0 0 0 2rpx rgba(239, 68, 68, 0.2); }
+.dot-mid { background: #f59e0b; box-shadow: 0 0 0 2rpx rgba(245, 158, 11, 0.2); }
+.dot-dove { background: #06b6d4; box-shadow: 0 0 0 2rpx rgba(6, 182, 212, 0.2); }
+
+.median-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 20rpx;
+  margin-top: 20rpx;
+  padding-top: 20rpx;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.median-label { display: block; font-size: 20rpx; color: #8b8fa8; }
+.median-big {
+  display: block;
+  font-size: 36rpx;
+  font-family: ui-monospace, Menlo, monospace;
+  color: #f59e0b;
+  margin-top: 4rpx;
+}
+.median-actual {
+  display: block;
+  font-size: 36rpx;
+  font-family: ui-monospace, Menlo, monospace;
+  color: #3b82f6;
+  margin-top: 4rpx;
+}
+
+.dev-cell { text-align: right; }
+
+.dev-value {
+  display: block;
+  font-size: 30rpx;
+  font-family: ui-monospace, Menlo, monospace;
+  margin-top: 4rpx;
+}
+
+.dev-tight { color: #ef4444; }
+.dev-loose { color: #3b82f6; }
+.dev-fair { color: #10b981; }
+
+.factions {
+  margin-top: 20rpx;
+  padding-top: 20rpx;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.fac-tag {
+  display: block;
+  font-size: 22rpx;
+  color: #8b8fa8;
+  margin-bottom: 12rpx;
+}
+
+.fac-bars {
+  display: flex;
+  height: 32rpx;
+  border-radius: 8rpx;
+  overflow: hidden;
+}
+
+.fac-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18rpx;
+  color: #fff;
+  transition: width 0.3s;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.fac-hawk { background: #ef4444; }
+.fac-mid { background: #f59e0b; }
+.fac-dove { background: #06b6d4; }
+
+.ch13-note {
+  display: block;
+  margin-top: 24rpx;
+  padding: 24rpx;
+  background: rgba(245, 158, 11, 0.06);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  border-radius: 24rpx;
+  font-size: 24rpx;
+  color: #f59e0b;
+  line-height: 1.7;
+}
+
+.panel {
+  margin-top: 24rpx;
+  padding: 28rpx;
+  background: rgba(28, 34, 54, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 24rpx;
+  display: flex;
+  flex-direction: column;
+  gap: 8rpx;
+}
+
+.panel-tag {
+  font-size: 22rpx;
+  color: #8b8fa8;
+  margin-bottom: 8rpx;
+}
+
+/* Fed 结构 */
+.structure-card {
+  margin-top: 24rpx;
+  padding: 28rpx;
+  background: rgba(167, 139, 250, 0.05);
+  border: 1px solid rgba(167, 139, 250, 0.2);
+  border-radius: 24rpx;
+}
+
+.struct-tag {
+  display: block;
+  font-size: 22rpx;
+  color: #a78bfa;
+  margin-bottom: 16rpx;
+  font-weight: 500;
+}
+
+.role-item {
+  padding: 16rpx 0;
+  border-bottom: 1px dashed rgba(167, 139, 250, 0.15);
+  &:last-of-type { border-bottom: none; }
+}
+
+.role-header {
+  display: flex;
+  gap: 14rpx;
+  align-items: center;
+  margin-bottom: 8rpx;
+}
+
+.role-emoji { font-size: 32rpx; line-height: 1; }
+.role-name { display: block; font-size: 26rpx; color: #e6edf3; font-weight: 500; }
+.role-count { display: block; font-size: 20rpx; color: #a78bfa; margin-top: 2rpx; }
+
+.role-desc {
+  display: block;
+  font-size: 22rpx;
+  color: rgba(230, 237, 243, 0.8);
+  line-height: 1.6;
+  margin-bottom: 6rpx;
+}
+
+.role-protect {
+  display: block;
+  font-size: 20rpx;
+  color: #10b981;
+  line-height: 1.5;
+}
+
+.struct-note {
+  display: block;
+  margin-top: 16rpx;
+  padding-top: 16rpx;
+  border-top: 1px solid rgba(167, 139, 250, 0.15);
+  font-size: 22rpx;
+  color: rgba(167, 139, 250, 0.85);
+  line-height: 1.7;
+}
+
+/* 中美对比 */
+.compare-card {
+  margin-top: 24rpx;
+  padding: 28rpx;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 24rpx;
+}
+
+.compare-tag {
+  display: block;
+  font-size: 22rpx;
+  color: #e6edf3;
+  margin-bottom: 16rpx;
+  font-weight: 500;
+}
+
+.cmp-row {
+  display: flex;
+  flex-direction: column;
+  gap: 14rpx;
+}
+
+.cmp-cell {
+  padding: 16rpx 20rpx;
+  border-radius: 16rpx;
+  border: 1px solid;
+}
+
+.cmp-us {
+  background: rgba(59, 130, 246, 0.05);
+  border-color: rgba(59, 130, 246, 0.25);
+}
+
+.cmp-cn {
+  background: rgba(239, 68, 68, 0.04);
+  border-color: rgba(239, 68, 68, 0.2);
+}
+
+.cmp-name {
+  display: block;
+  font-size: 26rpx;
+  font-weight: 500;
+  color: #e6edf3;
+  margin-bottom: 6rpx;
+}
+
+.cmp-detail {
+  display: block;
+  font-size: 22rpx;
+  color: rgba(230, 237, 243, 0.75);
+  line-height: 1.6;
+}
+
+.cmp-note {
+  display: block;
+  margin-top: 16rpx;
+  padding-top: 16rpx;
+  border-top: 1px dashed rgba(255, 255, 255, 0.08);
+  font-size: 22rpx;
+  color: rgba(230, 237, 243, 0.7);
+  line-height: 1.7;
+}
+
+.hint {
+  display: block;
+  margin-top: 24rpx;
+  padding: 0 8rpx;
+  font-size: 22rpx;
+  color: #8b8fa8;
+  line-height: 1.6;
+}

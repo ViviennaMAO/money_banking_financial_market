@@ -86,6 +86,54 @@ export const ch4Snapshots: Record<string, Ch4Snapshot> = {
   }
 }
 
+/* ===== 第 13 章 FOMC 点阵图 ===== */
+export interface Ch13Snapshot {
+  inflationGap: number
+  outputGap: number
+  uncertainty: number
+  actualFFR: number
+  note: string
+  flash?: boolean
+  predict?: PredictDef
+}
+
+export const ch13Snapshots: Record<string, Ch13Snapshot> = {
+  '1981': {
+    inflationGap: 10, outputGap: -2, uncertainty: 30, actualFFR: 19.1,
+    note: '⚠️ 1981.6 沃尔克紧缩巅峰:通胀 12%,失业率 7.5%,FFR 推到 19.1%(史上最高)。农民开拖拉机围 Fed 大楼,无数企业倒闭。沃尔克坚持不让步。',
+    flash: true,
+    predict: {
+      title: '你即将切换到「1981.6 沃尔克紧缩」',
+      question: '1981 沃尔克把 FFR 推到 19.1%,引发 1981-82 双重衰退,失业率 11%,无数企业破产。农民开拖拉机围 Fed 大楼。问:沃尔克会让步吗?',
+      options: [
+        '让步,降息救经济',
+        '部分让步,温和降息',
+        '不让步,继续紧缩',
+        '不让步,通胀 1986 降到 1.5%,大缓和起点'
+      ],
+      correctIdx: 3,
+      revealHeadline: '不让步 — 通胀 1986 降到 1.5%,开启大缓和',
+      revealMsg: '沃尔克坚持紧缩 3 年,直到通胀降到 1.5%(1986)。**短期承担骂名换长期通胀稳定** = 央行独立性的核心价值。1984-2007 大缓和(GDP 波动率减半 + 通胀 2-3%)正是这次坚持的成果。土耳其反例:Erdogan 强迫央行降息(2021-2023)→ 里拉崩盘 -75% + 通胀 80%+。教学点:**Fed 的"政治隔离"结构(7 理事 14 年任期 + 联储行长地区任命)是反通胀的制度基础**。'
+    }
+  },
+  '2008': {
+    inflationGap: -1, outputGap: -4, uncertainty: 80, actualFFR: 0.16,
+    note: '2008.12 紧急 ZLB:通胀转负,失业率 7.3% 飙升中。FOMC 把 FFR 推到 0.25%,启动 QE1。委员意见高度一致(危机中无人敢鸽派)。'
+  },
+  '2015': {
+    inflationGap: -1.3, outputGap: -1, uncertainty: 60, actualFFR: 0.40,
+    note: '2015.12 启动加息:Fed 终于离开 ZLB,但通胀还低于目标。委员意见分歧(部分担心过早加息)。耶伦时期的"渐进加息"开始。'
+  },
+  '2022': {
+    inflationGap: 7.1, outputGap: 1, uncertainty: 70, actualFFR: 1.58,
+    note: '2022.6 通胀冲击:CPI 9.1% 创 40 年新高,但 FFR 仅 1.58%(滞后泰勒规则 12pp)。FOMC 委员意见分裂——鹰派要 75bp,鸽派要保留弹性。'
+  },
+  'today': {
+    inflationGap: 1, outputGap: 0, uncertainty: 40, actualFFR: 4.5,
+    note: '今天:通胀回落但仍超目标,经济稳健。委员观点回归正态分布。Fed 在"维持限制性"和"避免过紧"之间走钢丝。'
+  }
+}
+
 /* ===== 第 15 章 Fed 利率走廊 ===== */
 export interface Ch15Snapshot {
   iorb: number
