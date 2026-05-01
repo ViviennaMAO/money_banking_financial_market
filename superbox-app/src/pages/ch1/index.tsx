@@ -5,6 +5,7 @@ import { mortgagePayment } from '../../utils/formulas'
 import SliderRow from '../../components/SliderRow'
 import PredictModal from '../../components/PredictModal'
 import RevealModal from '../../components/RevealModal'
+import LiveData from '../../components/LiveData'
 import './index.scss'
 
 const lifeImpacts = [
@@ -67,6 +68,25 @@ export default function Ch1Page() {
           这一章用一个简单计算器告诉你:**金融素养是现代公民的基本能力**。
         </Text>
       </View>
+
+      <LiveData
+        title='📡 此刻的真实利率环境'
+        subtitle='用 FRED 当下的房贷利率算你的月供 — 不是教材里的"假设 6%"'
+        tiles={[
+          { id: 'MORTGAGE30US', label: '30Y 房贷利率',
+            hint: '直接代到下方滑块,看月供如何变化'
+          },
+          { id: 'DFF', label: '联邦基金利率', change: '1y',
+            hint: 'Fed 加 1% → 房贷涨 ~1%'
+          },
+          { id: 'CPIAUCSL', label: 'CPI 总', change: '1y',
+            hint: '通胀决定你的"实际"购买力'
+          },
+          { id: 'UNRATE', label: '失业率',
+            hint: '劳动市场状况 — 决定你的工资增长'
+          }
+        ]}
+      />
 
       <View className='calc-card'>
         <Text className='calc-tag'>🏠 房贷月供计算器</Text>

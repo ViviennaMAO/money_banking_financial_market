@@ -7,6 +7,7 @@ import SnapshotBar from '../../components/SnapshotBar'
 import SliderRow from '../../components/SliderRow'
 import PredictModal from '../../components/PredictModal'
 import RevealModal from '../../components/RevealModal'
+import LiveData from '../../components/LiveData'
 import './index.scss'
 
 export default function Ch16Page() {
@@ -102,6 +103,23 @@ export default function Ch16Page() {
           { key: 'today', label: '今天', accent: 'primary' }
         ]}
         onSelect={loadSnapshot}
+      />
+
+      <LiveData
+        title='📡 当下泰勒输入'
+        subtitle='把这些数字代入下方滑块,看 Fed 偏离规则多少'
+        tiles={[
+          { id: 'CPIAUCSL', label: 'CPI YoY', change: '1y',
+            hint: '同比变化 = 当下通胀 π'
+          },
+          { id: 'UNRATE', label: '失业率',
+            hint: '低于 4.4 → 输出缺口为正,推高规则利率'
+          },
+          { id: 'DFF', label: '实际 FFR',
+            hint: '与规则给出值的差 = Fed 的"裁量空间"'
+          },
+          { id: 'DGS10', label: '10Y 美债', change: '1y' }
+        ]}
       />
 
       <View className={`output ${flash ? 'flash' : ''}`}>

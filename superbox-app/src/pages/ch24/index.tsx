@@ -7,6 +7,7 @@ import SnapshotBar from '../../components/SnapshotBar'
 import SliderRow from '../../components/SliderRow'
 import PredictModal from '../../components/PredictModal'
 import RevealModal from '../../components/RevealModal'
+import LiveData from '../../components/LiveData'
 import './index.scss'
 
 const compColors: Record<string, string> = {
@@ -96,6 +97,25 @@ export default function Ch24Page() {
           { key: 'today', label: '今天', accent: 'primary' }
         ]}
         onSelect={loadSnapshot}
+      />
+
+      <LiveData
+        title='📡 当下通胀全景'
+        subtitle='Headline / Core / PCE / 通胀预期 — 4 个数字告诉 Fed 该不该动'
+        tiles={[
+          { id: 'CPIAUCSL',  label: 'CPI 总', change: '1y',
+            hint: '同比变化 = 总通胀,媒体头版数字'
+          },
+          { id: 'CPILFESL',  label: '核心 CPI', change: '1y',
+            hint: '剔除食品+能源,Fed 真正盯的"粘性通胀"'
+          },
+          { id: 'PCEPILFE',  label: '核心 PCE', change: '1y',
+            hint: 'Fed 法定目标变量 — 比 Core CPI 更"官方"'
+          },
+          { id: 'T10YIE',    label: '10Y 通胀盈亏平衡',
+            hint: '市场对未来 10 年通胀预期'
+          }
+        ]}
       />
 
       <View className={`output ${flash ? 'flash' : ''}`}>

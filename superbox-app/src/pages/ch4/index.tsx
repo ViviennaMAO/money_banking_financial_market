@@ -7,6 +7,7 @@ import SnapshotBar from '../../components/SnapshotBar'
 import SliderRow from '../../components/SliderRow'
 import PredictModal from '../../components/PredictModal'
 import RevealModal from '../../components/RevealModal'
+import LiveData from '../../components/LiveData'
 import './index.scss'
 
 export default function Ch4Page() {
@@ -96,6 +97,19 @@ export default function Ch4Page() {
           { key: 'today', label: '今天', accent: 'primary' }
         ]}
         onSelect={loadSnapshot}
+      />
+
+      <LiveData
+        title='📡 当下利率快照'
+        subtitle='教材里的 r,在今天的 FRED 数据中是这些数字'
+        tiles={[
+          { id: 'DGS2',  label: '2 年期美债' },
+          { id: 'DGS10', label: '10 年期美债' },
+          { id: 'DGS30', label: '30 年期美债' },
+          { id: 'T10YIE', label: '10Y 通胀盈亏平衡',
+            hint: '费雪方程的 π^e:把 i - π^e ≈ 实际利率'
+          }
+        ]}
       />
 
       <View className='panel'>

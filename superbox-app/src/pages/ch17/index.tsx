@@ -6,6 +6,7 @@ import SnapshotBar from '../../components/SnapshotBar'
 import SliderRow from '../../components/SliderRow'
 import PredictModal from '../../components/PredictModal'
 import RevealModal from '../../components/RevealModal'
+import LiveData from '../../components/LiveData'
 import './index.scss'
 
 export default function Ch17Page() {
@@ -86,6 +87,21 @@ export default function Ch17Page() {
           { key: 'today', label: '今天', accent: 'primary' }
         ]}
         onSelect={loadSnapshot}
+      />
+
+      <LiveData
+        title='📡 当下汇率与利差'
+        subtitle='IRP 不是静态公式 — 这些数字每天都在动'
+        tiles={[
+          { id: 'DEXJPUS', label: 'USD/JPY',
+            hint: '同比变化 = 套息盘的"汇率风险"实绩'
+          },
+          { id: 'DEXUSEU', label: 'EUR/USD' },
+          { id: 'DFF', label: 'USD 利率',
+            hint: '套息收益的"高息腿"'
+          },
+          { id: 'DTWEXBGS', label: '美元贸易加权指数' }
+        ]}
       />
 
       <View className='panel'>

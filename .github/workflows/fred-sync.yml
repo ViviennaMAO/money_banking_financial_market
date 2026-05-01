@@ -1,0 +1,45 @@
+name: FRED 数据每日同步
+
+on:
+  schedule:
+    # 每天 UTC 02:00 运行(美东 21:00,FRED 大多数日序列已更新)
+    - cron: '0 2 * * *'
+  workflow_dispatch: # 手动触发
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Fetch FRED data
+        env:
+          FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
+        working-directory: superbox-app
+        run: |
+          if [ -z "$FRED_API_KEY" ]; then
+            echo "::warning::FRED_API_KEY 未配置 — 跳过拉取。请在 repo Settings → Secrets 添加。"
+            exit 0
+          fi
+          node scripts/fetch-fred.mjs
+
+      - name: Commit & push if changed
+        run: |
+          cd "$GITHUB_WORKSPACE"
+          if [ -z "$(git status --porcelain superbox-app/public/data/fred-latest.json 2>/dev/null)" ]; then
+            echo "无改动,跳过 commit"
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add superbox-app/public/data/fred-latest.json
+          git commit -m "data: FRED daily sync $(date -u +'%Y-%m-%d')"
+          git push

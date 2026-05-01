@@ -12,6 +12,7 @@ import {
   dueReviews,
   type ProgressData
 } from '../../utils/progress'
+import LiveData from '../../components/LiveData'
 import './index.scss'
 
 export default function Home() {
@@ -53,6 +54,20 @@ export default function Home() {
           把<Text className='hero-accent'>货币金融学</Text>{'\n'}
           变成你能<Text className='hero-warm'>动手玩</Text>的活教材
         </Text>
+      </View>
+
+      {/* 今日核心数字 — FRED 实时 */}
+      <View className='live-block'>
+        <LiveData
+          title='📡 今日核心数字'
+          subtitle='FRED 数据每日同步 · 让米什金的理论看到此刻的市场'
+          tiles={[
+            { id: 'DFF', label: '联邦基金利率' },
+            { id: 'DGS10', label: '10 年期美债' },
+            { id: 'T10Y2Y', label: '2s10s 利差' },
+            { id: 'MORTGAGE30US', label: '30Y 房贷利率' }
+          ]}
+        />
       </View>
 
       {/* 进度概览 + 仪表板入口 */}
