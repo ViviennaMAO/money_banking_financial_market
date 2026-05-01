@@ -38,7 +38,7 @@ export default defineAppConfig({
   window: {
     backgroundTextStyle: 'dark',
     navigationBarBackgroundColor: '#0a0e1a',
-    navigationBarTitleText: '米什金互动学习',
+    navigationBarTitleText: '货币金融学互动学习',
     navigationBarTextStyle: 'white',
     backgroundColor: '#0a0e1a'
   }

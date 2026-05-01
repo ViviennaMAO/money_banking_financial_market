@@ -14,15 +14,6 @@ import {
 } from '../../utils/progress'
 import './index.scss'
 
-const principles = [
-  { name: '测试效应', color: 'p-blue' },
-  { name: '生成效应', color: 'p-amber' },
-  { name: '反预期', color: 'p-red' },
-  { name: '必要难度', color: 'p-green' },
-  { name: '自解释', color: 'p-purple' },
-  { name: '元认知', color: 'p-cyan' }
-]
-
 export default function Home() {
   const [expanded, setExpanded] = useState<Set<number>>(
     new Set(parts.map(p => p.num))
@@ -62,16 +53,6 @@ export default function Home() {
           把<Text className='hero-accent'>货币金融学</Text>{'\n'}
           变成你能<Text className='hero-warm'>动手玩</Text>的活教材
         </Text>
-      </View>
-
-      {/* 学习科学 6 锚点 */}
-      <View className='card principles'>
-        <Text className='card-tag'>设计原则 · 6 条学习科学锚点</Text>
-        <View className='badges'>
-          {principles.map(p => (
-            <Text key={p.name} className={`badge ${p.color}`}>{p.name}</Text>
-          ))}
-        </View>
       </View>
 
       {/* 进度概览 + 仪表板入口 */}
