@@ -1,23 +1,23 @@
 {
-	"projectname": "mishkin-superbox",
-	"description": "米什金互动学习 · Luffa SuperBox 小程序",
-	"appid": "touristappid",
-	"setting": {
-		"urlCheck": true,
-		"es6": false,
-		"enhance": false,
-		"postcss": false,
-		"minified": false,
-		"newFeature": true,
-		"autoAudits": false,
-		"coverView": true,
-		"showShadowRootInWxmlPanel": true,
-		"scopeDataCheck": false,
-		"useCompilerModule": true,
-		"userConfirmedUseCompilerModuleSwitch": false
-	},
-	"compileType": "miniprogram",
-	"simulatorType": "wechat",
-	"LuffaToolsappid": "touristappid",
-	"condition": {}
+  "miniprogramRoot": "./",
+  "projectname": "mishkin-superbox",
+  "description": "米什金互动学习 · Luffa SuperBox 小程序",
+  "appid": "touristappid",
+  "setting": {
+    "urlCheck": true,
+    "es6": false,
+    "enhance": false,
+    "postcss": false,
+    "minified": false,
+    "newFeature": true,
+    "autoAudits": false,
+    "coverView": true,
+    "showShadowRootInWxmlPanel": true,
+    "scopeDataCheck": false,
+    "useCompilerModule": true,
+    "userConfirmedUseCompilerModuleSwitch": false
+  },
+  "compileType": "miniprogram",
+  "simulatorType": "wechat",
+  "condition": {}
 }

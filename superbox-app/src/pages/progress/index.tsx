@@ -10,9 +10,11 @@ import {
   type ProgressData
 } from '../../utils/progress'
 import { findChapter, parts, totalChapters } from '../../data/chapters'
+import { useT } from '../../i18n'
 import './index.scss'
 
 export default function ProgressPage() {
+  const { t, toggle } = useT()
   const [data, setData] = useState<ProgressData>(loadProgress())
 
   useEffect(() => {
@@ -53,13 +55,16 @@ export default function ProgressPage() {
 
   return (
     <ScrollView scrollY className='progress-page'>
+      <View className='lang-switch' onClick={toggle}>
+        <Text className='lang-icon'>🌐</Text>
+        <Text className='lang-label'>{t.common.langSwitch}</Text>
+      </View>
+
       {/* Hero */}
       <View className='progress-hero'>
         <Text className='hero-emoji'>📊</Text>
-        <Text className='hero-title'>学习仪表盘</Text>
-        <Text className='hero-subtitle'>
-          基于本地存储 · 隐私无忧 · 艾宾浩斯复习提醒
-        </Text>
+        <Text className='hero-title'>{t.progressPage.title}</Text>
+        <Text className='hero-subtitle'>{t.progressPage.subtitle}</Text>
       </View>
 
       {/* 总览 4 块 */}

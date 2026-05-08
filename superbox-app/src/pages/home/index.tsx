@@ -12,9 +12,15 @@ import {
   dueReviews,
   type ProgressData
 } from '../../utils/progress'
+import { useT, pickL } from '../../i18n'
 import './index.scss'
 
+function fmt(tpl: string, vars: Record<string, string | number>): string {
+  return tpl.replace(/\{(\w+)\}/g, (_, k) => String(vars[k] ?? ''))
+}
+
 export default function Home() {
+  const { t, locale, toggle } = useT()
   const [expanded, setExpanded] = useState<Set<number>>(
     new Set(parts.map(p => p.num))
   )
@@ -46,12 +52,23 @@ export default function Home() {
 
   return (
     <ScrollView scrollY className='home'>
+      {/* 语言切换按钮 */}
+      <View className='lang-switch' onClick={toggle}>
+        <Text className='lang-icon'>🌐</Text>
+        <Text className='lang-label'>{t.common.langSwitch}</Text>
+      </View>
+
       {/* Hero */}
       <View className='hero'>
-        <Text className='hero-tag'>让米什金的理论 · 在今天的市场上立刻验证</Text>
+        <Text className='hero-tag'>{t.hero.tag}</Text>
         <Text className='hero-title'>
-          把<Text className='hero-accent'>货币金融学</Text>{'\n'}
-          变成你能<Text className='hero-warm'>动手玩</Text>的活教材
+          {locale === 'zh' ? (
+            <>把<Text className='hero-accent'>{t.hero.titleAccent1}</Text>{'\n'}
+            变成你能<Text className='hero-warm'>{t.hero.titleAccent2}</Text>的活教材</>
+          ) : (
+            <>Turn <Text className='hero-accent'>{t.hero.titleAccent1}</Text>{'\n'}
+            into a hands-on, <Text className='hero-warm'>{t.hero.titleAccent2}</Text> textbook</>
+          )}
         </Text>
       </View>
 
@@ -62,7 +79,7 @@ export default function Home() {
           onClick={() => Taro.navigateTo({ url: '/pages/progress/index' })}
         >
           <View className='progress-mini-info'>
-            <Text className='pm-label'>📊 学习仪表板</Text>
+            <Text className='pm-label'>{t.progressMini.label}</Text>
             <View className='pm-bar'>
               <View
                 className='pm-bar-fill'
@@ -70,8 +87,8 @@ export default function Home() {
               ></View>
             </View>
             <Text className='pm-meta'>
-              {completed}/{totalChapters} 章完成 · 连续 {progress.streakDays} 天
-              {dueCount > 0 ? ` · ⏰ ${dueCount} 章待复习` : ''}
+              {fmt(t.progressMini.summary, { done: completed, total: totalChapters, streak: progress.streakDays })}
+              {dueCount > 0 ? fmt(t.progressMini.due, { n: dueCount }) : ''}
             </Text>
           </View>
           <Text className='pm-arrow'>→</Text>
@@ -81,13 +98,15 @@ export default function Home() {
       {/* ==================== 1. 完整目录 ==================== */}
       <View className='section'>
         <View className='section-header'>
-          <Text className='section-tag'>📚 完整目录 · 6 篇 {totalChapters} 章</Text>
-          <Text className='section-meta'>点击篇名展开 / 收起</Text>
+          <Text className='section-tag'>{t.features.toc} · {fmt(t.features.tocSub, { n: totalChapters })}</Text>
+          <Text className='section-meta'>{t.features.tocMeta}</Text>
         </View>
 
         {parts.map(part => {
           const isOpen = expanded.has(part.num)
           const mvpInPart = part.chapters.filter(c => c.tier === 'mvp').length
+          const partTitle = pickL(part, 'title', locale)
+          const partDesc = pickL(part, 'desc', locale)
           return (
             <View key={part.num} className='part-block'>
               <View
@@ -95,11 +114,11 @@ export default function Home() {
                 onClick={() => togglePart(part.num)}
               >
                 <View className='part-info'>
-                  <Text className='part-title'>第 {part.num} 篇 · {part.title}</Text>
-                  <Text className='part-desc'>{part.desc}</Text>
+                  <Text className='part-title'>{fmt(t.common.part, { n: part.num })} · {partTitle}</Text>
+                  <Text className='part-desc'>{partDesc}</Text>
                   <Text className='part-meta'>
-                    {part.range} · {part.chapters.length} 章
-                    {mvpInPart > 0 ? ` · ${mvpInPart} 章 ⭐ MVP` : ''}
+                    {fmt(t.toc.range, { range: part.range, n: part.chapters.length })}
+                    {mvpInPart > 0 ? fmt(t.toc.mvpInPart, { n: mvpInPart }) : ''}
                   </Text>
                 </View>
                 <Text className='part-arrow'>{isOpen ? '▾' : '▸'}</Text>
@@ -109,6 +128,8 @@ export default function Home() {
                 <View className='part-chapters'>
                   {part.chapters.map(c => {
                     const stat = progress?.chapterStats[c.num]
+                    const chTitle = pickL(c, 'title', locale)
+                    const chBrief = pickL(c, 'brief', locale)
                     return (
                       <View
                         key={c.num}
@@ -118,17 +139,17 @@ export default function Home() {
                         <Text className='mini-emoji'>{c.emoji}</Text>
                         <View className='mini-body'>
                           <View className='mini-title-row'>
-                            <Text className='mini-num'>第 {c.num} 章</Text>
+                            <Text className='mini-num'>{fmt(t.common.chapter, { n: c.num })}</Text>
                             {stat?.completed ? (
-                              <Text className='mini-status mini-status-done'>✓ 已学</Text>
+                              <Text className='mini-status mini-status-done'>{t.toc.statusDone}</Text>
                             ) : c.tier === 'mvp' ? (
-                              <Text className='mini-status mini-status-mvp'>⭐ 专属</Text>
+                              <Text className='mini-status mini-status-mvp'>{t.toc.statusMvp}</Text>
                             ) : (
-                              <Text className='mini-status mini-status-basic'>● 概览版</Text>
+                              <Text className='mini-status mini-status-basic'>{t.toc.statusBasic}</Text>
                             )}
                           </View>
-                          <Text className='mini-title'>{c.title}</Text>
-                          <Text className='mini-brief'>{c.brief}</Text>
+                          <Text className='mini-title'>{chTitle}</Text>
+                          <Text className='mini-brief'>{chBrief}</Text>
                           <Text className='mini-stars'>{'⭐'.repeat(c.difficulty)}</Text>
                         </View>
                       </View>
@@ -148,11 +169,9 @@ export default function Home() {
       >
         <Text className='feat-emoji'>🗺️</Text>
         <View className='feat-body'>
-          <Text className='feat-title'>学习地图</Text>
-          <Text className='feat-desc'>
-            打乱原教材顺序 · {learningPaths.length} 条路径按"思维模块"重组
-          </Text>
-          <Text className='feat-meta'>30 分钟入门 / 利率思维 / 银行倒下 / Fed 工具箱 ...</Text>
+          <Text className='feat-title'>{t.features.paths}</Text>
+          <Text className='feat-desc'>{fmt(t.features.pathsDesc, { n: learningPaths.length })}</Text>
+          <Text className='feat-meta'>{t.features.pathsMeta}</Text>
         </View>
         <Text className='feat-arrow'>→</Text>
       </View>
@@ -164,11 +183,9 @@ export default function Home() {
       >
         <Text className='feat-emoji'>⭐</Text>
         <View className='feat-body'>
-          <Text className='feat-title'>反预期精选</Text>
-          <Text className='feat-desc'>
-            {mvpCount} 章 · 每章一个"教材没说,但市场会教你"的瞬间
-          </Text>
-          <Text className='feat-meta'>历史快照 · 预测先行 · 互动模拟器</Text>
+          <Text className='feat-title'>{t.features.mvp}</Text>
+          <Text className='feat-desc'>{fmt(t.features.mvpDesc, { n: mvpCount })}</Text>
+          <Text className='feat-meta'>{t.features.mvpMeta}</Text>
         </View>
         <Text className='feat-arrow'>→</Text>
       </View>
@@ -180,11 +197,9 @@ export default function Home() {
       >
         <Text className='feat-emoji'>🧩</Text>
         <View className='feat-body'>
-          <Text className='feat-title'>跨章测验</Text>
-          <Text className='feat-desc'>
-            {totalQuizCount} 题精选 · 4 层级(回忆 / 应用 / 分析 / 综合)
-          </Text>
-          <Text className='feat-meta'>单章精练 / 按篇抽题 / 全章随机</Text>
+          <Text className='feat-title'>{t.features.quiz}</Text>
+          <Text className='feat-desc'>{fmt(t.features.quizDesc, { n: totalQuizCount })}</Text>
+          <Text className='feat-meta'>{t.features.quizMeta}</Text>
         </View>
         <Text className='feat-arrow'>→</Text>
       </View>
@@ -196,11 +211,9 @@ export default function Home() {
       >
         <Text className='feat-emoji'>📖</Text>
         <View className='feat-body'>
-          <Text className='feat-title'>词汇附录</Text>
-          <Text className='feat-desc'>
-            {totalTerms} 词条 · 中英对照 · 反预期一句话定义
-          </Text>
-          <Text className='feat-meta'>搜索 · 8 大类 · 直达章节</Text>
+          <Text className='feat-title'>{t.features.glossary}</Text>
+          <Text className='feat-desc'>{fmt(t.features.glossaryDesc, { n: totalTerms })}</Text>
+          <Text className='feat-meta'>{t.features.glossaryMeta}</Text>
         </View>
         <Text className='feat-arrow'>→</Text>
       </View>
@@ -208,12 +221,12 @@ export default function Home() {
       {/* ==================== 6. 今日财经 Top 10 ==================== */}
       <View className='news-block'>
         <View className='section-header'>
-          <Text className='section-tag'>📰 今日财经 Top 10</Text>
+          <Text className='section-tag'>{t.features.news}</Text>
           <Text
             className='section-link'
             onClick={() => Taro.navigateTo({ url: '/pages/news/index' })}
           >
-            查看全部 →
+            {t.features.newsLink}
           </Text>
         </View>
         <View className='news-mini-list'>
@@ -240,7 +253,7 @@ export default function Home() {
       </View>
 
       <View className='footer-note'>
-        <Text>原型 v2 · 米什金教材内容版权属 Pearson</Text>
+        <Text>{t.common.bookCopyright}</Text>
       </View>
     </ScrollView>
   )

@@ -9,7 +9,12 @@ import {
 } from '../../data/chapter-quiz'
 import { findChapter, parts } from '../../data/chapters'
 import { markQuiz } from '../../utils/progress'
+import { useT } from '../../i18n'
 import './index.scss'
+
+function fmt(tpl: string, vars: Record<string, string | number>): string {
+  return tpl.replace(/\{(\w+)\}/g, (_, k) => String(vars[k] ?? ''))
+}
 
 type Mode = 'menu' | 'running' | 'result'
 
@@ -21,6 +26,7 @@ const LEVEL_LABEL: Record<QuizQuestion['level'], string> = {
 }
 
 export default function QuizPage() {
+  const { t, toggle } = useT()
   const router = useRouter()
   const chParam = router.params.ch ? Number(router.params.ch) : undefined
 
@@ -90,11 +96,16 @@ export default function QuizPage() {
   if (mode === 'menu') {
     return (
       <ScrollView scrollY className='quiz-page'>
+        <View className='lang-switch' onClick={toggle}>
+          <Text className='lang-icon'>🌐</Text>
+          <Text className='lang-label'>{t.common.langSwitch}</Text>
+        </View>
+
         <View className='quiz-hero'>
           <Text className='hero-emoji'>🧩</Text>
-          <Text className='hero-title'>跨章联动测验</Text>
+          <Text className='hero-title'>{t.quizPage.title}</Text>
           <Text className='hero-subtitle'>
-            题库共 {totalQuizCount} 题 · 25 章 × 5 题精选
+            {fmt(t.quizPage.subtitleTpl, { n: totalQuizCount })}
           </Text>
         </View>
 

@@ -1,57 +1,72 @@
 import { View, Text, ScrollView } from '@tarojs/components'
 import Taro from '@tarojs/taro'
 import { mvpChapters, type Chapter } from '../../data/chapters'
+import { useT, pickL } from '../../i18n'
 import './index.scss'
 
+function fmt(tpl: string, vars: Record<string, string | number>): string {
+  return tpl.replace(/\{(\w+)\}/g, (_, k) => String(vars[k] ?? ''))
+}
+
 export default function MvpPage() {
+  const { t, locale, toggle } = useT()
+
   function go(ch: Chapter) {
     const url = ch.pagePath || `/pages/chapter/index?ch=${ch.num}`
     Taro.navigateTo({ url })
   }
 
-  // 按章号排序
   const sorted = [...mvpChapters].sort((a, b) => a.num - b.num)
 
   return (
     <ScrollView scrollY className='mvp-page'>
+      <View className='lang-switch' onClick={toggle}>
+        <Text className='lang-icon'>🌐</Text>
+        <Text className='lang-label'>{t.common.langSwitch}</Text>
+      </View>
+
       <View className='mvp-hero'>
         <Text className='hero-emoji'>⭐</Text>
-        <Text className='hero-title'>反预期精选</Text>
+        <Text className='hero-title'>{t.mvpPage.title}</Text>
         <Text className='hero-subtitle'>
-          {sorted.length} 个震撼时刻 · 每章一个"教材没说,但市场会教你"的瞬间
+          {fmt(t.mvpPage.subtitleTpl, { n: sorted.length })}
         </Text>
       </View>
 
       <View className='mvp-list'>
-        {sorted.map(c => (
-          <View
-            key={c.num}
-            className='mvp-card'
-            onClick={() => go(c)}
-          >
-            <View className='card-row'>
-              <Text className='card-emoji'>{c.emoji}</Text>
-              <View className='card-body'>
-                <View className='card-meta'>
-                  <Text className='card-num'>第 {c.num} 章</Text>
-                  <Text className='card-stars'>{'⭐'.repeat(c.difficulty)}</Text>
+        {sorted.map(c => {
+          const chTitle = pickL(c, 'title', locale)
+          const chHook = pickL(c, 'hook', locale)
+          return (
+            <View
+              key={c.num}
+              className='mvp-card'
+              onClick={() => go(c)}
+            >
+              <View className='card-row'>
+                <Text className='card-emoji'>{c.emoji}</Text>
+                <View className='card-body'>
+                  <View className='card-meta'>
+                    <Text className='card-num'>{fmt(t.common.chapter, { n: c.num })}</Text>
+                    <Text className='card-stars'>{'⭐'.repeat(c.difficulty)}</Text>
+                  </View>
+                  <Text className='card-title'>{chTitle}</Text>
                 </View>
-                <Text className='card-title'>{c.title}</Text>
               </View>
+              {chHook ? (
+                <View className='card-hook'>
+                  <Text className='hook-flag'>⚡</Text>
+                  <Text className='hook-text'>{chHook}</Text>
+                </View>
+              ) : null}
+              <Text className='card-cta'>{t.mvpPage.cta}</Text>
             </View>
-            {c.hook ? (
-              <View className='card-hook'>
-                <Text className='hook-flag'>⚡</Text>
-                <Text className='hook-text'>{c.hook}</Text>
-              </View>
-            ) : null}
-            <Text className='card-cta'>立刻试 →</Text>
-          </View>
-        ))}
+          )
+        })}
       </View>
 
       <View className='footer-note'>
-        <Text>每章带历史快照 + 反预期预测先行 + 互动公式器</Text>
+        <Text>{t.mvpPage.foot}</Text>
       </View>
     </ScrollView>
   )

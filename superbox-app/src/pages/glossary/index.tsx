@@ -3,9 +3,15 @@ import { useState, useMemo } from 'react'
 import Taro from '@tarojs/taro'
 import { glossary, totalTerms, type GlossaryItem } from '../../data/glossary'
 import { findChapter } from '../../data/chapters'
+import { useT } from '../../i18n'
 import './index.scss'
 
+function fmt(tpl: string, vars: Record<string, string | number>): string {
+  return tpl.replace(/\{(\w+)\}/g, (_, k) => String(vars[k] ?? ''))
+}
+
 export default function GlossaryPage() {
+  const { t, toggle } = useT()
   const [query, setQuery] = useState('')
   const [activeGroup, setActiveGroup] = useState<string>('all')
 
@@ -30,11 +36,16 @@ export default function GlossaryPage() {
 
   return (
     <ScrollView scrollY className='glossary-page'>
+      <View className='lang-switch' onClick={toggle}>
+        <Text className='lang-icon'>🌐</Text>
+        <Text className='lang-label'>{t.common.langSwitch}</Text>
+      </View>
+
       <View className='glossary-hero'>
         <Text className='hero-emoji'>📖</Text>
-        <Text className='hero-title'>词汇附录</Text>
+        <Text className='hero-title'>{t.glossaryPage.title}</Text>
         <Text className='hero-subtitle'>
-          {totalTerms} 个核心术语 · 中英对照 · 反预期一句话定义
+          {fmt(t.glossaryPage.subtitleTpl, { n: totalTerms })}
         </Text>
       </View>
 
@@ -43,7 +54,7 @@ export default function GlossaryPage() {
         <Text className='search-icon'>🔍</Text>
         <Input
           className='search-input'
-          placeholder='搜索术语 / 英文 / 关键词'
+          placeholder={t.glossaryPage.searchPlaceholder}
           value={query}
           onInput={e => setQuery(e.detail.value)}
         />
@@ -59,7 +70,7 @@ export default function GlossaryPage() {
             className={`filter-chip ${activeGroup === 'all' ? 'active' : ''}`}
             onClick={() => setActiveGroup('all')}
           >
-            <Text>全部</Text>
+            <Text>{t.glossaryPage.filterAll}</Text>
           </View>
           {glossary.map(g => (
             <View

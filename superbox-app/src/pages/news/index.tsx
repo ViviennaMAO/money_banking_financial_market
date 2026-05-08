@@ -3,9 +3,11 @@ import { useState } from 'react'
 import Taro from '@tarojs/taro'
 import { newsTop10, newsCategoryLabel, type NewsItem } from '../../data/news'
 import { findChapter } from '../../data/chapters'
+import { useT } from '../../i18n'
 import './index.scss'
 
 export default function NewsPage() {
+  const { t, toggle } = useT()
   const [active, setActive] = useState<NewsItem | null>(null)
 
   function open(item: NewsItem) {
@@ -84,10 +86,15 @@ export default function NewsPage() {
 
   return (
     <ScrollView scrollY className='news-page'>
+      <View className='lang-switch' onClick={toggle}>
+        <Text className='lang-icon'>🌐</Text>
+        <Text className='lang-label'>{t.common.langSwitch}</Text>
+      </View>
+
       <View className='news-hero'>
         <Text className='hero-emoji'>📰</Text>
-        <Text className='hero-title'>每日财经 Top 10</Text>
-        <Text className='hero-subtitle'>每条新闻 → 即时拆解涉及的知识点 → 跳转学习</Text>
+        <Text className='hero-title'>{t.newsPage.title}</Text>
+        <Text className='hero-subtitle'>{t.newsPage.subtitle}</Text>
         <Text className='hero-date'>{newsTop10[0].date}</Text>
       </View>
 
