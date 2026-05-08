@@ -2,11 +2,16 @@
 
 export interface PredictDef {
   title: string
+  title_en?: string
   question: string
+  question_en?: string
   options: string[]
+  options_en?: string[]
   correctIdx: number
   revealHeadline: string
+  revealHeadline_en?: string
   revealMsg: string
+  revealMsg_en?: string
 }
 
 /* ===== 第 14 章 货币乘数 ===== */
@@ -49,6 +54,7 @@ export const ch14Snapshots: Record<string, Ch14Snapshot> = {
 export interface Ch4Snapshot {
   fv: number; couponRate: number; ytm: number; years: number; inflation: number
   note: string
+  note_en?: string
   flash?: boolean
   predict?: PredictDef
 }
@@ -56,33 +62,47 @@ export interface Ch4Snapshot {
 export const ch4Snapshots: Record<string, Ch4Snapshot> = {
   '1981': {
     fv: 1000, couponRate: 14, ytm: 14, years: 10, inflation: 10,
-    note: '1981.9 沃尔克紧缩末:10Y 利率 ~14%,通胀 ~10%。后续 1982 起 Fed 大幅降息,债券进入超级牛市。把 ytm 从 14% 拖到 8% 看看价格变化。'
+    note: '1981.9 沃尔克紧缩末:10Y 利率 ~14%,通胀 ~10%。后续 1982 起 Fed 大幅降息,债券进入超级牛市。把 ytm 从 14% 拖到 8% 看看价格变化。',
+    note_en: '1981.9 Volcker tightening peak: 10Y yield ~14%, inflation ~10%. Fed slashed rates from 1982; bonds entered a super bull market. Drag YTM from 14% to 8% to watch the price change.'
   },
   '2022': {
     fv: 1000, couponRate: 1, ytm: 1, years: 20, inflation: 7,
     note: '⚠️ 2022.3 加息冲击起点:20Y 期 1% 票息债券,利率 1%。Fed 此后把 FFR 推到 5.25%。把 ytm 拖到 5%——见证长债被屠杀。',
+    note_en: '⚠️ 2022.3 hike cycle inception: 20Y bond, 1% coupon, 1% yield. Fed later pushed FFR to 5.25%. Drag YTM to 5% — watch long bonds get slaughtered.',
     flash: true,
     predict: {
       title: '你即将切换到「2022 加息冲击」',
+      title_en: 'You\'re about to switch to \'2022 Hike Shock\'',
       question: 'Fed 把 ytm 从 1% 推到 5%,20 年期、1% 票息的债券价格变化最接近?',
+      question_en: 'Fed pushed YTM from 1% to 5%. For a 20Y, 1%-coupon bond, the price change is closest to:',
       options: [
         '+5%(避险逻辑,债券小涨)',
         '-10%(温和下跌)',
         '-30%(显著下跌,跟股市差不多)',
         '价格腰斩 -50%'
       ],
+      options_en: [
+        '+5% (flight-to-safety, mild rally)',
+        '-10% (modest drawdown)',
+        '-30% (significant fall, similar to stocks)',
+        'Halved, -50%'
+      ],
       correctIdx: 3,
       revealHeadline: '价格腰斩 ≈ -50%',
-      revealMsg: '20 年期、低票息债券对利率极度敏感(久期 ~18)。利率涨 4 个百分点 → 价格跌 ~50%。这就是为什么 2022 美国国债 ETF TLT 跌 -31%,比股市跌得更惨——债券不是"低风险资产",高久期债券是利率的杠杆赌注。'
+      revealHeadline_en: 'Price halved ≈ -50%',
+      revealMsg: '20 年期、低票息债券对利率极度敏感(久期 ~18)。利率涨 4 个百分点 → 价格跌 ~50%。这就是为什么 2022 美国国债 ETF TLT 跌 -31%,比股市跌得更惨——债券不是"低风险资产",高久期债券是利率的杠杆赌注。',
+      revealMsg_en: 'Long-duration low-coupon bonds are extremely rate-sensitive (duration ~18). Rates +4pp → price -50%. That\'s why 2022 long-bond ETF TLT crashed -31%, worse than stocks — bonds aren\'t "low-risk"; high-duration bonds are leveraged bets on interest rates.'
     }
   },
   '2024': {
     fv: 1000, couponRate: 4, ytm: 4.5, years: 10, inflation: 3,
-    note: '2024.10:10Y 利率 ~4.5%,核心通胀 ~3%,实际利率 ~1.5%(2008 来高位)。'
+    note: '2024.10:10Y 利率 ~4.5%,核心通胀 ~3%,实际利率 ~1.5%(2008 来高位)。',
+    note_en: '2024.10: 10Y yield ~4.5%, core inflation ~3%, real rate ~1.5% (highest since 2008).'
   },
   'today': {
     fv: 1000, couponRate: 4, ytm: 4, years: 10, inflation: 2.5,
-    note: '今天:利率回落,实际利率仍较高。试试 ytm 拖到 6%(衰退反转)看价格上涨。'
+    note: '今天:利率回落,实际利率仍较高。试试 ytm 拖到 6%(衰退反转)看价格上涨。',
+    note_en: 'Today: yields have receded, real rate still elevated. Try dragging YTM to 6% (recession reversal) to see prices rally.'
   }
 }
 
@@ -620,6 +640,7 @@ export interface Ch16Snapshot {
   beta: number
   actualFFR: number       // 实际联邦基金利率
   note: string
+  note_en?: string
   flash?: boolean
   predict?: PredictDef
 }
@@ -628,41 +649,56 @@ export const ch16Snapshots: Record<string, Ch16Snapshot> = {
   '1981': {
     inflation: 10, inflationTarget: 2, outputGap: -2, naturalRate: 0.5,
     alpha: 1.5, beta: 0.5, actualFFR: 14,
-    note: '1981 沃尔克紧缩:通胀 10%。沃尔克用极激进 α=1.5 → 隐含利率 14%+,实际 FFR 也到 14%。"Fed 真信通胀目标"的标志。'
+    note: '1981 沃尔克紧缩:通胀 10%。沃尔克用极激进 α=1.5 → 隐含利率 14%+,实际 FFR 也到 14%。"Fed 真信通胀目标"的标志。',
+    note_en: '1981 Volcker tightening: inflation 10%. Volcker used an aggressive α=1.5 → implied rate 14%+, actual FFR also at 14%. The hallmark of "Fed truly believes its inflation target".'
   },
   '2008': {
     inflation: 2, inflationTarget: 2, outputGap: -4, naturalRate: 0.5,
     alpha: 0.5, beta: 0.5, actualFFR: 1.0,
-    note: '2008 危机:通胀达标 + 产出缺口 -4%。泰勒规则要求 i* = 0.5(过松),但 ZLB 限制让实际只能到 0%。'
+    note: '2008 危机:通胀达标 + 产出缺口 -4%。泰勒规则要求 i* = 0.5(过松),但 ZLB 限制让实际只能到 0%。',
+    note_en: '2008 crisis: inflation on-target + output gap -4%. Taylor rule prescribes i* = 0.5 (too easy), but ZLB caps actual rate at 0%.'
   },
   '2010': {
     inflation: 1.5, inflationTarget: 2, outputGap: -3, naturalRate: 0.5,
     alpha: 0.5, beta: 0.5, actualFFR: 0.25,
-    note: '2010-2014 QE 期:通胀低于目标 + 衰退后复苏。泰勒说要 i*=-0.75%,但 ZLB → Fed 用 QE 替代降息。陷阱期间泰勒规则失灵。'
+    note: '2010-2014 QE 期:通胀低于目标 + 衰退后复苏。泰勒说要 i*=-0.75%,但 ZLB → Fed 用 QE 替代降息。陷阱期间泰勒规则失灵。',
+    note_en: '2010-2014 QE era: inflation below target + post-recession recovery. Taylor implies i* = -0.75%, but ZLB → Fed used QE in lieu of cuts. The Taylor rule breaks inside a liquidity trap.'
   },
   '2022': {
     inflation: 9.1, inflationTarget: 2, outputGap: 1, naturalRate: 0.5,
     alpha: 0.5, beta: 0.5, actualFFR: 1.25,
     note: '⚠️ 2022.6 通胀峰值:CPI 达 9.1%,但 Fed 才开始加息,实际 FFR 仅 1.25%。泰勒规则隐含 13%+。1980 来最大滞后。',
+    note_en: '⚠️ 2022.6 inflation peak: CPI hit 9.1%, but Fed had just begun hiking, actual FFR only 1.25%. Taylor rule implies 13%+. The biggest lag since 1980.',
     flash: true,
     predict: {
       title: '你即将切换到「2022.6 通胀冲击」',
+      title_en: 'You\'re about to switch to \'2022.6 Inflation Shock\'',
       question: '2022.6 美国 CPI 达到 9.1% 峰值,实际 FFR 还在 1.25%。按泰勒规则(α=β=0.5),Fed 应该把利率定在?',
+      question_en: 'By 2022.6 US CPI peaked at 9.1%, actual FFR only 1.25%. Per the Taylor rule (α=β=0.5), where should the Fed have set rates?',
       options: [
         '2.5%(温和加息)',
         '5%(快速追赶)',
         '7.5%(激进)',
         '13%+(沃尔克级激进)'
       ],
+      options_en: [
+        '2.5% (mild hike)',
+        '5% (fast catch-up)',
+        '7.5% (aggressive)',
+        '13%+ (Volcker-level aggressive)'
+      ],
       correctIdx: 3,
       revealHeadline: '泰勒规则隐含 13%+ · Fed 偏离 12 个百分点',
-      revealMsg: '按泰勒:i* = 0.5 + 9.1 + 0.5×(9.1-2) + 0.5×1 = 13.7%。实际 FFR 仅 1.25%。**1980 来最大滞后**。原因:① FAIT 战略允许"暂时"超调;② 判断为暂时性供给冲击;③ 不愿激进打击就业。后果:被迫以 1980 来最快速度追赶加息(2022.3-2023.7 共 525bp)。教学点:**FAIT 容忍超调让 Fed 反应慢**——这是该战略的内在矛盾。'
+      revealHeadline_en: 'Taylor rule implies 13%+ · Fed lagged by 12 percentage points',
+      revealMsg: '按泰勒:i* = 0.5 + 9.1 + 0.5×(9.1-2) + 0.5×1 = 13.7%。实际 FFR 仅 1.25%。**1980 来最大滞后**。原因:① FAIT 战略允许"暂时"超调;② 判断为暂时性供给冲击;③ 不愿激进打击就业。后果:被迫以 1980 来最快速度追赶加息(2022.3-2023.7 共 525bp)。教学点:**FAIT 容忍超调让 Fed 反应慢**——这是该战略的内在矛盾。',
+      revealMsg_en: 'Taylor: i* = 0.5 + 9.1 + 0.5×(9.1-2) + 0.5×1 = 13.7%. Actual FFR only 1.25%. **The biggest lag since 1980**. Reasons: ① FAIT framework permits "temporary" overshoots; ② Diagnosed as transitory supply shock; ③ Reluctance to aggressively hurt employment. Consequence: forced to catch up at the fastest pace since 1980 (525bp from 2022.3 to 2023.7). Teaching point: **FAIT\'s tolerance of overshoot delays Fed response** — an inherent contradiction in the strategy.'
     }
   },
   'today': {
     inflation: 3, inflationTarget: 2, outputGap: 0, naturalRate: 0.5,
     alpha: 0.5, beta: 0.5, actualFFR: 4.5,
-    note: '今天:通胀回落到 3%,Fed 已降息到 4.5%。泰勒规则:i* = 0.5 + 3 + 0.5×1 = 4%。实际略偏紧,Fed 谨慎中。'
+    note: '今天:通胀回落到 3%,Fed 已降息到 4.5%。泰勒规则:i* = 0.5 + 3 + 0.5×1 = 4%。实际略偏紧,Fed 谨慎中。',
+    note_en: 'Today: inflation back to 3%, Fed cut to 4.5%. Taylor rule: i* = 0.5 + 3 + 0.5×1 = 4%. Actual slightly tighter than rule — Fed remains cautious.'
   }
 }
 
@@ -865,6 +901,7 @@ export interface Ch6Snapshot {
   longEnd: number       // 30Y 长端
   curveBow: number      // 凸度
   note: string
+  note_en?: string
   flash?: boolean
   predict?: PredictDef
 }
@@ -872,37 +909,52 @@ export interface Ch6Snapshot {
 export const ch6Snapshots: Record<string, Ch6Snapshot> = {
   '1980': {
     shortEnd: 14, longEnd: 11, curveBow: -0.5,
-    note: '1980 沃尔克紧缩巅峰:短端 14%(拉到极致打通胀),长端 11%(市场预期会降)。严重倒挂 + 凹陷 → 1981-82 双重衰退如期而至。'
+    note: '1980 沃尔克紧缩巅峰:短端 14%(拉到极致打通胀),长端 11%(市场预期会降)。严重倒挂 + 凹陷 → 1981-82 双重衰退如期而至。',
+    note_en: '1980 Volcker tightening peak: short end 14% (extreme to break inflation), long end 11% (market expecting cuts). Deep inversion + concave shape → the 1981-82 double-dip recession arrived on schedule.'
   },
   '2007': {
     shortEnd: 5.25, longEnd: 5.0, curveBow: 0,
-    note: '2007.6 危机前:平坦微倒挂,市场嗅到了风险。一年后(2008.9)雷曼倒下。倒挂 → 衰退,经典传导。'
+    note: '2007.6 危机前:平坦微倒挂,市场嗅到了风险。一年后(2008.9)雷曼倒下。倒挂 → 衰退,经典传导。',
+    note_en: '2007.6 pre-crisis: flat with mild inversion, market sensing risk. A year later (2008.9) Lehman collapsed. Inversion → recession, classic transmission.'
   },
   '2019': {
     shortEnd: 2.4, longEnd: 1.6, curveBow: -0.2,
-    note: '2019.8 倒挂:Fed 紧缩末期,市场预期会衰退。但 2020 衰退是疫情触发,不是常规商业周期 — 两个原因混在一起。'
+    note: '2019.8 倒挂:Fed 紧缩末期,市场预期会衰退。但 2020 衰退是疫情触发,不是常规商业周期 — 两个原因混在一起。',
+    note_en: '2019.8 inversion: end of Fed tightening, market pricing recession. But the 2020 recession was triggered by the pandemic, not a regular business cycle — two causes blended.'
   },
   '2024': {
     shortEnd: 5.4, longEnd: 4.2, curveBow: -0.3,
     note: '⚠️ 2024.7 反常:2s10s 倒挂超过 24 个月,但 GDP 仍 +2.5%。50 年来首次"超长倒挂无衰退"。教科书 8/8 必衰退被打破。',
+    note_en: '⚠️ 2024.7 anomaly: 2s10s inverted for 24+ months, yet GDP still +2.5%. First time in 50 years of an ultra-long inversion without recession. The 8/8 textbook record was broken.',
     flash: true,
     predict: {
       title: '你即将切换到「2024.7 反常」',
+      title_en: 'You\'re about to switch to \'2024.7 Anomaly\'',
       question: '美国 2s10s 倒挂已持续 24 个月,按教科书 8/8 历史经验衰退应该已发生。猜 2024 末美国实际 GDP 增速?',
+      question_en: 'US 2s10s has been inverted for 24 months. By the textbook 8-of-8 record, recession should have hit. What was US real GDP growth at end-2024?',
       options: [
         '衰退 (-2% 以下)',
         '微弱增长 (0-1%)',
         '健康增长 (2-3%)',
         '强劲增长 (3%+)'
       ],
+      options_en: [
+        'Recession (below -2%)',
+        'Weak growth (0-1%)',
+        'Healthy growth (2-3%)',
+        'Strong growth (3%+)'
+      ],
       correctIdx: 2,
       revealHeadline: '答案 +2.5% — 健康增长',
-      revealMsg: '50 年来首次"超长倒挂无衰退"。打破"倒挂必衰退"的信仰。可能原因:① 财政刺激持续(IRA/CHIPS)② 劳动力市场异常坚韧 ③ AI 投资潮带动增长 ④ 后疫情消费补偿。教学点:收益率曲线是市场预期的反映,不是真理 — 预期可能错。'
+      revealHeadline_en: 'Answer: +2.5% — healthy growth',
+      revealMsg: '50 年来首次"超长倒挂无衰退"。打破"倒挂必衰退"的信仰。可能原因:① 财政刺激持续(IRA/CHIPS)② 劳动力市场异常坚韧 ③ AI 投资潮带动增长 ④ 后疫情消费补偿。教学点:收益率曲线是市场预期的反映,不是真理 — 预期可能错。',
+      revealMsg_en: 'First "ultra-long inversion without recession" in 50 years. Breaks the "inversion → recession" dogma. Possible reasons: ① Sustained fiscal stimulus (IRA/CHIPS) ② Unusually resilient labor market ③ AI investment wave ④ Post-pandemic consumption catch-up. Teaching point: the yield curve reflects market expectations, not truth — expectations can be wrong.'
     }
   },
   'today': {
     shortEnd: 4.3, longEnd: 4.6, curveBow: 0.1,
-    note: '今天:Fed 已降息,2s10s 转正。市场松一口气,但通胀风险还没完全过去。试试调长端通胀预期看曲线变化。'
+    note: '今天:Fed 已降息,2s10s 转正。市场松一口气,但通胀风险还没完全过去。试试调长端通胀预期看曲线变化。',
+    note_en: 'Today: Fed has cut, 2s10s back in positive territory. Markets exhale, but inflation risk isn\'t fully gone. Try adjusting long-end inflation expectations to see the curve shift.'
   }
 }
 
@@ -910,6 +962,7 @@ export const ch6Snapshots: Record<string, Ch6Snapshot> = {
 export interface Ch17Snapshot {
   id: number; ifv: number; ds: number; lev: number
   note: string
+  note_en?: string
   flash?: boolean
   predict?: PredictDef
 }
@@ -917,41 +970,56 @@ export interface Ch17Snapshot {
 export const ch17Snapshots: Record<string, Ch17Snapshot> = {
   '2007': {
     id: 5.25, ifv: 0.5, ds: 1, lev: 5,
-    note: '2007.7 套息巅峰:利差 4.75% × 5x = 28% 年化,carry trade 黄金时代。'
+    note: '2007.7 套息巅峰:利差 4.75% × 5x = 28% 年化,carry trade 黄金时代。',
+    note_en: '2007.7 carry-trade peak: 4.75% spread × 5x leverage = 28% annualized — the golden age of carry trades.'
   },
   '2008': {
     id: 5.0, ifv: 1.0, ds: -18, lev: 10,
     note: '⚠️ 2008.10 雷曼:USD/JPY 单月暴跌 18%,10x 杠杆 -140% → 爆仓。',
+    note_en: '⚠️ 2008.10 Lehman: USD/JPY crashed 18% in one month, 10x leverage = -140% → margin call wipeout.',
     flash: true,
     predict: {
       title: '你即将切换到「2008.10 雷曼崩盘」',
+      title_en: 'You\'re about to switch to \'2008.10 Lehman Collapse\'',
       question: 'USD/JPY 单月跌 18%,10x 杠杆套息策略亏多少?',
+      question_en: 'USD/JPY fell 18% in one month. How much does a 10x-leveraged carry strategy lose?',
       options: ['-30%(还活着)', '-100%(归零)', '-140%(倒欠经纪商)'],
+      options_en: ['-30% (still alive)', '-100% (zero out)', '-140% (owe broker money)'],
       correctIdx: 2,
       revealHeadline: '真实损失 = -140%',
-      revealMsg: '保证金被强平,杠杆放大让你不只是亏完本金,还倒欠经纪商。这是 2008 全球套息平仓潮的微观结果。'
+      revealHeadline_en: 'Actual loss = -140%',
+      revealMsg: '保证金被强平,杠杆放大让你不只是亏完本金,还倒欠经纪商。这是 2008 全球套息平仓潮的微观结果。',
+      revealMsg_en: 'Margin call → forced liquidation. Leverage amplifies losses — you don\'t just zero out, you owe the broker. This is the micro-level outcome of the 2008 global carry-unwind.'
     }
   },
   '2024-7': {
     id: 5.25, ifv: 0.25, ds: 0, lev: 10,
-    note: '2024.7:套息利差 5%,市场以为这种关系会永远持续。'
+    note: '2024.7:套息利差 5%,市场以为这种关系会永远持续。',
+    note_en: '2024.7: carry spread at 5%, markets assumed the relationship would last forever.'
   },
   '2024-8': {
     id: 4.75, ifv: 0.5, ds: -12, lev: 10,
     note: '⚠️ 2024.8 三周内 USD/JPY 162→142(-12%),10x 杠杆 -100%。10 年 carry 收益,3 周亏完。',
+    note_en: '⚠️ 2024.8: USD/JPY went 162→142 (-12%) in three weeks. 10x leverage = -100%. A decade of carry yield wiped out in 3 weeks.',
     flash: true,
     predict: {
       title: '你即将切换到「2024.8 套息平仓」',
+      title_en: 'You\'re about to switch to \'2024.8 Carry Unwind\'',
       question: '这 3 周内,10 倍杠杆套息策略亏多少?',
+      question_en: 'Over these 3 weeks, how much does a 10x-leveraged carry strategy lose?',
       options: ['-10%(carry 还在)', '-50%(汇率跌 5%)', '-100%(全亏完)', '比 -100% 更糟'],
+      options_en: ['-10% (carry still works)', '-50% (FX down 5%)', '-100% (wiped out)', 'Worse than -100%'],
       correctIdx: 2,
       revealHeadline: '真实损失 = -100%',
-      revealMsg: 'BOJ 意外加息 + Fed 转向降息,carry 利差双向夹击。叠加自我实现的平仓潮,USD/JPY 三周从 162 跌到 142。10x 杠杆 = 一夜归零。'
+      revealHeadline_en: 'Actual loss = -100%',
+      revealMsg: 'BOJ 意外加息 + Fed 转向降息,carry 利差双向夹击。叠加自我实现的平仓潮,USD/JPY 三周从 162 跌到 142。10x 杠杆 = 一夜归零。',
+      revealMsg_en: 'BOJ surprise hike + Fed pivot to cuts — carry spread squeezed from both sides. Combined with a self-fulfilling unwind, USD/JPY went 162→142 in three weeks. 10x leverage = wiped out overnight.'
     }
   },
   'today': {
     id: 4.5, ifv: 0.5, ds: 0, lev: 10,
-    note: '今天:利差仍在 4%,但市场对"持续"的信心已动摇。'
+    note: '今天:利差仍在 4%,但市场对"持续"的信心已动摇。',
+    note_en: 'Today: spread still at 4%, but market confidence in "sustainability" has been shaken.'
   }
 }
 

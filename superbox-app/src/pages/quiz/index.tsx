@@ -18,15 +18,22 @@ function fmt(tpl: string, vars: Record<string, string | number>): string {
 
 type Mode = 'menu' | 'running' | 'result'
 
-const LEVEL_LABEL: Record<QuizQuestion['level'], string> = {
-  recall: '回忆',
-  apply: '应用',
-  analyze: '分析',
-  synth: '综合'
-}
-
 export default function QuizPage() {
-  const { t, toggle } = useT()
+  const { t, locale, toggle } = useT()
+  // 题目层级标签的双语
+  const LEVEL_LABEL: Record<QuizQuestion['level'], string> = {
+    recall: t.quizPage.levelRecall,
+    apply: t.quizPage.levelApply,
+    analyze: t.quizPage.levelAnalyze,
+    synth: t.quizPage.levelSynth
+  }
+  // 题目字段双语选择 helper
+  const pickQ = (q: QuizQuestion) =>
+    locale === 'en' && q.question_en ? q.question_en : q.question
+  const pickOpts = (q: QuizQuestion): string[] =>
+    locale === 'en' && q.options_en ? q.options_en : q.options
+  const pickExp = (q: QuizQuestion) =>
+    locale === 'en' && q.explain_en ? q.explain_en : q.explain
   const router = useRouter()
   const chParam = router.params.ch ? Number(router.params.ch) : undefined
 
@@ -192,9 +199,9 @@ export default function QuizPage() {
                   <Text className='review-tag'>第 {q.ch} 章 · {LEVEL_LABEL[q.level]}</Text>
                   <Text className='review-icon'>{correct ? '✓' : '✗'}</Text>
                 </View>
-                <Text className='review-q'>{q.question}</Text>
+                <Text className='review-q'>{pickQ(q)}</Text>
                 <View className='review-opts'>
-                  {q.options.map((opt, oi) => {
+                  {pickOpts(q).map((opt, oi) => {
                     const isAnswer = oi === q.answer
                     const isPicked = oi === picks[qi]
                     let cls = 'opt-default'
@@ -209,7 +216,7 @@ export default function QuizPage() {
                 </View>
                 <View className='review-explain'>
                   <Text className='explain-flag'>💡</Text>
-                  <Text className='explain-text'>{q.explain}</Text>
+                  <Text className='explain-text'>{pickExp(q)}</Text>
                 </View>
               </View>
             )
@@ -256,9 +263,9 @@ export default function QuizPage() {
                 </Text>
               ) : null}
             </View>
-            <Text className='q-stem'>{q.question}</Text>
+            <Text className='q-stem'>{pickQ(q)}</Text>
             <View className='q-opts'>
-              {q.options.map((opt, oi) => {
+              {pickOpts(q).map((opt, oi) => {
                 const picked = picks[qi] === oi
                 let cls = ''
                 if (revealed[qi]) {
@@ -279,7 +286,7 @@ export default function QuizPage() {
             {revealed[qi] ? (
               <View className='q-explain'>
                 <Text className='explain-flag'>💡</Text>
-                <Text className='explain-text'>{q.explain}</Text>
+                <Text className='explain-text'>{pickExp(q)}</Text>
               </View>
             ) : (
               <Text
