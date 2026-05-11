@@ -18,6 +18,7 @@ export interface PredictDef {
 export interface Ch14Snapshot {
   mb: number; r: number; e: number; c: number
   note: string
+  note_en?: string
   flash?: boolean
   predict?: PredictDef
 }
@@ -25,28 +26,36 @@ export interface Ch14Snapshot {
 export const ch14Snapshots: Record<string, Ch14Snapshot> = {
   '2007': {
     mb: 0.85, r: 10, e: 0.04, c: 7,
-    note: '2007.8 危机前:乘数 ≈ 8.7。正常时期。'
+    note: '2007.8 危机前:乘数 ≈ 8.7。正常时期。',
+    note_en: '2007.8 pre-crisis: multiplier ≈ 8.7. A normal period.'
   },
   '2010': {
     mb: 2.0, r: 10, e: 80, c: 8,
     note: '⚠️ 2010.1 QE 后:乘数从 8.7 砸到 1.2!Fed 注入的钱卡在准备金里——流动性陷阱的微观证据。',
+    note_en: '⚠️ 2010.1 post-QE: multiplier crashed from 8.7 to 1.2! Fed-injected money stayed in reserves — micro evidence of the liquidity trap.',
     flash: true,
     predict: {
       title: '你即将切换到「2010.1 QE 后」',
+      title_en: 'You\'re about to switch to \'2010.1 Post-QE\'',
       question: 'Fed QE 把 MB 从 0.85T 推到 2.0T,乘数 m 会变成多少?',
+      question_en: 'Fed QE pushed MB from 0.85T to 2.0T. What does the multiplier m become?',
       options: ['跟现在差不多(5 左右)', '涨到 10+(QE 注入大量货币)', '暴跌到 1-2(超储锁住流动性)'],
       correctIdx: 2,
       revealHeadline: '真实 m = 1.2',
-      revealMsg: '超额准备金 e 从 0.04% 飙到 80%——Fed 印的钱卡在银行系统。这就是为什么万亿 QE 没引发 1970s 式恶性通胀。'
+      revealHeadline_en: 'Actual m = 1.2',
+      revealMsg: '超额准备金 e 从 0.04% 飙到 80%——Fed 印的钱卡在银行系统。这就是为什么万亿 QE 没引发 1970s 式恶性通胀。',
+      revealMsg_en: 'Excess reserves jumped from 0.04% to 80% — Fed-printed money stuck in the banking system. This is why trillion-dollar QE didn\'t trigger 1970s-style hyperinflation.'
     }
   },
   '2020': {
     mb: 4.8, r: 0, e: 18, c: 9,
-    note: '2020.4 疫情:无 r 时代(Fed 2020.3 起 r=0),但 e 仍是大头。'
+    note: '2020.4 疫情:无 r 时代(Fed 2020.3 起 r=0),但 e 仍是大头。',
+    note_en: '2020.4 pandemic: zero-r era (Fed cut to r=0 in 2020.3), but excess reserves still dominate.'
   },
   'today': {
     mb: 5.5, r: 0, e: 12, c: 8,
-    note: '今天:QT 进行中,e 缓慢下降,M2 增速回升。注意 IORB 已合并 IOER+IORR(2021.7.29)。'
+    note: '今天:QT 进行中,e 缓慢下降,M2 增速回升。注意 IORB 已合并 IOER+IORR(2021.7.29)。',
+    note_en: 'Today: QT underway, excess reserves slowly receding, M2 growth picking up. Note IORB merged IOER+IORR on 2021.7.29.'
   }
 }
 
@@ -441,6 +450,7 @@ export interface Ch22Snapshot {
   srasShift: number
   potentialY: number
   note: string
+  note_en?: string
   flash?: boolean
   predict?: PredictDef
 }
@@ -448,37 +458,52 @@ export interface Ch22Snapshot {
 export const ch22Snapshots: Record<string, Ch22Snapshot> = {
   '1960s': {
     adShift: 1, srasShift: 0, potentialY: 100,
-    note: '1960s 大缓和:温和 AD 增 + SRAS 平稳。经典菲利普斯曲线时期(失业↓ → 通胀↑ 权衡)。这就是 Burns/Greenspan 早期信奉的世界。'
+    note: '1960s 大缓和:温和 AD 增 + SRAS 平稳。经典菲利普斯曲线时期(失业↓ → 通胀↑ 权衡)。这就是 Burns/Greenspan 早期信奉的世界。',
+    note_en: '1960s Great Moderation: mild AD growth + stable SRAS. The classic Phillips curve era (unemployment↓ → inflation↑ trade-off). This was the world Burns and early Greenspan believed in.'
   },
   '1973': {
     adShift: 0, srasShift: 4, potentialY: 100,
-    note: '1973 OPEC 石油禁运:SRAS 大幅左移(原油从 $3 飙到 $12)。AD 几乎不动。教科书级"成本推动型通胀"——同时通胀↑+失业↑+产出↓。'
+    note: '1973 OPEC 石油禁运:SRAS 大幅左移(原油从 $3 飙到 $12)。AD 几乎不动。教科书级"成本推动型通胀"——同时通胀↑+失业↑+产出↓。',
+    note_en: '1973 OPEC oil embargo: SRAS shifts left sharply (crude from $3 to $12). AD barely moves. Textbook cost-push inflation — inflation↑ + unemployment↑ + output↓ all at once.'
   },
   '1979': {
     adShift: 1, srasShift: 8, potentialY: 100,
     note: '⚠️ 1979 滞胀峰值:CPI 13.5%(战后最高)+ 失业 5.8% + 经济衰退。Burns 宽松货币 + 第二次石油危机叠加 → 滞胀失控。',
+    note_en: '⚠️ 1979 stagflation peak: CPI 13.5% (post-war high) + 5.8% unemployment + recession. Burns\' loose money + second oil crisis → stagflation out of control.',
     flash: true,
     predict: {
       title: '你即将切换到「1979 滞胀峰值」',
+      title_en: 'You\'re about to switch to \'1979 Stagflation Peak\'',
       question: '1973 OPEC 石油禁运后,Fed 主席 Burns 选择"保就业"继续宽松货币。1979 美国 CPI 通胀峰值多少?',
+      question_en: 'After the 1973 OPEC oil embargo, Fed Chair Burns kept money loose to \'protect employment.\' What was the 1979 US CPI inflation peak?',
       options: [
         '5%(轻度通胀)',
         '8%(中度)',
         '13.5%(战后最高)',
         '20%(失控)'
       ],
+      options_en: [
+        '5% (mild)',
+        '8% (moderate)',
+        '13.5% (post-war high)',
+        '20% (out of control)'
+      ],
       correctIdx: 2,
       revealHeadline: '1979 CPI 13.5% — 战后最高',
-      revealMsg: '1979 CPI 13.5% 创战后最高,但**失业率仍 5.8%,GDP 还在缩**。这就是滞胀——经典菲利普斯曲线被打破:"失业↓→通胀↑"变成"高失业 + 高通胀"同时存在。原因:**供给冲击(石油)直接推高 SRAS,而非 AD**——经典菲利普斯只描述需求冲击。教学点:**菲利普斯曲线只在需求冲击主导时有效;供给冲击时它失效**。1979 沃尔克接手,用 20% FFR 三年才把通胀打下来(详见第 13 章)。'
+      revealHeadline_en: '1979 CPI 13.5% — post-war high',
+      revealMsg: '1979 CPI 13.5% 创战后最高,但**失业率仍 5.8%,GDP 还在缩**。这就是滞胀——经典菲利普斯曲线被打破:"失业↓→通胀↑"变成"高失业 + 高通胀"同时存在。原因:**供给冲击(石油)直接推高 SRAS,而非 AD**——经典菲利普斯只描述需求冲击。教学点:**菲利普斯曲线只在需求冲击主导时有效;供给冲击时它失效**。1979 沃尔克接手,用 20% FFR 三年才把通胀打下来(详见第 13 章)。',
+      revealMsg_en: '1979 CPI 13.5% was a post-war high — but **unemployment was still 5.8%, GDP still shrinking**. This is stagflation: the classic Phillips curve broke. \'Unemployment↓ → inflation↑\' became \'high unemployment + high inflation\' simultaneously. Reason: **supply shocks (oil) push SRAS directly, not AD** — the classic Phillips curve only describes demand shocks. Teaching point: **the Phillips curve only works when demand shocks dominate; it fails for supply shocks**. Volcker took over in 1979 and used 20% FFR over three years to break inflation (see Ch.13).'
     }
   },
   '2008': {
     adShift: -7, srasShift: 0, potentialY: 100,
-    note: '2008 危机:AD 大幅左移(信贷冻结 + 信心崩塌)。短期通缩压力 + 失业飙到 10%。需求冲击的教科书案例,与 1973 供给冲击形成对照。'
+    note: '2008 危机:AD 大幅左移(信贷冻结 + 信心崩塌)。短期通缩压力 + 失业飙到 10%。需求冲击的教科书案例,与 1973 供给冲击形成对照。',
+    note_en: '2008 crisis: AD shifts left sharply (credit freeze + collapsing confidence). Short-term deflationary pressure + unemployment spike to 10%. A textbook demand-shock case, contrasting with the 1973 supply shock.'
   },
   '2022': {
     adShift: 5, srasShift: 5, potentialY: 100,
-    note: '2022 疫情通胀:AD 大幅右移(财政刺激 + QE 无限)+ SRAS 左移(供应链 + 能源)。**双向夹击 → CPI 9.1%**。这是 1979 来最复杂的通胀。'
+    note: '2022 疫情通胀:AD 大幅右移(财政刺激 + QE 无限)+ SRAS 左移(供应链 + 能源)。**双向夹击 → CPI 9.1%**。这是 1979 来最复杂的通胀。',
+    note_en: '2022 pandemic inflation: AD shifts right sharply (fiscal stimulus + unlimited QE) + SRAS shifts left (supply chain + energy). **Two-way squeeze → CPI 9.1%**. The most complex inflation episode since 1979.'
   }
 }
 
@@ -711,6 +736,7 @@ export interface Ch9Snapshot {
   rateShock: number
   withdrawPct: number
   note: string
+  note_en?: string
   flash?: boolean
   predict?: PredictDef
 }
@@ -718,37 +744,52 @@ export interface Ch9Snapshot {
 export const ch9Snapshots: Record<string, Ch9Snapshot> = {
   'normal': {
     deposits: 100, loanPct: 55, longBondPct: 15, capitalPct: 10, rateShock: 0, withdrawPct: 5,
-    note: '正常运营银行:55% 贷款 + 15% 长债 + 30% 准备金/短期资产,资本 10%。Fed 不动 + 提款正常。这是 Basel 标准下的健康银行。'
+    note: '正常运营银行:55% 贷款 + 15% 长债 + 30% 准备金/短期资产,资本 10%。Fed 不动 + 提款正常。这是 Basel 标准下的健康银行。',
+    note_en: 'Normally operating bank: 55% loans + 15% long bonds + 30% reserves/short assets, 10% capital. Fed steady + normal withdrawals. A healthy bank under Basel.'
   },
   '2008': {
     deposits: 100, loanPct: 30, longBondPct: 5, capitalPct: 3, rateShock: 0, withdrawPct: 15,
-    note: '2008.9 雷曼前夜:杠杆 30+ 倍(资本仅 3%),大量投行 RMBS/CDO 风险敞口。一旦客户撤资即资本击穿。'
+    note: '2008.9 雷曼前夜:杠杆 30+ 倍(资本仅 3%),大量投行 RMBS/CDO 风险敞口。一旦客户撤资即资本击穿。',
+    note_en: '2008.9 eve of Lehman: leverage 30x+ (capital only 3%), heavy investment-bank RMBS/CDO exposure. Customer flight → instant capital breach.'
   },
   '2023': {
     deposits: 100, loanPct: 35, longBondPct: 40, capitalPct: 8, rateShock: 4, withdrawPct: 25,
     note: '⚠️ 2023.3 SVB:长债占比 40%(异常高,典型 15%)+ 客户高度集中科技行业 → Fed 加息 4% 撕开 HTM 浮亏 + 储户集中提款 25%。账面看起来正常,真实资本被击穿。',
+    note_en: '⚠️ 2023.3 SVB: long-bond share 40% (unusually high vs typical 15%) + customer base highly concentrated in tech → Fed +4% rates exposed HTM unrealized losses + concentrated 25% deposit run. Book metrics look fine, real capital crushed.',
     flash: true,
     predict: {
       title: '你即将切换到「2023 SVB」',
+      title_en: 'You\'re about to switch to \'2023 SVB\'',
       question: 'SVB 倒闭前看起来"正常":CET1 ~12%,LCR > 100%,无会计欺诈。为什么 48 小时倒闭?',
+      question_en: 'Before collapse SVB looked \'fine\': CET1 ~12%, LCR > 100%, no accounting fraud. Why did it die in 48 hours?',
       options: [
         '经营违法',
         '资本本来就不足,只是隐瞒',
         'HTM 长债浮亏 + 客户集中 + 利率冲击 = 真实资本被击穿',
         '监管查不出来'
       ],
+      options_en: [
+        'Illegal operations',
+        'Capital was already low, just hidden',
+        'HTM long-bond losses + customer concentration + rate shock = real capital crushed',
+        'Regulator couldn\'t detect'
+      ],
       correctIdx: 2,
       revealHeadline: '隐性风险公式:HTM + 客户集中 + 利率冲击',
-      revealMsg: 'SVB 持有大量长期国债(HTM 不计市价)。Fed 加息让这些国债浮亏 ~$15B,但账面看不出。客户集中(科技公司,90% 存款超 FDIC $250K 限额)→ 风声一来集中提款 → 被迫卖 HTM 浮亏变实亏 → 资本一夜击穿。教学点:看资产负债表,不只看账面数字,还要看*利率敏感度*和*客户结构*。Basel III 后 Fed 在监管中增加了"未实现损益"维度。'
+      revealHeadline_en: 'Hidden-risk formula: HTM + concentration + rate shock',
+      revealMsg: 'SVB 持有大量长期国债(HTM 不计市价)。Fed 加息让这些国债浮亏 ~$15B,但账面看不出。客户集中(科技公司,90% 存款超 FDIC $250K 限额)→ 风声一来集中提款 → 被迫卖 HTM 浮亏变实亏 → 资本一夜击穿。教学点:看资产负债表,不只看账面数字,还要看*利率敏感度*和*客户结构*。Basel III 后 Fed 在监管中增加了"未实现损益"维度。',
+      revealMsg_en: 'SVB held a large pile of long Treasuries (HTM, not marked-to-market). Fed hikes generated ~$15B unrealized losses, invisible on the book. Customers were concentrated (tech firms, 90% of deposits above FDIC\'s $250K limit) → as the rumor spread, withdrawals concentrated → SVB forced to sell HTM, realizing losses → capital crushed overnight. Teaching point: read a bank balance sheet not just for book numbers — also for *interest-rate sensitivity* and *customer structure*. Post-SVB regulation now incorporates \'unrealized loss\' explicitly.'
     }
   },
   '2024cre': {
     deposits: 80, loanPct: 60, longBondPct: 10, capitalPct: 9, rateShock: 2, withdrawPct: 8,
-    note: '2024 区域银行 + 商业地产敞口:贷款占比高(60%),其中商业地产占大头。Fed 加息让商业地产违约率上升 → 拨备压力 → 利润压缩。慢性危机模式。'
+    note: '2024 区域银行 + 商业地产敞口:贷款占比高(60%),其中商业地产占大头。Fed 加息让商业地产违约率上升 → 拨备压力 → 利润压缩。慢性危机模式。',
+    note_en: '2024 regional banks + CRE exposure: loan share high (60%), heavily in commercial real estate. Fed hikes lifted CRE default rates → provision pressure → margin compression. Chronic-crisis mode.'
   },
   'today': {
     deposits: 100, loanPct: 50, longBondPct: 12, capitalPct: 12, rateShock: 1, withdrawPct: 6,
-    note: '今天:SVB 后监管收紧 + 银行主动降低长债占比。资本充足率上升,流动性储备增加。"修复后"健康水位。'
+    note: '今天:SVB 后监管收紧 + 银行主动降低长债占比。资本充足率上升,流动性储备增加。"修复后"健康水位。',
+    note_en: 'Today: post-SVB regulation tightened + banks proactively reduced long-bond exposure. Capital ratios up, liquidity buffers stronger. The "post-fix" healthy level.'
   }
 }
 
