@@ -7,6 +7,7 @@ import SnapshotBar from '../../components/SnapshotBar'
 import SliderRow from '../../components/SliderRow'
 import PredictModal from '../../components/PredictModal'
 import RevealModal from '../../components/RevealModal'
+import { useT } from '../../i18n'
 import './index.scss'
 
 interface EMHForm {
@@ -38,6 +39,8 @@ const emhForms: EMHForm[] = [
 ]
 
 export default function Ch7Page() {
+  const { t, locale, toggle } = useT()
+  const S = (zh: string, en: string) => (locale === 'en' ? en : zh)
   const [params, setParams] = useState({ D: 3, g: 4, r: 8 })
   const [marketPrice, setMarketPrice] = useState(75)
   const [note, setNote] = useState('')
@@ -106,9 +109,14 @@ export default function Ch7Page() {
 
   return (
     <ScrollView scrollY className='ch7'>
+      <View className='lang-switch' onClick={toggle}>
+        <Text className='lang-icon'>🌐</Text>
+        <Text className='lang-label'>{t.common.langSwitch}</Text>
+      </View>
+
       <View className='page-header'>
-        <Text className='page-title'>📉 戈登增长 + EMH</Text>
-        <Text className='page-meta'>第 7 章</Text>
+        <Text className='page-title'>{S('📉 戈登增长 + EMH', '📉 Gordon Growth + EMH')}</Text>
+        <Text className='page-meta'>{S('第 7 章', 'Chapter 7')}</Text>
       </View>
 
       <SnapshotBar

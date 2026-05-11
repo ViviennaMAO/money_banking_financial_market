@@ -2,7 +2,21 @@
   padding: 32rpx 28rpx 80rpx;
   height: 100vh;
   box-sizing: border-box;
+
+position: relative;
 }
+
+.lang-switch {
+  position: absolute; top: 24rpx; right: 28rpx; z-index: 10;
+  display: flex; align-items: center; gap: 6rpx;
+  padding: 8rpx 16rpx;
+  background: rgba(28, 34, 54, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 9999rpx;
+  &:active { background: rgba(59, 130, 246, 0.15); border-color: rgba(59, 130, 246, 0.4); }
+}
+.lang-icon { font-size: 22rpx; line-height: 1; }
+.lang-label { font-size: 22rpx; font-weight: 600; color: #e6edf3; font-family: ui-monospace, Menlo, monospace; }
 
 .page-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 24rpx; }
 .page-title { font-size: 36rpx; font-weight: 600; color: #e6edf3; }

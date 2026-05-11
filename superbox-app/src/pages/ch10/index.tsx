@@ -6,6 +6,7 @@ import SnapshotBar from '../../components/SnapshotBar'
 import SliderRow from '../../components/SliderRow'
 import PredictModal from '../../components/PredictModal'
 import RevealModal from '../../components/RevealModal'
+import { useT } from '../../i18n'
 import './index.scss'
 
 const institutions = [
@@ -17,6 +18,8 @@ const institutions = [
 ]
 
 export default function Ch10Page() {
+  const { t, locale, toggle } = useT()
+  const S = (zh: string, en: string) => (locale === 'en' ? en : zh)
   const [params, setParams] = useState({ iorb: 4.40, mmfYield: 4.50 })
   const [bankDeposits, setBankDeposits] = useState(18)
   const [mmfSize, setMmfSize] = useState(6.4)
@@ -79,9 +82,14 @@ export default function Ch10Page() {
 
   return (
     <ScrollView scrollY className='ch10'>
+      <View className='lang-switch' onClick={toggle}>
+        <Text className='lang-icon'>🌐</Text>
+        <Text className='lang-label'>{t.common.langSwitch}</Text>
+      </View>
+
       <View className='page-header'>
-        <Text className='page-title'>🏢 银行业 vs 影子银行</Text>
-        <Text className='page-meta'>第 10 章</Text>
+        <Text className='page-title'>{S('🏢 银行业 vs 影子银行', '🏢 Commercial vs Shadow Banking')}</Text>
+        <Text className='page-meta'>{S('第 10 章', 'Chapter 10')}</Text>
       </View>
 
       <SnapshotBar

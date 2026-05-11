@@ -7,6 +7,7 @@ import SnapshotBar from '../../components/SnapshotBar'
 import SliderRow from '../../components/SliderRow'
 import PredictModal from '../../components/PredictModal'
 import RevealModal from '../../components/RevealModal'
+import { useT } from '../../i18n'
 import './index.scss'
 
 const riskMeta: Record<string, { label: string; cls: string; desc: string }> = {
@@ -33,6 +34,8 @@ const riskMeta: Record<string, { label: string; cls: string; desc: string }> = {
 }
 
 export default function Ch9Page() {
+  const { t, locale, toggle } = useT()
+  const S = (zh: string, en: string) => (locale === 'en' ? en : zh)
   const [params, setParams] = useState({
     deposits: 100, loanPct: 55, longBondPct: 15, capitalPct: 10,
     rateShock: 0, withdrawPct: 5
@@ -96,9 +99,14 @@ export default function Ch9Page() {
 
   return (
     <ScrollView scrollY className='ch9'>
+      <View className='lang-switch' onClick={toggle}>
+        <Text className='lang-icon'>🌐</Text>
+        <Text className='lang-label'>{t.common.langSwitch}</Text>
+      </View>
+
       <View className='page-header'>
-        <Text className='page-title'>🏦 银行压力测试</Text>
-        <Text className='page-meta'>第 9 章</Text>
+        <Text className='page-title'>{S('🏦 银行压力测试', '🏦 Bank Stress Test')}</Text>
+        <Text className='page-meta'>{S('第 9 章', 'Chapter 9')}</Text>
       </View>
 
       <SnapshotBar

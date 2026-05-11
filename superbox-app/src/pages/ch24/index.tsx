@@ -8,6 +8,7 @@ import SliderRow from '../../components/SliderRow'
 import PredictModal from '../../components/PredictModal'
 import RevealModal from '../../components/RevealModal'
 import LiveData from '../../components/LiveData'
+import { useT } from '../../i18n'
 import './index.scss'
 
 const compColors: Record<string, string> = {
@@ -18,6 +19,8 @@ const compColors: Record<string, string> = {
 }
 
 export default function Ch24Page() {
+  const { t, locale, toggle } = useT()
+  const S = (zh: string, en: string) => (locale === 'en' ? en : zh)
   const [params, setParams] = useState({
     m2Growth: 3, outputGap: 0.5, oilShock: -5, expectGap: 1
   })
@@ -83,9 +86,14 @@ export default function Ch24Page() {
 
   return (
     <ScrollView scrollY className='ch24'>
+      <View className='lang-switch' onClick={toggle}>
+        <Text className='lang-icon'>🌐</Text>
+        <Text className='lang-label'>{t.common.langSwitch}</Text>
+      </View>
+
       <View className='page-header'>
-        <Text className='page-title'>🔥 通胀 4 机制拆解</Text>
-        <Text className='page-meta'>第 24 章</Text>
+        <Text className='page-title'>{S('🔥 通胀 4 机制拆解', '🔥 Inflation 4-Mechanism Decomposition')}</Text>
+        <Text className='page-meta'>{S('第 24 章', 'Chapter 24')}</Text>
       </View>
 
       <SnapshotBar

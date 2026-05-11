@@ -7,6 +7,7 @@ import SnapshotBar from '../../components/SnapshotBar'
 import SliderRow from '../../components/SliderRow'
 import PredictModal from '../../components/PredictModal'
 import RevealModal from '../../components/RevealModal'
+import { useT } from '../../i18n'
 import './index.scss'
 
 interface InsightCard {
@@ -41,6 +42,8 @@ const insights: InsightCard[] = [
 ]
 
 export default function Ch25Page() {
+  const { t, locale, toggle } = useT()
+  const S = (zh: string, en: string) => (locale === 'en' ? en : zh)
   const [params, setParams] = useState({
     policyStrength: 30, expectedness: 65, credibility: 75
   })
@@ -103,9 +106,14 @@ export default function Ch25Page() {
 
   return (
     <ScrollView scrollY className='ch25'>
+      <View className='lang-switch' onClick={toggle}>
+        <Text className='lang-icon'>🌐</Text>
+        <Text className='lang-label'>{t.common.langSwitch}</Text>
+      </View>
+
       <View className='page-header'>
-        <Text className='page-title'>🧠 卢卡斯批判 · 政策预期</Text>
-        <Text className='page-meta'>第 25 章</Text>
+        <Text className='page-title'>{S('🧠 卢卡斯批判 · 政策预期', '🧠 Lucas Critique · Policy Expectations')}</Text>
+        <Text className='page-meta'>{S('第 25 章', 'Chapter 25')}</Text>
       </View>
 
       <SnapshotBar

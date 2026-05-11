@@ -7,9 +7,12 @@ import SnapshotBar from '../../components/SnapshotBar'
 import SliderRow from '../../components/SliderRow'
 import PredictModal from '../../components/PredictModal'
 import RevealModal from '../../components/RevealModal'
+import { useT } from '../../i18n'
 import './index.scss'
 
 export default function Ch21Page() {
+  const { t, locale, toggle } = useT()
+  const S = (zh: string, en: string) => (locale === 'en' ? en : zh)
   const [params, setParams] = useState({ fiscalShift: 30, monetaryShift: -30 })
   const [note, setNote] = useState('')
   const [flash, setFlash] = useState(false)
@@ -65,9 +68,14 @@ export default function Ch21Page() {
 
   return (
     <ScrollView scrollY className='ch21'>
+      <View className='lang-switch' onClick={toggle}>
+        <Text className='lang-icon'>🌐</Text>
+        <Text className='lang-label'>{t.common.langSwitch}</Text>
+      </View>
+
       <View className='page-header'>
-        <Text className='page-title'>⚙️ IS-LM 政策组合</Text>
-        <Text className='page-meta'>第 21 章</Text>
+        <Text className='page-title'>{S('⚙️ IS-LM 政策组合', '⚙️ IS-LM Policy Mix')}</Text>
+        <Text className='page-meta'>{S('第 21 章', 'Chapter 21')}</Text>
       </View>
 
       <SnapshotBar

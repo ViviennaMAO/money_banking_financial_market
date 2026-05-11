@@ -10,11 +10,15 @@ import {
   type ProgressData
 } from '../../utils/progress'
 import { findChapter, parts, totalChapters } from '../../data/chapters'
-import { useT } from '../../i18n'
+import { useT, pickL } from '../../i18n'
 import './index.scss'
 
+function fmt(tpl: string, vars: Record<string, string | number>): string {
+  return tpl.replace(/\{(\w+)\}/g, (_, k) => String(vars[k] ?? ''))
+}
+
 export default function ProgressPage() {
-  const { t, toggle } = useT()
+  const { t, locale, toggle } = useT()
   const [data, setData] = useState<ProgressData>(loadProgress())
 
   useEffect(() => {
@@ -29,15 +33,16 @@ export default function ProgressPage() {
 
   function handleReset() {
     Taro.showModal({
-      title: '清空进度',
-      content: '将清空所有学习记录和复习队列,无法恢复',
-      confirmText: '清空',
+      title: t.progressPage.resetTitle,
+      content: t.progressPage.resetContent,
+      cancelText: t.progressPage.resetCancel,
+      confirmText: t.progressPage.resetConfirm,
       confirmColor: '#ef4444',
       success(res) {
         if (res.confirm) {
           resetProgress()
           setData(loadProgress())
-          Taro.showToast({ title: '已清空', icon: 'success' })
+          Taro.showToast({ title: t.progressPage.resetDone, icon: 'success' })
         }
       }
     })
@@ -53,6 +58,18 @@ export default function ProgressPage() {
     (a, b) => b.lastOpenedAt - a.lastOpenedAt
   )
 
+  function formatAgo(ts: number): string {
+    const diff = Date.now() - ts
+    const m = Math.floor(diff / 60000)
+    if (m < 1) return t.progressPage.timeJustNow
+    if (m < 60) return fmt(t.progressPage.timeMinAgo, { n: m })
+    const h = Math.floor(m / 60)
+    if (h < 24) return fmt(t.progressPage.timeHrAgo, { n: h })
+    const d = Math.floor(h / 24)
+    if (d < 30) return fmt(t.progressPage.timeDayAgo, { n: d })
+    return new Date(ts).toLocaleDateString()
+  }
+
   return (
     <ScrollView scrollY className='progress-page'>
       <View className='lang-switch' onClick={toggle}>
@@ -67,31 +84,31 @@ export default function ProgressPage() {
         <Text className='hero-subtitle'>{t.progressPage.subtitle}</Text>
       </View>
 
-      {/* 总览 4 块 */}
+      {/* 4 stat cards */}
       <View className='stat-grid'>
         <View className='stat-card stat-blue'>
           <Text className='stat-num'>{completionPct}%</Text>
-          <Text className='stat-label'>完成度</Text>
-          <Text className='stat-sub'>{completed}/{totalChapters} 章</Text>
+          <Text className='stat-label'>{t.progressPage.statCompletion}</Text>
+          <Text className='stat-sub'>{fmt(t.progressPage.statCompletionSub, { done: completed, total: totalChapters })}</Text>
         </View>
         <View className='stat-card stat-green'>
           <Text className='stat-num'>{data.streakDays}</Text>
-          <Text className='stat-label'>连续天数</Text>
-          <Text className='stat-sub'>{data.lastStudyDate || '今日开始'}</Text>
+          <Text className='stat-label'>{t.progressPage.statStreak}</Text>
+          <Text className='stat-sub'>{data.lastStudyDate || t.progressPage.statStreakSubEmpty}</Text>
         </View>
         <View className='stat-card stat-amber'>
           <Text className='stat-num'>{due.length}</Text>
-          <Text className='stat-label'>待复习</Text>
-          <Text className='stat-sub'>艾宾浩斯到期</Text>
+          <Text className='stat-label'>{t.progressPage.statDue}</Text>
+          <Text className='stat-sub'>{t.progressPage.statDueSub}</Text>
         </View>
         <View className='stat-card stat-purple'>
           <Text className='stat-num'>{Math.round(data.totalMinutes)}</Text>
-          <Text className='stat-label'>累计分钟</Text>
-          <Text className='stat-sub'>{opened} 章打开过</Text>
+          <Text className='stat-label'>{t.progressPage.statMinutes}</Text>
+          <Text className='stat-sub'>{fmt(t.progressPage.statMinutesSub, { n: opened })}</Text>
         </View>
       </View>
 
-      {/* 进度条 */}
+      {/* Progress bar */}
       <View className='progress-bar-block'>
         <View className='progress-bar'>
           <View
@@ -101,22 +118,23 @@ export default function ProgressPage() {
         </View>
         <Text className='progress-bar-meta'>
           {completionPct === 100
-            ? '🎉 全部完成 · 走完了米什金 25 章'
-            : `还差 ${totalChapters - completed} 章 · 加油!`}
+            ? t.progressPage.barFull
+            : fmt(t.progressPage.barPartial, { n: totalChapters - completed })}
         </Text>
       </View>
 
-      {/* 待复习 */}
+      {/* Due review */}
       {due.length > 0 ? (
         <View className='section'>
           <View className='section-header'>
-            <Text className='section-title'>⏰ 待复习</Text>
-            <Text className='section-meta'>{due.length} 章到期</Text>
+            <Text className='section-title'>{t.progressPage.sectionDue}</Text>
+            <Text className='section-meta'>{fmt(t.progressPage.dueMeta, { n: due.length })}</Text>
           </View>
           <View className='review-list'>
             {due.slice(0, 6).map(item => {
               const ch = findChapter(item.num)?.chapter
               if (!ch) return null
+              const chTitle = pickL(ch, 'title', locale)
               return (
                 <View
                   key={item.num}
@@ -126,12 +144,12 @@ export default function ProgressPage() {
                   <Text className='review-emoji'>{ch.emoji}</Text>
                   <View className='review-body'>
                     <View className='review-row'>
-                      <Text className='review-num'>第 {ch.num} 章</Text>
-                      <Text className='review-level'>L{item.level}</Text>
+                      <Text className='review-num'>{fmt(t.common.chapter, { n: ch.num })}</Text>
+                      <Text className='review-level'>{fmt(t.progressPage.levelTpl, { n: item.level })}</Text>
                     </View>
-                    <Text className='review-title'>{ch.title}</Text>
+                    <Text className='review-title'>{chTitle}</Text>
                   </View>
-                  <Text className='review-go'>复习 →</Text>
+                  <Text className='review-go'>{t.progressPage.review} →</Text>
                 </View>
               )
             })}
@@ -139,17 +157,17 @@ export default function ProgressPage() {
         </View>
       ) : null}
 
-      {/* 章节进度矩阵 */}
+      {/* Chapter matrix */}
       <View className='section'>
         <View className='section-header'>
-          <Text className='section-title'>🧭 章节进度</Text>
-          <Text className='section-meta'>点击章节快速跳转</Text>
+          <Text className='section-title'>{t.progressPage.sectionMatrix}</Text>
+          <Text className='section-meta'>{t.progressPage.matrixHint}</Text>
         </View>
 
         <View className='matrix'>
           {parts.map(part => (
             <View key={part.num} className='matrix-row'>
-              <Text className='matrix-part'>第 {part.num} 篇</Text>
+              <Text className='matrix-part'>{fmt(t.common.part, { n: part.num })}</Text>
               <View className='matrix-cells'>
                 {part.chapters.map(ch => {
                   const stat = data.chapterStats[ch.num]
@@ -174,30 +192,31 @@ export default function ProgressPage() {
         <View className='matrix-legend'>
           <View className='legend-item'>
             <View className='legend-dot cell-done'></View>
-            <Text className='legend-text'>已完成</Text>
+            <Text className='legend-text'>{t.progressPage.legendDone}</Text>
           </View>
           <View className='legend-item'>
             <View className='legend-dot cell-open'></View>
-            <Text className='legend-text'>打开过</Text>
+            <Text className='legend-text'>{t.progressPage.legendOpen}</Text>
           </View>
           <View className='legend-item'>
             <View className='legend-dot cell-locked'></View>
-            <Text className='legend-text'>未学</Text>
+            <Text className='legend-text'>{t.progressPage.legendLocked}</Text>
           </View>
         </View>
       </View>
 
-      {/* 最近活动 */}
+      {/* Recent activity */}
       {stats.length > 0 ? (
         <View className='section'>
           <View className='section-header'>
-            <Text className='section-title'>🕐 最近活动</Text>
+            <Text className='section-title'>{t.progressPage.sectionRecent}</Text>
           </View>
           <View className='activity-list'>
             {stats.slice(0, 5).map(s => {
               const ch = findChapter(s.num)?.chapter
               if (!ch) return null
               const ago = formatAgo(s.lastOpenedAt)
+              const chTitle = pickL(ch, 'title', locale)
               return (
                 <View
                   key={s.num}
@@ -207,20 +226,20 @@ export default function ProgressPage() {
                   <Text className='activity-emoji'>{ch.emoji}</Text>
                   <View className='activity-body'>
                     <View className='activity-row'>
-                      <Text className='activity-title'>第 {s.num} 章 · {ch.title}</Text>
+                      <Text className='activity-title'>{fmt(t.common.chapter, { n: s.num })} · {chTitle}</Text>
                     </View>
                     <View className='activity-meta'>
                       <Text className='activity-time'>{ago}</Text>
                       {s.completed ? (
-                        <Text className='tag-done'>✓ 完成</Text>
+                        <Text className='tag-done'>{t.progressPage.tagDone}</Text>
                       ) : (
-                        <Text className='tag-progress'>进行中</Text>
+                        <Text className='tag-progress'>{t.progressPage.tagProgress}</Text>
                       )}
                       {typeof s.quizScore === 'number' ? (
-                        <Text className='tag-score'>{s.quizScore} 分</Text>
+                        <Text className='tag-score'>{fmt(t.progressPage.tagScore, { n: s.quizScore })}</Text>
                       ) : null}
                       {s.predictAttempts > 0 ? (
-                        <Text className='tag-tries'>{s.predictAttempts} 次预测</Text>
+                        <Text className='tag-tries'>{fmt(t.progressPage.tagTries, { n: s.predictAttempts })}</Text>
                       ) : null}
                     </View>
                   </View>
@@ -231,39 +250,27 @@ export default function ProgressPage() {
         </View>
       ) : null}
 
-      {/* 跨章联动测试入口 */}
+      {/* Cross-chapter quiz entry */}
       <View
         className='cross-test'
         onClick={() => Taro.navigateTo({ url: '/pages/quiz/index' })}
       >
         <Text className='cross-emoji'>🧩</Text>
         <View className='cross-body'>
-          <Text className='cross-title'>跨章联动测验</Text>
-          <Text className='cross-desc'>把多章知识点放在同一情景里 · 检测真正的迁移能力</Text>
+          <Text className='cross-title'>{t.progressPage.crossTestTitle}</Text>
+          <Text className='cross-desc'>{t.progressPage.crossTestDesc}</Text>
         </View>
         <Text className='cross-arrow'>→</Text>
       </View>
 
-      {/* 危险操作 */}
+      {/* Danger zone */}
       <View className='danger-zone'>
-        <Button className='reset-btn' onClick={handleReset}>清空所有进度</Button>
+        <Button className='reset-btn' onClick={handleReset}>{t.progressPage.resetBtn}</Button>
       </View>
 
       <View className='footer-note'>
-        <Text>所有数据仅存于设备本地 · 不上传服务器</Text>
+        <Text>{t.progressPage.foot}</Text>
       </View>
     </ScrollView>
   )
-}
-
-function formatAgo(ts: number): string {
-  const diff = Date.now() - ts
-  const m = Math.floor(diff / 60000)
-  if (m < 1) return '刚刚'
-  if (m < 60) return `${m} 分钟前`
-  const h = Math.floor(m / 60)
-  if (h < 24) return `${h} 小时前`
-  const d = Math.floor(h / 24)
-  if (d < 30) return `${d} 天前`
-  return new Date(ts).toLocaleDateString()
 }

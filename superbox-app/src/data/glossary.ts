@@ -15,8 +15,10 @@ export interface GlossaryItem {
 export interface GlossaryGroup {
   id: string
   title: string
+  title_en?: string
   emoji: string
   desc: string
+  desc_en?: string
   items: GlossaryItem[]
 }
 
@@ -24,8 +26,10 @@ export const glossary: GlossaryGroup[] = [
   {
     id: 'money',
     title: '货币与支付',
+    title_en: 'Money & Payments',
     emoji: '💵',
     desc: 'M0–M3、信用货币、数字支付',
+    desc_en: 'M0–M3, credit money, digital payments',
     items: [
       { zh: '基础货币', en: 'Monetary base / MB', short: '现金 + 银行准备金,央行直接控制的部分',
         twist: 'Fed 印万亿 MB, M2 几乎没动 — 印钱 ≠ 货币扩张', chapters: [3, 14] },
@@ -42,8 +46,10 @@ export const glossary: GlossaryGroup[] = [
   {
     id: 'rates',
     title: '利率与债券',
+    title_en: 'Interest Rates & Bonds',
     emoji: '📈',
     desc: '现值、久期、收益率曲线',
+    desc_en: 'PV, duration, yield curve',
     items: [
       { zh: '现值', en: 'Present value', short: 'PV = CF/(1+r)^t — 所有金融资产定价的最底层公式',
         chapters: [4] },
@@ -66,8 +72,10 @@ export const glossary: GlossaryGroup[] = [
   {
     id: 'stock',
     title: '股票与有效市场',
+    title_en: 'Stocks & EMH',
     emoji: '📉',
     desc: '戈登增长、EMH、行为金融',
+    desc_en: 'Gordon growth, EMH, behavioral finance',
     items: [
       { zh: '戈登增长模型', en: 'Gordon growth model', short: 'P = D₁/(r-g) — 永续增长的股息折现',
         twist: '1999 dotcom 隐含 g > GDP — 数学就在尖叫泡沫', chapters: [7] },
@@ -80,8 +88,10 @@ export const glossary: GlossaryGroup[] = [
   {
     id: 'banking',
     title: '银行与监管',
+    title_en: 'Banking & Regulation',
     emoji: '🏦',
     desc: '信息不对称、Basel、TBTF',
+    desc_en: 'Asymmetric info, Basel, TBTF',
     items: [
       { zh: '信息不对称', en: 'Information asymmetry', short: '一方比另一方知道得多 — 金融摩擦的根源',
         chapters: [8, 9] },
@@ -104,8 +114,10 @@ export const glossary: GlossaryGroup[] = [
   {
     id: 'central-bank',
     title: '中央银行与货币政策',
+    title_en: 'Central Banking',
     emoji: '🏛️',
     desc: 'FOMC、利率走廊、泰勒规则',
+    desc_en: 'FOMC, rate corridor, Taylor rule',
     items: [
       { zh: 'FOMC', en: 'Federal Open Market Committee', short: 'Fed 货币政策决策机构,12 名委员投票',
         chapters: [13] },
@@ -130,8 +142,10 @@ export const glossary: GlossaryGroup[] = [
   {
     id: 'international',
     title: '国际金融',
+    title_en: 'International Finance',
     emoji: '🌏',
     desc: '汇率、IRP、三元悖论',
+    desc_en: 'FX, IRP, impossible trinity',
     items: [
       { zh: '利率平价', en: 'Interest Rate Parity / IRP', short: 'F/S = (1+iₕ)/(1+iₓ) — 远期汇率理论',
         chapters: [17] },
@@ -148,8 +162,10 @@ export const glossary: GlossaryGroup[] = [
   {
     id: 'macro',
     title: '宏观模型',
+    title_en: 'Macro Models',
     emoji: '📐',
     desc: 'IS-LM、AD-AS、菲利普斯曲线',
+    desc_en: 'IS-LM, AD-AS, Phillips curve',
     items: [
       { zh: 'IS 曲线', en: 'IS curve', short: '产品市场均衡 — 利率与产出的反向关系',
         chapters: [20] },
@@ -170,8 +186,10 @@ export const glossary: GlossaryGroup[] = [
   {
     id: 'inflation',
     title: '通胀与预期',
+    title_en: 'Inflation & Expectations',
     emoji: '🔥',
     desc: '通胀、传导渠道、卢卡斯批判',
+    desc_en: 'Inflation, transmission, Lucas critique',
     items: [
       { zh: '货币数量论', en: 'Quantity theory of money / QTM', short: 'MV = PY — 货币×流通速度 = 价格×产出',
         twist: '2008-14 M2 +50%, CPI 仅 +1.7% — V 暴跌 30% 抵消', chapters: [19, 24] },

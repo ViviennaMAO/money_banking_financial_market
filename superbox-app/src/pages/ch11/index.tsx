@@ -6,6 +6,7 @@ import SnapshotBar from '../../components/SnapshotBar'
 import SliderRow from '../../components/SliderRow'
 import PredictModal from '../../components/PredictModal'
 import RevealModal from '../../components/RevealModal'
+import { useT } from '../../i18n'
 import './index.scss'
 
 const baselEvolution = [
@@ -27,6 +28,8 @@ const dilemmas = [
 ]
 
 export default function Ch11Page() {
+  const { t, locale, toggle } = useT()
+  const S = (zh: string, en: string) => (locale === 'en' ? en : zh)
   const [params, setParams] = useState({ baselReq: 13, bankActual: 13 })
   const [note, setNote] = useState('')
   const [flash, setFlash] = useState(false)
@@ -78,9 +81,14 @@ export default function Ch11Page() {
 
   return (
     <ScrollView scrollY className='ch11'>
+      <View className='lang-switch' onClick={toggle}>
+        <Text className='lang-icon'>🌐</Text>
+        <Text className='lang-label'>{t.common.langSwitch}</Text>
+      </View>
+
       <View className='page-header'>
-        <Text className='page-title'>📜 金融监管 · Basel</Text>
-        <Text className='page-meta'>第 11 章</Text>
+        <Text className='page-title'>{S('📜 金融监管 · Basel', '📜 Financial Regulation · Basel')}</Text>
+        <Text className='page-meta'>{S('第 11 章', 'Chapter 11')}</Text>
       </View>
 
       <SnapshotBar

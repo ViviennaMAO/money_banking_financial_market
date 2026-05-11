@@ -5,6 +5,7 @@ import { ch18Snapshots, type PredictDef, type TrilemmaPick } from '../../utils/s
 import SnapshotBar from '../../components/SnapshotBar'
 import PredictModal from '../../components/PredictModal'
 import RevealModal from '../../components/RevealModal'
+import { useT } from '../../i18n'
 import './index.scss'
 
 interface PickInfo {
@@ -75,6 +76,8 @@ const swapNetwork: SwapTier[] = [
 ]
 
 export default function Ch18Page() {
+  const { t, locale, toggle } = useT()
+  const S = (zh: string, en: string) => (locale === 'en' ? en : zh)
   const [picks, setPicks] = useState<TrilemmaPick[]>(['free', 'independent'])
   const [note, setNote] = useState('')
   const [flash, setFlash] = useState(false)
@@ -151,9 +154,14 @@ export default function Ch18Page() {
 
   return (
     <ScrollView scrollY className='ch18'>
+      <View className='lang-switch' onClick={toggle}>
+        <Text className='lang-icon'>🌐</Text>
+        <Text className='lang-label'>{t.common.langSwitch}</Text>
+      </View>
+
       <View className='page-header'>
-        <Text className='page-title'>🌏 三元悖论</Text>
-        <Text className='page-meta'>第 18 章</Text>
+        <Text className='page-title'>{S('🌏 三元悖论', '🌏 Impossible Trinity')}</Text>
+        <Text className='page-meta'>{S('第 18 章', 'Chapter 18')}</Text>
       </View>
 
       <SnapshotBar

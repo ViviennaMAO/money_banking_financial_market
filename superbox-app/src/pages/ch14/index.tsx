@@ -7,9 +7,12 @@ import SnapshotBar from '../../components/SnapshotBar'
 import SliderRow from '../../components/SliderRow'
 import PredictModal from '../../components/PredictModal'
 import RevealModal from '../../components/RevealModal'
+import { useT } from '../../i18n'
 import './index.scss'
 
 export default function Ch14Page() {
+  const { t, locale, toggle } = useT()
+  const S = (zh: string, en: string) => (locale === 'en' ? en : zh)
   const [params, setParams] = useState({ mb: 5.5, r: 0, e: 12, c: 8 })
   const [note, setNote] = useState('')
   const [flash, setFlash] = useState(false)
@@ -66,9 +69,14 @@ export default function Ch14Page() {
 
   return (
     <ScrollView scrollY className='ch14'>
+      <View className='lang-switch' onClick={toggle}>
+        <Text className='lang-icon'>🌐</Text>
+        <Text className='lang-label'>{t.common.langSwitch}</Text>
+      </View>
+
       <View className='page-header'>
-        <Text className='page-title'>💱 货币乘数实验室</Text>
-        <Text className='page-meta'>第 14 章</Text>
+        <Text className='page-title'>{S('💱 货币乘数实验室', '💱 Money Multiplier Lab')}</Text>
+        <Text className='page-meta'>{S('第 14 章', 'Chapter 14')}</Text>
       </View>
 
       <SnapshotBar

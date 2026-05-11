@@ -8,9 +8,12 @@ import SliderRow from '../../components/SliderRow'
 import PredictModal from '../../components/PredictModal'
 import RevealModal from '../../components/RevealModal'
 import ADASCanvas from '../../components/ADASCanvas'
+import { useT } from '../../i18n'
 import './index.scss'
 
 export default function Ch22Page() {
+  const { t, locale, toggle } = useT()
+  const S = (zh: string, en: string) => (locale === 'en' ? en : zh)
   const [params, setParams] = useState({ adShift: 0, srasShift: 0, potentialY: 100 })
   const [note, setNote] = useState('')
   const [flash, setFlash] = useState(false)
@@ -74,9 +77,14 @@ export default function Ch22Page() {
 
   return (
     <ScrollView scrollY className='ch22'>
+      <View className='lang-switch' onClick={toggle}>
+        <Text className='lang-icon'>🌐</Text>
+        <Text className='lang-label'>{t.common.langSwitch}</Text>
+      </View>
+
       <View className='page-header'>
-        <Text className='page-title'>📊 AD-AS 沙盘</Text>
-        <Text className='page-meta'>第 22 章</Text>
+        <Text className='page-title'>{S('📊 AD-AS 沙盘', '📊 AD-AS Sandbox')}</Text>
+        <Text className='page-meta'>{S('第 22 章', 'Chapter 22')}</Text>
       </View>
 
       <SnapshotBar

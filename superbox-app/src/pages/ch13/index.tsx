@@ -7,6 +7,7 @@ import SnapshotBar from '../../components/SnapshotBar'
 import SliderRow from '../../components/SliderRow'
 import PredictModal from '../../components/PredictModal'
 import RevealModal from '../../components/RevealModal'
+import { useT } from '../../i18n'
 import './index.scss'
 
 interface FedRoleInfo {
@@ -36,6 +37,8 @@ const fedRoles: FedRoleInfo[] = [
 ]
 
 export default function Ch13Page() {
+  const { t, locale, toggle } = useT()
+  const S = (zh: string, en: string) => (locale === 'en' ? en : zh)
   const [params, setParams] = useState({ inflationGap: 1, outputGap: 0, uncertainty: 40 })
   const [actualFFR, setActualFFR] = useState(4.5)
   const [note, setNote] = useState('')
@@ -107,9 +110,14 @@ export default function Ch13Page() {
 
   return (
     <ScrollView scrollY className='ch13'>
+      <View className='lang-switch' onClick={toggle}>
+        <Text className='lang-icon'>🌐</Text>
+        <Text className='lang-label'>{t.common.langSwitch}</Text>
+      </View>
+
       <View className='page-header'>
-        <Text className='page-title'>🏛️ FOMC 点阵图模拟</Text>
-        <Text className='page-meta'>第 13 章</Text>
+        <Text className='page-title'>{S('🏛️ FOMC 点阵图模拟', '🏛️ FOMC Dot Plot Simulator')}</Text>
+        <Text className='page-meta'>{S('第 13 章', 'Chapter 13')}</Text>
       </View>
 
       <SnapshotBar

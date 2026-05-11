@@ -7,6 +7,7 @@ import SnapshotBar from '../../components/SnapshotBar'
 import SliderRow from '../../components/SliderRow'
 import PredictModal from '../../components/PredictModal'
 import RevealModal from '../../components/RevealModal'
+import { useT } from '../../i18n'
 import './index.scss'
 
 const channelExplain: Record<string, { mech: string; failsWhen: string }> = {
@@ -33,6 +34,8 @@ const channelExplain: Record<string, { mech: string; failsWhen: string }> = {
 }
 
 export default function Ch23Page() {
+  const { t, locale, toggle } = useT()
+  const S = (zh: string, en: string) => (locale === 'en' ? en : zh)
   const [params, setParams] = useState({
     fedAction: 0, bankHealth: 70, borrowerNetworth: 70,
     ratePosition: 60, consumerLeverage: 55
@@ -98,9 +101,14 @@ export default function Ch23Page() {
 
   return (
     <ScrollView scrollY className='ch23'>
+      <View className='lang-switch' onClick={toggle}>
+        <Text className='lang-icon'>🌐</Text>
+        <Text className='lang-label'>{t.common.langSwitch}</Text>
+      </View>
+
       <View className='page-header'>
-        <Text className='page-title'>🔄 5 大传导渠道</Text>
-        <Text className='page-meta'>第 23 章</Text>
+        <Text className='page-title'>{S('🔄 5 大传导渠道', '🔄 5 Transmission Channels')}</Text>
+        <Text className='page-meta'>{S('第 23 章', 'Chapter 23')}</Text>
       </View>
 
       <SnapshotBar

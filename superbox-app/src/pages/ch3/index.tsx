@@ -4,6 +4,7 @@ import Taro from '@tarojs/taro'
 import SliderRow from '../../components/SliderRow'
 import PredictModal from '../../components/PredictModal'
 import RevealModal from '../../components/RevealModal'
+import { useT } from '../../i18n'
 import './index.scss'
 
 const PREDICT = {
@@ -36,6 +37,8 @@ const layers: Layer[] = [
 ]
 
 export default function Ch3Page() {
+  const { t, locale, toggle } = useT()
+  const S = (zh: string, en: string) => (locale === 'en' ? en : zh)
   const [params, setParams] = useState({ cash: 5, demand: 30, savings: 50, mmf: 15 })
   const [predict, setPredict] = useState<typeof PREDICT | null>(null)
   const [reveal, setReveal] = useState<{ headline: string; msg: string; correct: boolean } | null>(null)
@@ -56,9 +59,14 @@ export default function Ch3Page() {
 
   return (
     <ScrollView scrollY className='ch3'>
+      <View className='lang-switch' onClick={toggle}>
+        <Text className='lang-icon'>🌐</Text>
+        <Text className='lang-label'>{t.common.langSwitch}</Text>
+      </View>
+
       <View className='page-header'>
-        <Text className='page-title'>💵 什么是货币 · M0-M2</Text>
-        <Text className='page-meta'>第 3 章</Text>
+        <Text className='page-title'>{S('💵 什么是货币 · M0-M2', '💵 What is Money · M0-M2')}</Text>
+        <Text className='page-meta'>{S('第 3 章', 'Chapter 3')}</Text>
       </View>
 
       <View className='intro-card'>

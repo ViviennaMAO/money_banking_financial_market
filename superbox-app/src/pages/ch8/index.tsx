@@ -7,6 +7,7 @@ import SnapshotBar from '../../components/SnapshotBar'
 import SliderRow from '../../components/SliderRow'
 import PredictModal from '../../components/PredictModal'
 import RevealModal from '../../components/RevealModal'
+import { useT } from '../../i18n'
 import './index.scss'
 
 const problemMeta: Record<AsymmetryProblem, { title: string; tag: string; desc: string; cls: string }> = {
@@ -37,6 +38,8 @@ const problemMeta: Record<AsymmetryProblem, { title: string; tag: string; desc: 
 }
 
 export default function Ch8Page() {
+  const { t, locale, toggle } = useT()
+  const S = (zh: string, en: string) => (locale === 'en' ? en : zh)
   const [params, setParams] = useState({ asymmetry: 38, monitoring: 72, screening: 32 })
   const [note, setNote] = useState('')
   const [flash, setFlash] = useState(false)
@@ -89,9 +92,14 @@ export default function Ch8Page() {
 
   return (
     <ScrollView scrollY className='ch8'>
+      <View className='lang-switch' onClick={toggle}>
+        <Text className='lang-icon'>🌐</Text>
+        <Text className='lang-label'>{t.common.langSwitch}</Text>
+      </View>
+
       <View className='page-header'>
-        <Text className='page-title'>🔍 信息不对称实验室</Text>
-        <Text className='page-meta'>第 8 章</Text>
+        <Text className='page-title'>{S('🔍 信息不对称实验室', '🔍 Asymmetric Info Lab')}</Text>
+        <Text className='page-meta'>{S('第 8 章', 'Chapter 8')}</Text>
       </View>
 
       <SnapshotBar

@@ -7,6 +7,7 @@ import SnapshotBar from '../../components/SnapshotBar'
 import SliderRow from '../../components/SliderRow'
 import PredictModal from '../../components/PredictModal'
 import RevealModal from '../../components/RevealModal'
+import { useT } from '../../i18n'
 import './index.scss'
 
 interface MotiveInfo {
@@ -32,6 +33,8 @@ const motives: MotiveInfo[] = [
 ]
 
 export default function Ch19Page() {
+  const { t, locale, toggle } = useT()
+  const S = (zh: string, en: string) => (locale === 'en' ? en : zh)
   const [params, setParams] = useState({ m: 21, v: 1.7, p: 1.22, y: 25 })
   const [note, setNote] = useState('')
   const [flash, setFlash] = useState(false)
@@ -86,9 +89,14 @@ export default function Ch19Page() {
 
   return (
     <ScrollView scrollY className='ch19'>
+      <View className='lang-switch' onClick={toggle}>
+        <Text className='lang-icon'>🌐</Text>
+        <Text className='lang-label'>{t.common.langSwitch}</Text>
+      </View>
+
       <View className='page-header'>
-        <Text className='page-title'>🧮 MV = PY 数量方程</Text>
-        <Text className='page-meta'>第 19 章</Text>
+        <Text className='page-title'>{S('🧮 MV = PY 数量方程', '🧮 MV = PY Quantity Equation')}</Text>
+        <Text className='page-meta'>{S('第 19 章', 'Chapter 19')}</Text>
       </View>
 
       <SnapshotBar

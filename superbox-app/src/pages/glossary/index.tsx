@@ -3,7 +3,7 @@ import { useState, useMemo } from 'react'
 import Taro from '@tarojs/taro'
 import { glossary, totalTerms, type GlossaryItem } from '../../data/glossary'
 import { findChapter } from '../../data/chapters'
-import { useT } from '../../i18n'
+import { useT, pickL } from '../../i18n'
 import './index.scss'
 
 function fmt(tpl: string, vars: Record<string, string | number>): string {
@@ -11,7 +11,7 @@ function fmt(tpl: string, vars: Record<string, string | number>): string {
 }
 
 export default function GlossaryPage() {
-  const { t, toggle } = useT()
+  const { t, locale, toggle } = useT()
   const [query, setQuery] = useState('')
   const [activeGroup, setActiveGroup] = useState<string>('all')
 
@@ -20,13 +20,14 @@ export default function GlossaryPage() {
     if (!q) return null
     const matches: { item: GlossaryItem; group: string }[] = []
     for (const g of glossary) {
+      const groupTitle = pickL(g, 'title', locale)
       for (const item of g.items) {
         const hay = (item.zh + item.en + item.short + (item.twist || '')).toLowerCase()
-        if (hay.includes(q)) matches.push({ item, group: g.title })
+        if (hay.includes(q)) matches.push({ item, group: groupTitle })
       }
     }
     return matches
-  }, [query])
+  }, [query, locale])
 
   function go(ch: number) {
     const found = findChapter(ch)
@@ -78,7 +79,7 @@ export default function GlossaryPage() {
               className={`filter-chip ${activeGroup === g.id ? 'active' : ''}`}
               onClick={() => setActiveGroup(g.id)}
             >
-              <Text>{g.emoji} {g.title}</Text>
+              <Text>{g.emoji} {pickL(g, 'title', locale)}</Text>
             </View>
           ))}
         </ScrollView>
@@ -88,7 +89,7 @@ export default function GlossaryPage() {
       {filtered ? (
         <View className='search-results'>
           <Text className='result-meta'>
-            {filtered.length === 0 ? '未找到匹配术语' : `匹配 ${filtered.length} 条`}
+            {filtered.length === 0 ? t.glossaryPage.notFound : fmt(t.glossaryPage.matched, { n: filtered.length })}
           </Text>
           {filtered.map(({ item, group }) => (
             <View key={item.zh} className='term-card'>
@@ -111,7 +112,7 @@ export default function GlossaryPage() {
                     className='ch-link'
                     onClick={() => go(ch)}
                   >
-                    第 {ch} 章 →
+                    {fmt(t.glossaryPage.chapterLink, { n: ch })}
                   </Text>
                 ))}
               </View>
@@ -128,8 +129,8 @@ export default function GlossaryPage() {
                 <View className='group-head'>
                   <Text className='group-emoji'>{g.emoji}</Text>
                   <View className='group-info'>
-                    <Text className='group-title'>{g.title}</Text>
-                    <Text className='group-desc'>{g.desc} · {g.items.length} 条</Text>
+                    <Text className='group-title'>{pickL(g, 'title', locale)}</Text>
+                    <Text className='group-desc'>{pickL(g, 'desc', locale)} · {g.items.length}</Text>
                   </View>
                 </View>
                 <View className='term-list'>
@@ -166,7 +167,7 @@ export default function GlossaryPage() {
       )}
 
       <View className='footer-note'>
-        <Text>米什金《货币金融学》第 11 版 · 核心术语精选</Text>
+        <Text>{t.glossaryPage.foot}</Text>
       </View>
     </ScrollView>
   )

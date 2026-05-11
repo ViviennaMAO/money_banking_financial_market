@@ -7,6 +7,7 @@ import SnapshotBar from '../../components/SnapshotBar'
 import SliderRow from '../../components/SliderRow'
 import PredictModal from '../../components/PredictModal'
 import RevealModal from '../../components/RevealModal'
+import { useT } from '../../i18n'
 import './index.scss'
 
 interface Component {
@@ -17,6 +18,8 @@ interface Component {
 }
 
 export default function Ch5Page() {
+  const { t, locale, toggle } = useT()
+  const S = (zh: string, en: string) => (locale === 'en' ? en : zh)
   const [params, setParams] = useState({
     realRate: 1.5, inflationExpect: 2.5, riskPremium: 0.5, fedAdjust: 0
   })
@@ -93,9 +96,14 @@ export default function Ch5Page() {
 
   return (
     <ScrollView scrollY className='ch5'>
+      <View className='lang-switch' onClick={toggle}>
+        <Text className='lang-icon'>🌐</Text>
+        <Text className='lang-label'>{t.common.langSwitch}</Text>
+      </View>
+
       <View className='page-header'>
-        <Text className='page-title'>⚖️ 利率行为实验室</Text>
-        <Text className='page-meta'>第 5 章</Text>
+        <Text className='page-title'>{S('⚖️ 利率行为实验室', '⚖️ Interest Rate Behavior Lab')}</Text>
+        <Text className='page-meta'>{S('第 5 章', 'Chapter 5')}</Text>
       </View>
 
       <SnapshotBar

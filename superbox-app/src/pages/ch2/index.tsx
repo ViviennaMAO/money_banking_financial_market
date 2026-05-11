@@ -3,6 +3,7 @@ import { useState } from 'react'
 import Taro from '@tarojs/taro'
 import PredictModal from '../../components/PredictModal'
 import RevealModal from '../../components/RevealModal'
+import { useT } from '../../i18n'
 import './index.scss'
 
 interface FinTool {
@@ -36,6 +37,8 @@ const PREDICT = {
 }
 
 export default function Ch2Page() {
+  const { t, locale, toggle } = useT()
+  const S = (zh: string, en: string) => (locale === 'en' ? en : zh)
   const [picks, setPicks] = useState<Record<number, string>>({})
   const [showResults, setShowResults] = useState(false)
   const [predict, setPredict] = useState<typeof PREDICT | null>(null)
@@ -64,9 +67,14 @@ export default function Ch2Page() {
 
   return (
     <ScrollView scrollY className='ch2'>
+      <View className='lang-switch' onClick={toggle}>
+        <Text className='lang-icon'>🌐</Text>
+        <Text className='lang-label'>{t.common.langSwitch}</Text>
+      </View>
+
       <View className='page-header'>
-        <Text className='page-title'>🏛️ 金融体系概览</Text>
-        <Text className='page-meta'>第 2 章</Text>
+        <Text className='page-title'>{S('🏛️ 金融体系概览', '🏛️ Financial System Overview')}</Text>
+        <Text className='page-meta'>{S('第 2 章', 'Chapter 2')}</Text>
       </View>
 
       <View className='intro-card'>
