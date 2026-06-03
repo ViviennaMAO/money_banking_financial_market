@@ -1,6 +1,6 @@
 {
   "asOf": "2026-06-02",
-  "fetchedAt": 1780381616253,
+  "fetchedAt": 1780469022853,
   "source": "fred-live",
   "series": {
     "DFF": {
@@ -8,39 +8,39 @@
       "name": "联邦基金利率",
       "value": 3.62,
       "unit": "%",
-      "date": "2026-05-29",
+      "date": "2026-06-01",
       "change1": 0,
-      "change1y": -0.46,
+      "change1y": -0.47,
       "freq": "d"
     },
     "DGS2": {
       "id": "DGS2",
       "name": "2 年期美债",
-      "value": 3.98,
+      "value": 4.05,
       "unit": "%",
-      "date": "2026-05-29",
+      "date": "2026-06-01",
+      "change1": 0.07,
+      "change1y": 0.13,
+      "freq": "d"
+    },
+    "T10YIE": {
+      "id": "T10YIE",
+      "name": "10Y 通胀盈亏平衡",
+      "value": 2.39,
+      "unit": "%",
+      "date": "2026-06-02",
       "change1": -0.01,
-      "change1y": 0.02,
+      "change1y": 0.05,
       "freq": "d"
     },
     "SOFR": {
       "id": "SOFR",
       "name": "隔夜担保融资利率",
-      "value": 3.63,
-      "unit": "%",
-      "date": "2026-05-29",
-      "change1": 0.01,
-      "change1y": -0.68,
-      "freq": "d"
-    },
-    "IORB": {
-      "id": "IORB",
-      "name": "准备金利率(走廊上沿)",
       "value": 3.65,
       "unit": "%",
-      "date": "2026-06-02",
-      "change1": 0,
-      "change1y": -0.5,
+      "date": "2026-06-01",
+      "change1": 0.02,
+      "change1y": -0.68,
       "freq": "d"
     },
     "M1SL": {
@@ -63,25 +63,25 @@
       "change1y": 970.5,
       "freq": "m"
     },
-    "DEXJPUS": {
-      "id": "DEXJPUS",
-      "name": "USD/JPY",
-      "value": 159.23,
-      "unit": "JPY",
+    "DTWEXBGS": {
+      "id": "DTWEXBGS",
+      "name": "美元贸易加权指数",
+      "value": 118.8783,
+      "unit": "index",
       "date": "2026-05-29",
-      "change1": -0.06,
-      "change1y": 14.19,
+      "change1": -0.1535,
+      "change1y": -3.1105,
       "freq": "d"
     },
-    "DEXUSEU": {
-      "id": "DEXUSEU",
-      "name": "EUR/USD",
-      "value": 1.1679,
-      "unit": "USD",
-      "date": "2026-05-29",
-      "change1": 0.003,
-      "change1y": 0.0393,
-      "freq": "d"
+    "MORTGAGE30US": {
+      "id": "MORTGAGE30US",
+      "name": "30 年期固定房贷利率",
+      "value": 6.53,
+      "unit": "%",
+      "date": "2026-05-28",
+      "change1": 0.02,
+      "change1y": -0.32,
+      "freq": "w"
     }
   },
   "derived": {
@@ -89,6 +89,11 @@
       "value": 4.44,
       "unit": "%",
       "date": "2026-04-01"
+    },
+    "mortgageMonthlyAt500k": {
+      "value": 3170,
+      "unit": "USD",
+      "rate": 6.53
     }
   }
 }
