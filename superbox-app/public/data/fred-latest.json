@@ -1,6 +1,6 @@
 {
-  "asOf": "2026-06-02",
-  "fetchedAt": 1780469022853,
+  "asOf": "2026-06-04",
+  "fetchedAt": 1780554458531,
   "source": "fred-live",
   "series": {
     "DFF": {
@@ -8,7 +8,7 @@
       "name": "联邦基金利率",
       "value": 3.62,
       "unit": "%",
-      "date": "2026-06-01",
+      "date": "2026-06-02",
       "change1": 0,
       "change1y": -0.47,
       "freq": "d"
@@ -18,17 +18,47 @@
       "name": "2 年期美债",
       "value": 4.05,
       "unit": "%",
-      "date": "2026-06-01",
-      "change1": 0.07,
-      "change1y": 0.13,
+      "date": "2026-06-02",
+      "change1": 0,
+      "change1y": 0.16,
+      "freq": "d"
+    },
+    "DGS10": {
+      "id": "DGS10",
+      "name": "10 年期美债",
+      "value": 4.46,
+      "unit": "%",
+      "date": "2026-06-02",
+      "change1": -0.01,
+      "change1y": 0.05,
+      "freq": "d"
+    },
+    "DGS30": {
+      "id": "DGS30",
+      "name": "30 年期美债",
+      "value": 4.97,
+      "unit": "%",
+      "date": "2026-06-02",
+      "change1": -0.02,
+      "change1y": 0.05,
+      "freq": "d"
+    },
+    "T10Y2Y": {
+      "id": "T10Y2Y",
+      "name": "10Y-2Y 利差",
+      "value": 0.41,
+      "unit": "%",
+      "date": "2026-06-03",
+      "change1": 0,
+      "change1y": -0.11,
       "freq": "d"
     },
     "T10YIE": {
       "id": "T10YIE",
       "name": "10Y 通胀盈亏平衡",
-      "value": 2.39,
+      "value": 2.38,
       "unit": "%",
-      "date": "2026-06-02",
+      "date": "2026-06-03",
       "change1": -0.01,
       "change1y": 0.05,
       "freq": "d"
@@ -36,12 +66,62 @@
     "SOFR": {
       "id": "SOFR",
       "name": "隔夜担保融资利率",
+      "value": 3.63,
+      "unit": "%",
+      "date": "2026-06-02",
+      "change1": -0.02,
+      "change1y": -0.7,
+      "freq": "d"
+    },
+    "IORB": {
+      "id": "IORB",
+      "name": "准备金利率(走廊上沿)",
       "value": 3.65,
       "unit": "%",
-      "date": "2026-06-01",
-      "change1": 0.02,
-      "change1y": -0.68,
+      "date": "2026-06-04",
+      "change1": 0,
+      "change1y": -0.5,
       "freq": "d"
+    },
+    "CPIAUCSL": {
+      "id": "CPIAUCSL",
+      "name": "CPI 总指数",
+      "value": 332.407,
+      "unit": "index",
+      "date": "2026-04-01",
+      "change1": 2.114,
+      "change1y": 12.105,
+      "freq": "m"
+    },
+    "CPILFESL": {
+      "id": "CPILFESL",
+      "name": "核心 CPI 指数",
+      "value": 335.423,
+      "unit": "index",
+      "date": "2026-04-01",
+      "change1": 1.258,
+      "change1y": 8.956,
+      "freq": "m"
+    },
+    "PCEPI": {
+      "id": "PCEPI",
+      "name": "PCE 价格指数",
+      "value": 130.902,
+      "unit": "index",
+      "date": "2026-04-01",
+      "change1": 0.521,
+      "change1y": 4.522,
+      "freq": "m"
+    },
+    "PCEPILFE": {
+      "id": "PCEPILFE",
+      "name": "核心 PCE 指数",
+      "value": 129.63,
+      "unit": "index",
+      "date": "2026-04-01",
+      "change1": 0.309,
+      "change1y": 3.84,
+      "freq": "m"
     },
     "M1SL": {
       "id": "M1SL",
@@ -62,6 +142,56 @@
       "change1": 118.1,
       "change1y": 970.5,
       "freq": "m"
+    },
+    "WALCL": {
+      "id": "WALCL",
+      "name": "Fed 资产负债表",
+      "value": 6704.383,
+      "unit": "B",
+      "date": "2026-05-27",
+      "change1": -9.26,
+      "change1y": 31.498,
+      "freq": "w"
+    },
+    "UNRATE": {
+      "id": "UNRATE",
+      "name": "失业率",
+      "value": 4.3,
+      "unit": "%",
+      "date": "2026-04-01",
+      "change1": 0,
+      "change1y": 0.1,
+      "freq": "m"
+    },
+    "GDPC1": {
+      "id": "GDPC1",
+      "name": "实际 GDP(链式)",
+      "value": 24152.656,
+      "unit": "B",
+      "date": "2026-01-01",
+      "change1": 96.907,
+      "change1y": 381.68,
+      "freq": "q"
+    },
+    "DEXJPUS": {
+      "id": "DEXJPUS",
+      "name": "USD/JPY",
+      "value": 159.23,
+      "unit": "JPY",
+      "date": "2026-05-29",
+      "change1": -0.06,
+      "change1y": 14.19,
+      "freq": "d"
+    },
+    "DEXUSEU": {
+      "id": "DEXUSEU",
+      "name": "EUR/USD",
+      "value": 1.1679,
+      "unit": "USD",
+      "date": "2026-05-29",
+      "change1": 0.003,
+      "change1y": 0.0393,
+      "freq": "d"
     },
     "DTWEXBGS": {
       "id": "DTWEXBGS",
@@ -85,10 +215,51 @@
     }
   },
   "derived": {
+    "cpiYoY": {
+      "value": 3.78,
+      "unit": "%",
+      "date": "2026-04-01"
+    },
+    "coreCpiYoY": {
+      "value": 2.74,
+      "unit": "%",
+      "date": "2026-04-01"
+    },
+    "pceYoY": {
+      "value": 3.58,
+      "unit": "%",
+      "date": "2026-04-01"
+    },
+    "corePceYoY": {
+      "value": 3.05,
+      "unit": "%",
+      "date": "2026-04-01"
+    },
     "m2YoY": {
       "value": 4.44,
       "unit": "%",
       "date": "2026-04-01"
+    },
+    "spread2s10sBps": {
+      "value": 41,
+      "unit": "bps",
+      "date": "2026-06-03"
+    },
+    "walclVsPeak": {
+      "value": 6.7,
+      "peak": 8.96,
+      "unit": "T",
+      "date": "2026-05-27"
+    },
+    "taylorImplied": {
+      "value": 7.27,
+      "unit": "%",
+      "inputs": {
+        "piPct": 3.78,
+        "piStarPct": 2,
+        "outputGapPct": 0.2,
+        "rStarPct": 2.5
+      }
     },
     "mortgageMonthlyAt500k": {
       "value": 3170,
