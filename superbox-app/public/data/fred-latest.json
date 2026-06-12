@@ -1,6 +1,6 @@
 {
-  "asOf": "2026-06-11",
-  "fetchedAt": 1781159967996,
+  "asOf": "2026-06-12",
+  "fetchedAt": 1781245456028,
   "source": "fred-live",
   "series": {
     "DFF": {
@@ -8,7 +8,7 @@
       "name": "联邦基金利率",
       "value": 3.62,
       "unit": "%",
-      "date": "2026-06-09",
+      "date": "2026-06-10",
       "change1": 0,
       "change1y": -0.47,
       "freq": "d"
@@ -18,59 +18,59 @@
       "name": "2 年期美债",
       "value": 4.13,
       "unit": "%",
-      "date": "2026-06-09",
-      "change1": -0.02,
-      "change1y": 0.09,
+      "date": "2026-06-10",
+      "change1": 0,
+      "change1y": 0.12,
       "freq": "d"
     },
     "DGS10": {
       "id": "DGS10",
       "name": "10 年期美债",
-      "value": 4.53,
+      "value": 4.55,
       "unit": "%",
-      "date": "2026-06-09",
-      "change1": -0.03,
-      "change1y": 0.02,
+      "date": "2026-06-10",
+      "change1": 0.02,
+      "change1y": 0.06,
       "freq": "d"
     },
     "DGS30": {
       "id": "DGS30",
       "name": "30 年期美债",
-      "value": 5.01,
+      "value": 5.03,
       "unit": "%",
-      "date": "2026-06-09",
-      "change1": -0.02,
-      "change1y": 0.04,
+      "date": "2026-06-10",
+      "change1": 0.02,
+      "change1y": 0.08,
       "freq": "d"
     },
     "T10Y2Y": {
       "id": "T10Y2Y",
       "name": "10Y-2Y 利差",
-      "value": 0.42,
+      "value": 0.4,
       "unit": "%",
-      "date": "2026-06-10",
-      "change1": 0.02,
+      "date": "2026-06-11",
+      "change1": -0.02,
       "change1y": -0.06,
       "freq": "d"
     },
     "T10YIE": {
       "id": "T10YIE",
       "name": "10Y 通胀盈亏平衡",
-      "value": 2.34,
+      "value": 2.29,
       "unit": "%",
-      "date": "2026-06-10",
-      "change1": 0.01,
-      "change1y": 0.03,
+      "date": "2026-06-11",
+      "change1": -0.05,
+      "change1y": 0,
       "freq": "d"
     },
     "SOFR": {
       "id": "SOFR",
       "name": "隔夜担保融资利率",
-      "value": 3.6,
+      "value": 3.59,
       "unit": "%",
-      "date": "2026-06-09",
-      "change1": -0.03,
-      "change1y": -0.69,
+      "date": "2026-06-10",
+      "change1": -0.01,
+      "change1y": -0.7,
       "freq": "d"
     },
     "IORB": {
@@ -78,7 +78,7 @@
       "name": "准备金利率(走廊上沿)",
       "value": 3.65,
       "unit": "%",
-      "date": "2026-06-11",
+      "date": "2026-06-12",
       "change1": 0,
       "change1y": -0.5,
       "freq": "d"
@@ -146,11 +146,11 @@
     "WALCL": {
       "id": "WALCL",
       "name": "Fed 资产负债表",
-      "value": 6711.495,
+      "value": 6725.397,
       "unit": "B",
-      "date": "2026-06-03",
-      "change1": 7.112,
-      "change1y": 34.34,
+      "date": "2026-06-10",
+      "change1": 13.902,
+      "change1y": 44.341,
       "freq": "w"
     },
     "UNRATE": {
@@ -206,11 +206,11 @@
     "MORTGAGE30US": {
       "id": "MORTGAGE30US",
       "name": "30 年期固定房贷利率",
-      "value": 6.48,
+      "value": 6.52,
       "unit": "%",
-      "date": "2026-06-04",
-      "change1": -0.05,
-      "change1y": -0.36,
+      "date": "2026-06-11",
+      "change1": 0.04,
+      "change1y": -0.29,
       "freq": "w"
     }
   },
@@ -241,15 +241,15 @@
       "date": "2026-04-01"
     },
     "spread2s10sBps": {
-      "value": 42,
+      "value": 40,
       "unit": "bps",
-      "date": "2026-06-10"
+      "date": "2026-06-11"
     },
     "walclVsPeak": {
-      "value": 6.71,
+      "value": 6.73,
       "peak": 8.96,
       "unit": "T",
-      "date": "2026-06-03"
+      "date": "2026-06-10"
     },
     "taylorImplied": {
       "value": 7.86,
@@ -262,9 +262,9 @@
       }
     },
     "mortgageMonthlyAt500k": {
-      "value": 3154,
+      "value": 3167,
       "unit": "USD",
-      "rate": 6.48
+      "rate": 6.52
     }
   }
 }
