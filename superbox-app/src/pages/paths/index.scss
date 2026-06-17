@@ -276,6 +276,23 @@
   font-weight: 300;
 }
 
+.node.node-locked {
+  background: rgba(245, 158, 11, 0.04);
+  border-color: rgba(245, 158, 11, 0.25);
+  &:active {
+    background: rgba(245, 158, 11, 0.10);
+    border-color: rgba(245, 158, 11, 0.45);
+  }
+  .node-role {
+    color: #f59e0b;
+    background: rgba(245, 158, 11, 0.15);
+  }
+  .node-go {
+    color: #f59e0b;
+    font-size: 24rpx;
+  }
+}
+
 /* ===== Footer ===== */
 .footer-note {
   margin-top: 40rpx;

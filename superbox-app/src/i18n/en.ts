@@ -64,7 +64,40 @@ export const en: typeof zh = {
     mvpInPart: ' · {n} ⭐ MVP',
     statusDone: '✓ Done',
     statusMvp: '⭐ Featured',
-    statusBasic: '● Overview'
+    statusBasic: '● Overview',
+    statusLocked: '🔒 Paid',
+    partLocked: ' · 🔒 Paid part'
+  },
+
+  unlockPage: {
+    heroEmoji: '🔓',
+    heroTitle: 'Unlock All Chapters',
+    heroSubtitle: 'One-time purchase · Lifetime access · No subscription',
+    forChapterTpl: "You're trying to open · Chapter {n}",
+    valueTag: '—— What you get ——',
+    value1: 'Ch 17-25 · 9 chapters (International Finance + Monetary Theory)',
+    value2: '9 anti-intuition simulators (Carry / IS-LM / AD-AS / Inflation / Lucas)',
+    value3: '45 curated quiz questions · International + Macro modules unlocked',
+    value4: '30+ glossary jumps unlocked · Cross-chapter quiz fully accessible',
+    priceTag: '—— Price ——',
+    priceFull: '$19.9',
+    priceMeta: 'One-time · Lifetime access',
+    payBtn: '⚡ Unlock Now',
+    payBusy: 'Waiting for wallet signature…',
+    demoBtn: '🧪 Demo Unlock (local mark · no payment)',
+    demoConfirmTitle: 'Demo unlock',
+    demoConfirmContent: 'This marks unlock locally only. No real payment is made. For preview; production will use Luffa wallet payment.',
+    demoConfirmOk: 'Demo unlock now',
+    demoConfirmCancel: 'Cancel',
+    successTitle: 'Unlocked!',
+    backBtn: '← Back',
+    footnote: 'Unlock state lives on this device only · Reinstall needs re-unlock · Future cross-device sync via Luffa account',
+    payTokenInfo: 'Via Luffa Wallet · Endless chain',
+    edsFallbackNote: 'Currently using EDS fallback (≈ {eds} EDS), USDT path enabled once token address is confirmed',
+    txInfoTitle: 'Transaction',
+    txInfoHash: 'TX',
+    txInfoAddress: 'Wallet',
+    txInfoAt: 'Time'
   },
 
   pathsPage: {

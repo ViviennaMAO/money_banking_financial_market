@@ -17,6 +17,21 @@
 .lang-icon { font-size: 22rpx; line-height: 1; }
 .lang-label { font-size: 22rpx; font-weight: 600; color: #e6edf3; font-family: ui-monospace, Menlo, monospace; }
 
+/* ===== 锁定卡片 ===== */
+.mvp-card.mvp-locked {
+  border-color: rgba(245, 158, 11, 0.28);
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.06), rgba(245, 158, 11, 0.02));
+}
+.card-locked-tag {
+  font-size: 18rpx;
+  color: #f59e0b;
+  background: rgba(245, 158, 11, 0.15);
+  padding: 2rpx 10rpx;
+  border-radius: 9999rpx;
+  font-weight: 600;
+  margin-left: 8rpx;
+}
+
 .mvp-hero {
   text-align: center;
   padding: 24rpx 0 32rpx;

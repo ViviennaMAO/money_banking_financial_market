@@ -1,17 +1,23 @@
 import { View, Text, ScrollView } from '@tarojs/components'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Taro from '@tarojs/taro'
 import { learningPaths, pathGroups, type LearningPath } from '../../data/learning-paths'
 import { findChapter } from '../../data/chapters'
 import { useT, pickL } from '../../i18n'
+import { loadUnlockState, isChapterLockedFor, type UnlockState } from '../../utils/unlock'
 import './index.scss'
 
 export default function PathsPage() {
   const { t, locale, toggle: toggleLang } = useT()
+  const [unlock, setUnlock] = useState<UnlockState>({ unlocked: false })
   // 默认全部展开
   const [expanded, setExpanded] = useState<Set<string>>(
     new Set(learningPaths.map(p => p.id))
   )
+
+  useEffect(() => {
+    setUnlock(loadUnlockState())
+  }, [])
 
   function toggle(id: string) {
     setExpanded(prev => {
@@ -23,6 +29,10 @@ export default function PathsPage() {
   }
 
   function go(ch: number) {
+    if (isChapterLockedFor(unlock, ch)) {
+      Taro.navigateTo({ url: `/pages/unlock/index?ch=${ch}` })
+      return
+    }
     const found = findChapter(ch)
     const url = found?.chapter.pagePath || `/pages/chapter/index?ch=${ch}`
     Taro.navigateTo({ url })
@@ -91,10 +101,11 @@ export default function PathsPage() {
                           const ch = findChapter(node.ch)?.chapter
                           if (!ch) return null
                           const chTitle = pickL(ch, 'title', locale)
+                          const nodeLocked = isChapterLockedFor(unlock, node.ch)
                           return (
                             <View
                               key={`${path.id}-${node.ch}`}
-                              className='node'
+                              className={`node ${nodeLocked ? 'node-locked' : ''}`}
                               onClick={() => go(node.ch)}
                             >
                               <View className='node-line'>
@@ -104,12 +115,12 @@ export default function PathsPage() {
                               <View className='node-body'>
                                 <View className='node-row'>
                                   <Text className='node-num'>{`${locale === 'zh' ? '第 ' : 'Ch. '}${ch.num}${locale === 'zh' ? ' 章' : ''}`}</Text>
-                                  <Text className='node-role'>{node.role}</Text>
+                                  <Text className='node-role'>{nodeLocked ? t.toc.statusLocked : node.role}</Text>
                                 </View>
                                 <Text className='node-title'>{chTitle}</Text>
                                 <Text className='node-why'>{node.why}</Text>
                               </View>
-                              <Text className='node-go'>→</Text>
+                              <Text className='node-go'>{nodeLocked ? '🔒' : '→'}</Text>
                             </View>
                           )
                         })}

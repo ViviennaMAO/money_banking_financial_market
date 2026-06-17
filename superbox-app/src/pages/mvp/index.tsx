@@ -1,7 +1,9 @@
 import { View, Text, ScrollView } from '@tarojs/components'
+import { useState, useEffect } from 'react'
 import Taro from '@tarojs/taro'
 import { mvpChapters, type Chapter } from '../../data/chapters'
 import { useT, pickL } from '../../i18n'
+import { loadUnlockState, isChapterLockedFor, type UnlockState } from '../../utils/unlock'
 import './index.scss'
 
 function fmt(tpl: string, vars: Record<string, string | number>): string {
@@ -10,8 +12,17 @@ function fmt(tpl: string, vars: Record<string, string | number>): string {
 
 export default function MvpPage() {
   const { t, locale, toggle } = useT()
+  const [unlock, setUnlock] = useState<UnlockState>({ unlocked: false })
+
+  useEffect(() => {
+    setUnlock(loadUnlockState())
+  }, [])
 
   function go(ch: Chapter) {
+    if (isChapterLockedFor(unlock, ch.num)) {
+      Taro.navigateTo({ url: `/pages/unlock/index?ch=${ch.num}` })
+      return
+    }
     const url = ch.pagePath || `/pages/chapter/index?ch=${ch.num}`
     Taro.navigateTo({ url })
   }
@@ -37,10 +48,11 @@ export default function MvpPage() {
         {sorted.map(c => {
           const chTitle = pickL(c, 'title', locale)
           const chHook = pickL(c, 'hook', locale)
+          const locked = isChapterLockedFor(unlock, c.num)
           return (
             <View
               key={c.num}
-              className='mvp-card'
+              className={`mvp-card ${locked ? 'mvp-locked' : ''}`}
               onClick={() => go(c)}
             >
               <View className='card-row'>
@@ -49,6 +61,7 @@ export default function MvpPage() {
                   <View className='card-meta'>
                     <Text className='card-num'>{fmt(t.common.chapter, { n: c.num })}</Text>
                     <Text className='card-stars'>{'⭐'.repeat(c.difficulty)}</Text>
+                    {locked ? <Text className='card-locked-tag'>{t.toc.statusLocked}</Text> : null}
                   </View>
                   <Text className='card-title'>{chTitle}</Text>
                 </View>

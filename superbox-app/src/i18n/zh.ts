@@ -67,7 +67,41 @@ export const zh = {
     mvpInPart: ' · {n} 章 ⭐ MVP',
     statusDone: '✓ 已学',
     statusMvp: '⭐ 专属',
-    statusBasic: '● 概览版'
+    statusBasic: '● 概览版',
+    statusLocked: '🔒 付费',
+    partLocked: ' · 🔒 付费篇'
+  },
+
+  // ===== 付费解锁页 =====
+  unlockPage: {
+    heroEmoji: '🔓',
+    heroTitle: '解锁全部章节',
+    heroSubtitle: '一次买断 · 永久可用 · 无订阅',
+    forChapterTpl: '你想打开的是 · 第 {n} 章',
+    valueTag: '—— 你将获得 ——',
+    value1: 'Ch 17-25 · 9 章专属(国际金融 + 货币理论)',
+    value2: '9 个反预期模拟器(套息 / IS-LM / AD-AS / 通胀拆解 / 卢卡斯批判)',
+    value3: '45 道精选题 · 解锁国际金融 + 宏观模块',
+    value4: '30+ 词条章节跳转全开 · 跨章测验无锁',
+    priceTag: '—— 价格 ——',
+    priceFull: '$19.9',
+    priceMeta: '一次性买断 · 永久可用',
+    payBtn: '⚡ 立即解锁',
+    payBusy: '请在钱包中签名…',
+    demoBtn: '🧪 演示解锁(本地标记 · 不付费)',
+    demoConfirmTitle: '演示解锁',
+    demoConfirmContent: '这会在本地标记为已解锁,不会发起任何支付。仅用于体验,正式版会接入 Luffa 钱包支付。',
+    demoConfirmOk: '确认演示解锁',
+    demoConfirmCancel: '取消',
+    successTitle: '解锁成功!',
+    backBtn: '← 返回',
+    footnote: '解锁状态存于本设备 · 重装需重新解锁 · 后续可绑定 Luffa 账户跨设备同步',
+    payTokenInfo: '通过 Luffa 钱包 · Endless 链',
+    edsFallbackNote: '当前用 EDS 兜底(≈ {eds} EDS),USDT 路径待 token 地址确认后启用',
+    txInfoTitle: '交易信息',
+    txInfoHash: 'TX',
+    txInfoAddress: '钱包',
+    txInfoAt: '时间'
   },
 
   // ===== 学习地图页 =====

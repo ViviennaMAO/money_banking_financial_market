@@ -473,6 +473,25 @@
   border-radius: 9999rpx;
 }
 
+/* ===== 锁定状态 ===== */
+.mini-card.mini-locked {
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.06), rgba(245, 158, 11, 0.02));
+  border-color: rgba(245, 158, 11, 0.25);
+  position: relative;
+  &:active {
+    background: rgba(245, 158, 11, 0.10);
+    border-color: rgba(245, 158, 11, 0.45);
+  }
+}
+
+.mini-status-locked {
+  color: #f59e0b;
+  background: rgba(245, 158, 11, 0.15);
+  padding: 2rpx 10rpx;
+  border-radius: 9999rpx;
+  font-weight: 600;
+}
+
 /* ===== MVP 单一入口卡(保留) ===== */
 .mvp-entry {
   position: relative;

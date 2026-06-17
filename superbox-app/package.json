@@ -16,6 +16,8 @@
     "dev:h5": "npm run build:h5 -- --watch"
   },
   "dependencies": {
+    "@endlesslab/endless-ts-sdk": "^1.0.7",
+    "@luffalab/luffa-endless-sdk": "^1.1.9",
     "@tarojs/components": "4.0.9",
     "@tarojs/helper": "4.0.9",
     "@tarojs/plugin-framework-react": "4.0.9",
@@ -25,6 +27,7 @@
     "@tarojs/runtime": "4.0.9",
     "@tarojs/shared": "4.0.9",
     "@tarojs/taro": "4.0.9",
+    "bignumber.js": "^11.1.4",
     "react": "^18.0.0",
     "react-dom": "^18.0.0"
   },

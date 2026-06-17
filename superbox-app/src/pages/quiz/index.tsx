@@ -10,6 +10,7 @@ import {
 import { findChapter, parts } from '../../data/chapters'
 import { markQuiz } from '../../utils/progress'
 import { useT } from '../../i18n'
+import { isChapterLocked, LOCKED_CHAPTERS, isAllUnlocked } from '../../utils/unlock'
 import './index.scss'
 
 function fmt(tpl: string, vars: Record<string, string | number>): string {
@@ -61,10 +62,20 @@ export default function QuizPage() {
     setRevealed(prev => prev.map((r, i) => (i === qi ? true : r)))
   }
 
+  /** 把锁定章节过滤掉(未付费时);全解锁时不过滤 */
+  function filterUnlocked(chs?: number[]): number[] | undefined {
+    if (isAllUnlocked()) return chs
+    const allowed = (chs || parts.flatMap(p => p.chapters).map(c => c.num))
+      .filter(n => !(LOCKED_CHAPTERS as readonly number[]).includes(n))
+    return allowed
+  }
+
   function startCrossPart(partNum?: number, count = 8) {
-    const fromChapters = partNum
+    const baseChs = partNum
       ? parts.find(p => p.num === partNum)?.chapters.map(c => c.num)
       : undefined
+    // 锁定章节的题目不参与抽题
+    const fromChapters = filterUnlocked(baseChs)
     const qs = randomQuiz(count, fromChapters)
     setQuestions(qs)
     setPicks(qs.map(() => null))
@@ -73,6 +84,10 @@ export default function QuizPage() {
   }
 
   function startSingle(ch: number) {
+    if (isChapterLocked(ch)) {
+      Taro.navigateTo({ url: `/pages/unlock/index?ch=${ch}` })
+      return
+    }
     const qs = getChapterQuiz(ch)
     setQuestions(qs)
     setPicks(qs.map(() => null))
@@ -150,16 +165,19 @@ export default function QuizPage() {
           <Text className='mode-title'>🎯 单章精练</Text>
           <Text className='mode-tip'>每章 5 道高质量精选题</Text>
           <View className='ch-grid'>
-            {parts.flatMap(p => p.chapters).map(c => (
+            {parts.flatMap(p => p.chapters).map(c => {
+              const locked = isChapterLocked(c.num)
+              return (
               <View
                 key={c.num}
-                className='ch-tile'
+                className={`ch-tile ${locked ? 'ch-tile-locked' : ''}`}
                 onClick={() => startSingle(c.num)}
               >
-                <Text className='ch-tile-emoji'>{c.emoji}</Text>
+                <Text className='ch-tile-emoji'>{locked ? '🔒' : c.emoji}</Text>
                 <Text className='ch-tile-num'>第 {c.num} 章</Text>
               </View>
-            ))}
+              )
+            })}
           </View>
         </View>
 

@@ -4,6 +4,7 @@ import Taro from '@tarojs/taro'
 import { glossary, totalTerms, type GlossaryItem } from '../../data/glossary'
 import { findChapter } from '../../data/chapters'
 import { useT, pickL } from '../../i18n'
+import { isChapterLocked } from '../../utils/unlock'
 import './index.scss'
 
 function fmt(tpl: string, vars: Record<string, string | number>): string {
@@ -30,6 +31,10 @@ export default function GlossaryPage() {
   }, [query, locale])
 
   function go(ch: number) {
+    if (isChapterLocked(ch)) {
+      Taro.navigateTo({ url: `/pages/unlock/index?ch=${ch}` })
+      return
+    }
     const found = findChapter(ch)
     const url = found?.chapter.pagePath || `/pages/chapter/index?ch=${ch}`
     Taro.navigateTo({ url })

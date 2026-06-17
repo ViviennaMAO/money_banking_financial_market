@@ -35,6 +35,13 @@ export default defineAppConfig({
     'pages/quiz/index',
     'pages/placeholder/index'
   ],
+  /* 子包:把 Luffa Endless SDK + bignumber 等大依赖隔离到 unlock 子包,主包保持轻量 */
+  subpackages: [
+    {
+      root: 'pages/unlock',
+      pages: ['index']
+    }
+  ],
   window: {
     backgroundTextStyle: 'dark',
     navigationBarBackgroundColor: '#0a0e1a',

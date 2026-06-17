@@ -12,6 +12,12 @@ import {
   dueReviews,
   type ProgressData
 } from '../../utils/progress'
+import {
+  loadUnlockState,
+  isChapterLockedFor,
+  LOCKED_PARTS,
+  type UnlockState
+} from '../../utils/unlock'
 import { useT, pickL } from '../../i18n'
 import './index.scss'
 
@@ -25,9 +31,11 @@ export default function Home() {
     new Set(parts.map(p => p.num))
   )
   const [progress, setProgress] = useState<ProgressData | null>(null)
+  const [unlock, setUnlock] = useState<UnlockState>({ unlocked: false })
 
   useEffect(() => {
     setProgress(loadProgress())
+    setUnlock(loadUnlockState())
   }, [])
 
   function togglePart(partNum: number) {
@@ -40,6 +48,10 @@ export default function Home() {
   }
 
   function navigateToChapter(ch: Chapter) {
+    if (isChapterLockedFor(unlock, ch.num)) {
+      Taro.navigateTo({ url: `/pages/unlock/index?ch=${ch.num}` })
+      return
+    }
     const url = ch.pagePath || `/pages/chapter/index?ch=${ch.num}`
     Taro.navigateTo({ url })
   }
@@ -107,6 +119,7 @@ export default function Home() {
           const mvpInPart = part.chapters.filter(c => c.tier === 'mvp').length
           const partTitle = pickL(part, 'title', locale)
           const partDesc = pickL(part, 'desc', locale)
+          const partIsLocked = !unlock.unlocked && (LOCKED_PARTS as readonly number[]).includes(part.num)
           return (
             <View key={part.num} className='part-block'>
               <View
@@ -119,6 +132,7 @@ export default function Home() {
                   <Text className='part-meta'>
                     {fmt(t.toc.range, { range: part.range, n: part.chapters.length })}
                     {mvpInPart > 0 ? fmt(t.toc.mvpInPart, { n: mvpInPart }) : ''}
+                    {partIsLocked ? t.toc.partLocked : ''}
                   </Text>
                 </View>
                 <Text className='part-arrow'>{isOpen ? '▾' : '▸'}</Text>
@@ -130,17 +144,20 @@ export default function Home() {
                     const stat = progress?.chapterStats[c.num]
                     const chTitle = pickL(c, 'title', locale)
                     const chBrief = pickL(c, 'brief', locale)
+                    const locked = isChapterLockedFor(unlock, c.num)
                     return (
                       <View
                         key={c.num}
-                        className={`mini-card mini-${c.tier}`}
+                        className={`mini-card mini-${c.tier} ${locked ? 'mini-locked' : ''}`}
                         onClick={() => navigateToChapter(c)}
                       >
                         <Text className='mini-emoji'>{c.emoji}</Text>
                         <View className='mini-body'>
                           <View className='mini-title-row'>
                             <Text className='mini-num'>{fmt(t.common.chapter, { n: c.num })}</Text>
-                            {stat?.completed ? (
+                            {locked ? (
+                              <Text className='mini-status mini-status-locked'>{t.toc.statusLocked}</Text>
+                            ) : stat?.completed ? (
                               <Text className='mini-status mini-status-done'>{t.toc.statusDone}</Text>
                             ) : c.tier === 'mvp' ? (
                               <Text className='mini-status mini-status-mvp'>{t.toc.statusMvp}</Text>

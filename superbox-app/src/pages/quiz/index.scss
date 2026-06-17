@@ -127,6 +127,16 @@
   color: rgba(230, 237, 243, 0.65);
 }
 
+.ch-tile.ch-tile-locked {
+  background: rgba(245, 158, 11, 0.06);
+  border-color: rgba(245, 158, 11, 0.25);
+  &:active {
+    border-color: rgba(245, 158, 11, 0.5);
+    background: rgba(245, 158, 11, 0.12);
+  }
+  .ch-tile-num { color: rgba(245, 158, 11, 0.7); }
+}
+
 .footer-note {
   margin-top: 40rpx;
   text-align: center;
