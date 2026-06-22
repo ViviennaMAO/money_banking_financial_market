@@ -1,7 +1,7 @@
 {
 	"miniprogramRoot": "dist/",
-	"projectname": "mishkin-superbox",
-	"description": "米什金互动学习 · Luffa SuperBox 小程序",
+	"projectname": "money-banking-superbox",
+	"description": "货币金融学互动学习 · Luffa SuperBox 小程序",
 	"appid": "touristappid",
 	"setting": {
 		"urlCheck": true,
