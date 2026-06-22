@@ -1,50 +1,19 @@
-import { PropsWithChildren, useEffect } from 'react'
-import { ensureConnected } from './utils/identity'
-import { bridgeAvailable } from './utils/luffa-bridge'
+import { PropsWithChildren } from 'react'
 import './app.scss'
 
-/** 已在本会话内触发过 connect → 不再重复 */
-let _initOnce = false
-
 /**
- * 安全地触发 Luffa 钱包连接 — 任何错误都不允许传播到 App 根。
- * 设计目标:即使 Luffa 平台 publib 自身有 bug,小程序也必须能继续运行。
+ * App 根 — 暂保持纯 shell,不在 onLaunch 触发任何 native 调用。
+ *
+ * 背景:用户真机调试遇到 Luffa publib_remote_helper:1020 Buffer/TypedArray
+ * 抛错,经排查不在我们主包(dist 内 grep TYPED_ARRAY_SUPPORT=0),
+ * 但仍导致闪退。先让 App 根尽量空,确认问题是否来自其他位置(子包预热 /
+ * 平台 SDK)。
+ *
+ * 钱包连接已移到 pages/unlock 子包 + 首页"立即解锁"按钮主动触发(用户点击时)。
+ * 这仍然满足"用户在使用过程中调用钱包授权"的合规要求 —— Luffa 多数审核样例
+ * 也是用户主动点击触发,非 onLaunch 强制弹窗。
  */
-function initLuffaIdentitySafe() {
-  if (_initOnce) return
-  _initOnce = true
-
-  // 延迟 3 秒,让首屏完全渲染、用户开始浏览后再请求(更友好,且躲开冷启动期 publib 不稳定)
-  setTimeout(() => {
-    try {
-      if (!bridgeAvailable()) return
-
-      // 这里用 Promise.resolve(...).catch 而不是 async/await,确保不会抛同步错
-      Promise.resolve()
-        .then(() => ensureConnected({ network: 'mainnet' }))
-        .then(id => {
-          if (id && id.address) {
-            // eslint-disable-next-line no-console
-            console.log('[luffa] connected:', id.address.slice(0, 8) + '...' + id.address.slice(-6))
-          }
-        })
-        .catch(err => {
-          // eslint-disable-next-line no-console
-          console.warn('[luffa] connect failed (non-fatal):', err)
-        })
-    } catch (err) {
-      // 兜底:任何同步异常都吞掉
-      // eslint-disable-next-line no-console
-      console.warn('[luffa] init exception (non-fatal):', err)
-    }
-  }, 3000)
-}
-
 function App({ children }: PropsWithChildren<{}>) {
-  useEffect(() => {
-    initLuffaIdentitySafe()
-  }, [])
-
   return children
 }
 
