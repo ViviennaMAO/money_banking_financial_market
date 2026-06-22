@@ -96,15 +96,11 @@ export async function ensureConnected(opts: {
   // 桥不可用 — 开发者工具 web 模式或非 Luffa 环境,静默
   if (!bridgeAvailable()) return current
 
-  // 弹窗连接
+  // 弹窗连接 — 用最简参数,避免 publib 在嵌套对象/中文上崩
   try {
     const res: any = await luffa('connect', {
       uuid: sessionUuid(),
-      network: opts.network || 'mainnet',
-      metadata: {
-        title: opts.title || '货币金融学互动学习',
-        desc: opts.desc || '需要您的钱包地址以验证身份和后续付费解锁'
-      }
+      network: opts.network || 'mainnet'
     })
 
     // Luffa 返回结构兼容多种 shape
