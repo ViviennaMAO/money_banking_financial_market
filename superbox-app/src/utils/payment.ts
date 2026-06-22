@@ -1,28 +1,20 @@
 /* Luffa 钱包 + Endless 链 · $19.9 解锁支付
  *
- * 收款:Bf8qoqsjPnT9ufHqLeEYoFyy5hxqm6ahrLxbkh2NPp4r(Endless 钱包地址)
+ * 用 raw wx.invokeNativePlugin native bridge,完全不依赖任何 SDK
+ * (Luffa Endless SDK / endless-ts-sdk / bignumber.js 都不需要)。
  *
- * Phase 1(当前):用 EDS 兜底走通流程(USDT 合约地址待补)
- * Phase 2:配齐 USDT FA Metadata 地址后切回 USDT 路径
+ * 重写原因:SDK 内部用了 BigInt,SuperBox 1.1.6 的 JS 引擎在子包
+ * 加载时直接抛 ReferenceError: BigInt is not defined → 小程序闪退。
  *
- * 用法:
- *   import { payUnlock, explainError, PaymentError } from '../../utils/payment'
- *   try {
- *     const { txHash, fromAddress } = await payUnlock()
- *     markUnlocked('paid', { txId: txHash, address: fromAddress })
- *   } catch (e) {
- *     Taro.showToast({ title: explainError(e), icon: 'none' })
- *   }
+ * 改为 raw bridge 后,所有 BCS 序列化由 Luffa 客户端 native 端完成,
+ * 客户端不需要 BigInt。
  */
 
-import { EndlessLuffaSdk, UserResponseStatus } from '@luffalab/luffa-endless-sdk'
-import BigNumber from 'bignumber.js'
+declare const wx: any
 
 /* ============ 配置 ============ */
 
 const CONFIG = {
-  network: 'mainnet' as 'testnet' | 'mainnet',
-
   /** 收款地址(Endless 链账户) */
   recipient: 'Bf8qoqsjPnT9ufHqLeEYoFyy5hxqm6ahrLxbkh2NPp4r',
 
@@ -30,29 +22,26 @@ const CONFIG = {
   priceUsd: 19.9,
 
   /**
-   * USDT 在 Endless 链上的 Fungible Asset Metadata 地址。
-   * TODO:拿到官方地址后填进来,并把下面 PAY_WITH_EDS_FALLBACK 切成 false。
+   * USDT 在 Endless 链上的 Fungible Asset Metadata 地址(占位)
+   * 拿到官方地址后填进来,把 PAY_WITH_EDS_FALLBACK 切成 false
    */
   usdtTokenAddress: '0xREPLACE_ME_WITH_USDT_FA_METADATA_ADDRESS',
   usdtDecimals: 6,
 
-  /**
-   * 当前默认:走 EDS 兜底路径。
-   * 等 USDT 地址确认后改为 false。
-   */
+  /** 默认走 EDS 兜底路径 */
   PAY_WITH_EDS_FALLBACK: true,
 
-  /** EDS 兜底:1 EDS = $X 的假设汇率(可调) */
+  /** EDS / USD 兑率假设(等真实汇率后调整) */
   edsUsdRate: 2.0
 }
 
 /* ============ 错误分类 ============ */
 
 export type PaymentErrorCode =
-  | 'NO_WALLET'        // Luffa 钱包不可用(不在 SuperBox / IDE 环境)
-  | 'USER_REJECTED'    // 用户取消签名/连接
-  | 'CHAIN_FAILED'     // 链上交易失败 / 超时
-  | 'CONFIG_INVALID'   // 收款 / USDT 地址未配置
+  | 'NO_WALLET'
+  | 'USER_REJECTED'
+  | 'CHAIN_FAILED'
+  | 'CONFIG_INVALID'
   | 'UNKNOWN'
 
 export class PaymentError extends Error {
@@ -65,24 +54,45 @@ export class PaymentError extends Error {
   }
 }
 
-/* ============ SDK 单例 ============ */
+/* ============ Promise wrapper(raw bridge,内嵌避免循环依赖) ============ */
 
-let _sdk: EndlessLuffaSdk | null = null
-
-function getSdk(): EndlessLuffaSdk {
-  if (!_sdk) _sdk = new EndlessLuffaSdk({ network: CONFIG.network })
-  return _sdk
+function luffa<T = any>(methodName: string, data: Record<string, any> = {}): Promise<T> {
+  return new Promise((resolve, reject) => {
+    if (typeof wx === 'undefined' || !wx.invokeNativePlugin) {
+      reject(new PaymentError('NO_WALLET',
+        '未检测到 Luffa 钱包。请在 Luffa 客户端打开。'))
+      return
+    }
+    wx.invokeNativePlugin({
+      api_name: 'luffaWebRequest',
+      data: { methodName, ...data },
+      success: resolve,
+      fail: reject
+    })
+  })
 }
 
-/** Luffa 钱包是否可用 — SuperBox / IDE 环境才有 wx.invokeNativePlugin */
 export function isWalletAvailable(): boolean {
   try {
-    // @ts-ignore
-    const w = typeof wx !== 'undefined' ? wx : (typeof globalThis !== 'undefined' ? (globalThis as any).wx : undefined)
-    return !!(w && typeof w.invokeNativePlugin === 'function')
+    return typeof wx !== 'undefined' && typeof wx.invokeNativePlugin === 'function'
   } catch {
     return false
   }
+}
+
+/* ============ 把美元换成 base unit 字符串(无 BigInt) ============ */
+
+/**
+ * 浮点数 × 10^decimals,返回整数字符串。
+ * 避免 JS 浮点误差:用字符串运算 + 截断到整数。
+ */
+function toBaseUnits(amount: number, decimals: number): string {
+  const s = amount.toFixed(decimals + 2)
+  const [intPart, fracPartRaw = ''] = s.split('.')
+  let frac = fracPartRaw.slice(0, decimals)
+  while (frac.length < decimals) frac += '0'
+  const combined = (intPart + frac).replace(/^0+(?=\d)/, '')
+  return combined === '' ? '0' : combined
 }
 
 /* ============ 连接钱包 ============ */
@@ -90,22 +100,18 @@ export function isWalletAvailable(): boolean {
 async function connect(): Promise<{ address: string }> {
   if (!isWalletAvailable()) {
     throw new PaymentError('NO_WALLET',
-      '未检测到 Luffa 钱包。请在 Luffa 客户端 / SuperBox 开发者工具中打开。')
+      '未检测到 Luffa 钱包。请在 Luffa 客户端打开。')
   }
-  const sdk = getSdk()
   let res: any
   try {
-    res = await sdk.connect()
-  } catch (e) {
-    throw new PaymentError('UNKNOWN', '钱包连接异常', e)
+    res = await luffa('connect', { network: 'mainnet' })
+  } catch (e: any) {
+    if (e instanceof PaymentError) throw e
+    throw new PaymentError('USER_REJECTED', '用户取消了钱包连接', e)
   }
-  if (res?.status !== UserResponseStatus.APPROVED) {
-    throw new PaymentError('USER_REJECTED', '用户取消了钱包连接')
-  }
-  const account = await sdk.getAccount()
-  const address = (account as any)?.account?.address || (account as any)?.address
+  const address = res?.address || res?.args?.address || res?.data?.address
   if (!address) {
-    throw new PaymentError('UNKNOWN', '未获取到钱包地址', account)
+    throw new PaymentError('UNKNOWN', '未获取到钱包地址', res)
   }
   return { address }
 }
@@ -115,12 +121,11 @@ async function connect(): Promise<{ address: string }> {
 export interface PayResult {
   txHash: string
   fromAddress: string
-  amount: string          // 实际支付的 base-unit 字符串
+  amount: string
   token: 'USDT' | 'EDS'
 }
 
 export async function payUnlock(): Promise<PayResult> {
-  // 1) 校验配置
   if (CONFIG.recipient.startsWith('0xREPLACE') || !CONFIG.recipient) {
     throw new PaymentError('CONFIG_INVALID', '收款地址未配置')
   }
@@ -128,57 +133,73 @@ export async function payUnlock(): Promise<PayResult> {
     throw new PaymentError('CONFIG_INVALID', 'USDT 合约地址未配置')
   }
 
-  // 2) 连接钱包
   const { address: fromAddress } = await connect()
 
-  // 3) 构造转账 payload
-  const sdk = getSdk()
-  let tx: any
   let token: 'USDT' | 'EDS'
   let amountBase: string
+  let functionArguments: string[]
+  let typeArguments: string[] = []
+  let functionId: string
 
+  if (CONFIG.PAY_WITH_EDS_FALLBACK) {
+    token = 'EDS'
+    const edsAmount = CONFIG.priceUsd / CONFIG.edsUsdRate
+    amountBase = toBaseUnits(edsAmount, 8)
+    functionId = '0x1::endless_account::transfer'
+    functionArguments = [CONFIG.recipient, amountBase]
+  } else {
+    token = 'USDT'
+    amountBase = toBaseUnits(CONFIG.priceUsd, CONFIG.usdtDecimals)
+    functionId = '0x1::endless_account::transfer_coins'
+    functionArguments = [CONFIG.recipient, amountBase, CONFIG.usdtTokenAddress]
+    typeArguments = ['0x1::fungible_asset::Metadata']
+  }
+
+  // Package — Luffa native 做 BCS encode
+  let packaged: any
   try {
-    if (CONFIG.PAY_WITH_EDS_FALLBACK) {
-      // EDS 兜底 — 原生 token 转账
-      token = 'EDS'
-      const edsAmount = CONFIG.priceUsd / CONFIG.edsUsdRate  // $19.9 / 2.0 = 9.95 EDS
-      amountBase = BigNumber(edsAmount).shiftedBy(8).integerValue().toFixed()
-      tx = await sdk.signAndSubmitTransaction({
+    packaged = await luffa('packageTransactionV2', {
+      from: fromAddress,
+      data: {
         payload: {
-          function: '0x1::endless_account::transfer',
-          functionArguments: [CONFIG.recipient, amountBase]
+          function: functionId,
+          functionArguments,
+          typeArguments
         }
-      })
-    } else {
-      // USDT 转账 — Fungible Asset
-      token = 'USDT'
-      amountBase = BigNumber(CONFIG.priceUsd)
-        .shiftedBy(CONFIG.usdtDecimals)
-        .integerValue()
-        .toFixed()
-      tx = await sdk.signAndSubmitTransaction({
-        payload: {
-          function: '0x1::endless_account::transfer_coins',
-          functionArguments: [
-            CONFIG.recipient,
-            amountBase,
-            CONFIG.usdtTokenAddress
-          ],
-          typeArguments: ['0x1::fungible_asset::Metadata']
-        }
-      })
-    }
+      }
+    })
   } catch (e: any) {
-    const msg = String(e?.message || e || '')
+    if (e instanceof PaymentError) throw e
+    const msg = String(e?.errMsg || e?.message || e || '')
     if (/reject|cancel|denied|user/i.test(msg)) {
-      throw new PaymentError('USER_REJECTED', '用户取消了支付')
+      throw new PaymentError('USER_REJECTED', '用户取消了支付', e)
+    }
+    throw new PaymentError('CHAIN_FAILED', `交易打包失败:${msg}`, e)
+  }
+
+  const serialized = packaged?.data || packaged?.args?.data
+  if (!serialized) {
+    throw new PaymentError('CHAIN_FAILED', '交易打包未返回数据', packaged)
+  }
+
+  // Sign + submit
+  let submitted: any
+  try {
+    submitted = await luffa('signAndSubmitTransaction', {
+      serializedTransaction: serialized
+    })
+  } catch (e: any) {
+    if (e instanceof PaymentError) throw e
+    const msg = String(e?.errMsg || e?.message || e || '')
+    if (/reject|cancel|denied|user/i.test(msg)) {
+      throw new PaymentError('USER_REJECTED', '用户取消了签名', e)
     }
     throw new PaymentError('CHAIN_FAILED', `链上交易失败:${msg}`, e)
   }
 
-  const txHash = tx?.hash || tx?.args?.hash || tx?.txHash
+  const txHash = submitted?.hash || submitted?.args?.hash || submitted?.txHash
   if (!txHash) {
-    throw new PaymentError('CHAIN_FAILED', '未拿到 tx hash,交易状态未知', tx)
+    throw new PaymentError('CHAIN_FAILED', '未拿到 tx hash', submitted)
   }
 
   return { txHash, fromAddress, amount: amountBase, token }
@@ -212,10 +233,8 @@ export function explainErrorEn(e: unknown): string {
   return 'Unknown payment error'
 }
 
-/** 暴露当前配置(给 UI 显示用,例如 fallback 状态) */
 export function paymentConfig() {
   return {
-    network: CONFIG.network,
     recipient: CONFIG.recipient,
     priceUsd: CONFIG.priceUsd,
     isEdsFallback: CONFIG.PAY_WITH_EDS_FALLBACK,

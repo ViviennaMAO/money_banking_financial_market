@@ -1,3 +1,3 @@
 export default definePageConfig({
-  navigationBarTitleText: '米什金互动学习'
+  navigationBarTitleText: '货币金融学互动学习'
 })
