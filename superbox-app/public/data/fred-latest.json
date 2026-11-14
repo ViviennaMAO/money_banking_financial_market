@@ -1,6 +1,6 @@
 {
-  "asOf": "2026-11-13",
-  "fetchedAt": 1794559952446,
+  "asOf": "2026-11-16",
+  "fetchedAt": 1794644116454,
   "source": "fred-live",
   "series": {
     "DFF": {
@@ -8,7 +8,7 @@
       "name": "联邦基金利率",
       "value": 3.88,
       "unit": "%",
-      "date": "2026-11-11",
+      "date": "2026-11-12",
       "change1": 0,
       "change1y": 0.24,
       "freq": "d"
@@ -16,41 +16,41 @@
     "DGS2": {
       "id": "DGS2",
       "name": "2 年期美债",
-      "value": 4.73,
+      "value": 4.86,
       "unit": "%",
-      "date": "2026-11-10",
-      "change1": 0.17,
-      "change1y": 1.18,
+      "date": "2026-11-12",
+      "change1": 0.13,
+      "change1y": 1.28,
       "freq": "d"
     },
     "DGS10": {
       "id": "DGS10",
       "name": "10 年期美债",
-      "value": 4.98,
+      "value": 5.1,
       "unit": "%",
-      "date": "2026-11-10",
-      "change1": 0.1,
-      "change1y": 0.87,
+      "date": "2026-11-12",
+      "change1": 0.12,
+      "change1y": 0.97,
       "freq": "d"
     },
     "DGS30": {
       "id": "DGS30",
       "name": "30 年期美债",
-      "value": 5.35,
+      "value": 5.43,
       "unit": "%",
-      "date": "2026-11-10",
-      "change1": 0.09,
-      "change1y": 0.65,
+      "date": "2026-11-12",
+      "change1": 0.08,
+      "change1y": 0.72,
       "freq": "d"
     },
     "T10Y2Y": {
       "id": "T10Y2Y",
       "name": "10Y-2Y 利差",
-      "value": 0.24,
+      "value": 0.27,
       "unit": "%",
-      "date": "2026-11-12",
-      "change1": -0.01,
-      "change1y": -0.31,
+      "date": "2026-11-13",
+      "change1": 0.03,
+      "change1y": -0.25,
       "freq": "d"
     },
     "T10YIE": {
@@ -58,17 +58,17 @@
       "name": "10Y 通胀盈亏平衡",
       "value": 2.24,
       "unit": "%",
-      "date": "2026-11-12",
-      "change1": 0.04,
-      "change1y": -0.05,
+      "date": "2026-11-13",
+      "change1": 0,
+      "change1y": -0.03,
       "freq": "d"
     },
     "SOFR": {
       "id": "SOFR",
       "name": "隔夜担保融资利率",
-      "value": 3.89,
+      "value": 3.9,
       "unit": "%",
-      "date": "2026-11-10",
+      "date": "2026-11-12",
       "change1": 0.01,
       "change1y": -0.03,
       "freq": "d"
@@ -78,7 +78,7 @@
       "name": "准备金利率(走廊上沿)",
       "value": 3.9,
       "unit": "%",
-      "date": "2026-11-13",
+      "date": "2026-11-16",
       "change1": 0,
       "change1y": 0.25,
       "freq": "d"
@@ -241,9 +241,9 @@
       "date": "2026-09-01"
     },
     "spread2s10sBps": {
-      "value": 24,
+      "value": 27,
       "unit": "bps",
-      "date": "2026-11-12"
+      "date": "2026-11-13"
     },
     "walclVsPeak": {
       "value": 6.76,
